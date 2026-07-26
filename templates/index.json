@@ -15,7 +15,7 @@
           "type": "text",
           "name": "t:names.heading",
           "settings": {
-            "text": "<p>Browse our latest products</p>",
+            "text": "<p>E&eacute;n gewoonte die alles verandert</p>",
             "width": "fit-content",
             "max_width": "normal",
             "alignment": "left",
@@ -41,7 +41,7 @@
           "type": "button",
           "name": "t:names.button",
           "settings": {
-            "label": "Shop all",
+            "label": "Ontdek nu",
             "link": "shopify://collections/all",
             "open_in_new_tab": false,
             "style_class": "button-secondary",
@@ -86,6 +86,371 @@
         "reflection_opacity": 75,
         "padding-block-start": 100,
         "padding-block-end": 72
+      }
+    },
+    "section_benefits_ag1": {
+      "type": "section",
+      "name": "Voordelen",
+      "blocks": {
+        "heading_benefits": {
+          "type": "text",
+          "settings": {
+            "text": "<h2>Wat je elke dag mag verwachten</h2>",
+            "width": "100%",
+            "max_width": "normal",
+            "alignment": "center",
+            "type_preset": "h2"
+          }
+        },
+        "row_benefits": {
+          "type": "group",
+          "settings": {
+            "content_direction": "row",
+            "vertical_on_mobile": true,
+            "horizontal_alignment": "space-between",
+            "vertical_alignment": "flex-start",
+            "gap": 24,
+            "width": "fill",
+            "height": "fit",
+            "inherit_color_scheme": true,
+            "padding-block-start": 32
+          },
+          "blocks": {
+            "benefit_1": {
+              "type": "group",
+              "settings": {
+                "content_direction": "column",
+                "horizontal_alignment_flex_direction_column": "center",
+                "vertical_alignment_flex_direction_column": "center",
+                "gap": 12,
+                "width": "fill",
+                "height": "fit",
+                "inherit_color_scheme": true
+              },
+              "blocks": {
+                "icon": {
+                  "type": "icon",
+                  "settings": { "icon": "lightning_bolt", "width": 32 }
+                },
+                "text_group": {
+                  "type": "group",
+                  "settings": { "gap": 4 },
+                  "blocks": {
+                    "heading": {
+                      "type": "text",
+                      "settings": { "text": "<h3>Aanhoudende energie</h3>", "type_preset": "h4", "alignment": "center", "width": "100%" }
+                    },
+                    "desc": {
+                      "type": "text",
+                      "settings": { "text": "<p>Ondersteuning voor je energie, zonder pieken en dalen.</p>", "type_preset": "rte", "alignment": "center", "width": "100%" }
+                    }
+                  },
+                  "block_order": ["heading", "desc"]
+                }
+              },
+              "block_order": ["icon", "text_group"]
+            },
+            "benefit_2": {
+              "type": "group",
+              "settings": {
+                "content_direction": "column",
+                "horizontal_alignment_flex_direction_column": "center",
+                "vertical_alignment_flex_direction_column": "center",
+                "gap": 12,
+                "width": "fill",
+                "height": "fit",
+                "inherit_color_scheme": true
+              },
+              "blocks": {
+                "icon": {
+                  "type": "icon",
+                  "settings": { "icon": "heart", "width": 32 }
+                },
+                "text_group": {
+                  "type": "group",
+                  "settings": { "gap": 4 },
+                  "blocks": {
+                    "heading": {
+                      "type": "text",
+                      "settings": { "text": "<h3>Weerstand</h3>", "type_preset": "h4", "alignment": "center", "width": "100%" }
+                    },
+                    "desc": {
+                      "type": "text",
+                      "settings": { "text": "<p>Ondersteunt je natuurlijke afweer, dag in dag uit.</p>", "type_preset": "rte", "alignment": "center", "width": "100%" }
+                    }
+                  },
+                  "block_order": ["heading", "desc"]
+                }
+              },
+              "block_order": ["icon", "text_group"]
+            },
+            "benefit_3": {
+              "type": "group",
+              "settings": {
+                "content_direction": "column",
+                "horizontal_alignment_flex_direction_column": "center",
+                "vertical_alignment_flex_direction_column": "center",
+                "gap": 12,
+                "width": "fill",
+                "height": "fit",
+                "inherit_color_scheme": true
+              },
+              "blocks": {
+                "icon": {
+                  "type": "icon",
+                  "settings": { "icon": "leaf", "width": 32 }
+                },
+                "text_group": {
+                  "type": "group",
+                  "settings": { "gap": 4 },
+                  "blocks": {
+                    "heading": {
+                      "type": "text",
+                      "settings": { "text": "<h3>Natuurlijke basis</h3>", "type_preset": "h4", "alignment": "center", "width": "100%" }
+                    },
+                    "desc": {
+                      "type": "text",
+                      "settings": { "text": "<p>Zorgvuldig geselecteerde ingredi&euml;nten, niets onnodigs.</p>", "type_preset": "rte", "alignment": "center", "width": "100%" }
+                    }
+                  },
+                  "block_order": ["heading", "desc"]
+                }
+              },
+              "block_order": ["icon", "text_group"]
+            },
+            "benefit_4": {
+              "type": "group",
+              "settings": {
+                "content_direction": "column",
+                "horizontal_alignment_flex_direction_column": "center",
+                "vertical_alignment_flex_direction_column": "center",
+                "gap": 12,
+                "width": "fill",
+                "height": "fit",
+                "inherit_color_scheme": true
+              },
+              "blocks": {
+                "icon": {
+                  "type": "icon",
+                  "settings": { "icon": "check_box", "width": 32 }
+                },
+                "text_group": {
+                  "type": "group",
+                  "settings": { "gap": 4 },
+                  "blocks": {
+                    "heading": {
+                      "type": "text",
+                      "settings": { "text": "<h3>Vol te houden</h3>", "type_preset": "h4", "alignment": "center", "width": "100%" }
+                    },
+                    "desc": {
+                      "type": "text",
+                      "settings": { "text": "<p>Een simpele gewoonte die makkelijk in je dag past.</p>", "type_preset": "rte", "alignment": "center", "width": "100%" }
+                    }
+                  },
+                  "block_order": ["heading", "desc"]
+                }
+              },
+              "block_order": ["icon", "text_group"]
+            }
+          },
+          "block_order": ["benefit_1", "benefit_2", "benefit_3", "benefit_4"]
+        }
+      },
+      "block_order": ["heading_benefits", "row_benefits"],
+      "settings": {
+        "content_direction": "column",
+        "vertical_on_mobile": true,
+        "horizontal_alignment_flex_direction_column": "center",
+        "vertical_alignment_flex_direction_column": "center",
+        "gap": 16,
+        "section_width": "page-width",
+        "color_scheme": "scheme-1",
+        "padding-block-start": 64,
+        "padding-block-end": 64
+      }
+    },
+    "section_highlight_ag1": {
+      "type": "media-with-content",
+      "name": "Product uitgelicht",
+      "blocks": {
+        "media": {
+          "type": "_media-without-appearance",
+          "static": true,
+          "settings": { "media_type": "image" }
+        },
+        "content": {
+          "type": "_content-without-appearance",
+          "static": true,
+          "settings": {
+            "horizontal_alignment_flex_direction_column": "flex-start",
+            "vertical_alignment_flex_direction_column": "center"
+          },
+          "blocks": {
+            "caption": {
+              "type": "text",
+              "settings": { "text": "<p>Dagelijkse routine</p>", "type_preset": "h6" }
+            },
+            "heading": {
+              "type": "text",
+              "settings": { "text": "<h2>E&eacute;n schep, alles wat je nodig hebt</h2>", "type_preset": "h3" }
+            },
+            "text": {
+              "type": "text",
+              "settings": { "text": "<p>Zorgvuldig samengestelde ingredi&euml;nten in &eacute;&eacute;n eenvoudige dagelijkse gewoonte.</p>", "max_width": "narrow", "type_preset": "rte" }
+            },
+            "button": {
+              "type": "button",
+              "settings": { "label": "Bekijk ingredi&euml;nten", "link": "shopify://collections/all", "style_class": "link" }
+            }
+          },
+          "block_order": ["caption", "heading", "text", "button"]
+        }
+      },
+      "block_order": ["media", "content"],
+      "settings": {
+        "media_position": "left",
+        "media_width": "medium",
+        "media_height": "60svh",
+        "section_width": "page-width",
+        "extend_media": true,
+        "color_scheme": "scheme-4",
+        "padding-block-start": 0,
+        "padding-block-end": 0
+      }
+    },
+    "section_testimonials_ag1": {
+      "type": "section",
+      "name": "Testimonials",
+      "blocks": {
+        "heading_testimonials": {
+          "type": "text",
+          "settings": { "text": "<h2>Wat klanten zeggen</h2>", "width": "100%", "alignment": "center", "type_preset": "h2" }
+        },
+        "row_testimonials": {
+          "type": "group",
+          "settings": {
+            "content_direction": "row",
+            "vertical_on_mobile": true,
+            "gap": 24,
+            "width": "fill",
+            "height": "fit",
+            "inherit_color_scheme": true,
+            "padding-block-start": 32
+          },
+          "blocks": {
+            "quote_1": {
+              "type": "group",
+              "settings": {
+                "content_direction": "column",
+                "horizontal_alignment_flex_direction_column": "center",
+                "gap": 12,
+                "width": "fill",
+                "height": "fit",
+                "inherit_color_scheme": true
+              },
+              "blocks": {
+                "quote": {
+                  "type": "text",
+                  "settings": { "text": "<p>&ldquo;Sinds ik dit elke ochtend gebruik voel ik me consistenter.&rdquo;</p>", "type_preset": "h5", "alignment": "center", "width": "100%" }
+                },
+                "author": {
+                  "type": "text",
+                  "settings": { "text": "<p>&mdash; Placeholder klant</p>", "type_preset": "paragraph", "alignment": "center", "width": "100%" }
+                }
+              },
+              "block_order": ["quote", "author"]
+            },
+            "quote_2": {
+              "type": "group",
+              "settings": {
+                "content_direction": "column",
+                "horizontal_alignment_flex_direction_column": "center",
+                "gap": 12,
+                "width": "fill",
+                "height": "fit",
+                "inherit_color_scheme": true
+              },
+              "blocks": {
+                "quote": {
+                  "type": "text",
+                  "settings": { "text": "<p>&ldquo;Simpel, snel, en het past precies in mijn ochtendritueel.&rdquo;</p>", "type_preset": "h5", "alignment": "center", "width": "100%" }
+                },
+                "author": {
+                  "type": "text",
+                  "settings": { "text": "<p>&mdash; Placeholder klant</p>", "type_preset": "paragraph", "alignment": "center", "width": "100%" }
+                }
+              },
+              "block_order": ["quote", "author"]
+            },
+            "quote_3": {
+              "type": "group",
+              "settings": {
+                "content_direction": "column",
+                "horizontal_alignment_flex_direction_column": "center",
+                "gap": 12,
+                "width": "fill",
+                "height": "fit",
+                "inherit_color_scheme": true
+              },
+              "blocks": {
+                "quote": {
+                  "type": "text",
+                  "settings": { "text": "<p>&ldquo;Precies de ondersteuning die ik nodig had voor drukke dagen.&rdquo;</p>", "type_preset": "h5", "alignment": "center", "width": "100%" }
+                },
+                "author": {
+                  "type": "text",
+                  "settings": { "text": "<p>&mdash; Placeholder klant</p>", "type_preset": "paragraph", "alignment": "center", "width": "100%" }
+                }
+              },
+              "block_order": ["quote", "author"]
+            }
+          },
+          "block_order": ["quote_1", "quote_2", "quote_3"]
+        }
+      },
+      "block_order": ["heading_testimonials", "row_testimonials"],
+      "settings": {
+        "content_direction": "column",
+        "horizontal_alignment_flex_direction_column": "center",
+        "gap": 16,
+        "section_width": "page-width",
+        "color_scheme": "scheme-5",
+        "padding-block-start": 64,
+        "padding-block-end": 64
+      }
+    },
+    "section_newsletter_ag1": {
+      "type": "section",
+      "name": "Nieuwsbrief",
+      "blocks": {
+        "text_1": {
+          "type": "text",
+          "settings": { "text": "<h2>Blijf op de hoogte</h2>", "width": "100%", "alignment": "center" }
+        },
+        "text_2": {
+          "type": "text",
+          "settings": { "text": "<p>Meld je aan voor updates, nieuwe producten en aanbiedingen.</p>", "type_preset": "paragraph", "width": "100%", "alignment": "center" }
+        },
+        "email_signup": {
+          "type": "email-signup",
+          "settings": {
+            "width": "custom",
+            "custom_width": 50,
+            "style_class": "button-unstyled",
+            "display_type": "arrow",
+            "label": "Aanmelden",
+            "integrated_button": true
+          }
+        }
+      },
+      "block_order": ["text_1", "text_2", "email_signup"],
+      "settings": {
+        "horizontal_alignment_flex_direction_column": "center",
+        "gap": 16,
+        "section_width": "page-width",
+        "color_scheme": "scheme-2",
+        "padding-block-start": 40,
+        "padding-block-end": 40
       }
     },
     "product_list_fa6P9H": {
@@ -285,6 +650,10 @@
   },
   "order": [
     "hero_jVaWmY",
-    "product_list_fa6P9H"
+    "section_benefits_ag1",
+    "section_highlight_ag1",
+    "section_testimonials_ag1",
+    "product_list_fa6P9H",
+    "section_newsletter_ag1"
   ]
 }
