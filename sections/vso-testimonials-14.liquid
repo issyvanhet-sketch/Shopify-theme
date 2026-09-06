@@ -1,0 +1,2462 @@
+{% comment %}
+WARNING: UNAUTHORIZED MODIFICATION PROHIBITED
+This code is proprietary property of Versio Studio. Any unauthorized tampering, 
+alteration, or distribution of this file is strictly forbidden and will be prosecuted to the maximum extent permitted by law.
+All modifications are logged.
+
+If you require assistance or have questions regarding this code, please contact support@versio.studio.
+{% endcomment %}
+
+{%- liquid
+  assign text_alignment = 'center'
+  assign blocks_alignment = 'left'
+  assign desktop_blocks_gap = section.settings.desktop_blocks_gap
+	  assign mobile_blocks_gap = section.settings.mobile_blocks_gap
+	  assign block_padding = section.settings.block_padding
+	  assign block_elements_gap = section.settings.block_elements_gap
+
+	  assign heading_block = section.blocks | where: 'type', 'heading' | first
+	  assign review_summary_block = section.blocks | where: 'type', 'review_summary' | first
+	  assign testimonial_blocks = section.blocks | where: 'type', 'star_card'
+	  assign block_count = testimonial_blocks.size
+	-%}
+
+{%- style -%}
+  .vd-l { display: none !important; }
+  {% if heading_block != blank and heading_block.settings.heading_custom_font and heading_block.settings.heading_font != blank %}
+    {{ heading_block.settings.heading_font | font_face: font_display: 'swap' }}
+  {% endif %}
+
+  {% if review_summary_block != blank and review_summary_block.settings.custom_font and review_summary_block.settings.font != blank %}
+    {{ review_summary_block.settings.font | font_face: font_display: 'swap' }}
+  {% endif %}
+
+  {{ section.settings.block_title_font | font_face: font_display: 'swap' }}
+  {{ section.settings.block_description_font | font_face: font_display: 'swap' }}
+
+  {% if heading_block != blank and heading_block.settings.heading_custom_font %}
+    #Star-Cards-{{ section.id }} .vso-star-cards__title {
+      font-family: {{ heading_block.settings.heading_font.family }}, {{ heading_block.settings.heading_font.fallback_families }};
+      font-style: {{ heading_block.settings.heading_font.style }};
+    }
+  {% endif %}
+
+  {% if review_summary_block != blank and review_summary_block.settings.custom_font %}
+    #Star-Cards-{{ section.id }} .vso-star-cards__review-summary {
+      font-family: {{ review_summary_block.settings.font.family }}, {{ review_summary_block.settings.font.fallback_families }};
+      font-style: {{ review_summary_block.settings.font.style }};
+    }
+  {% endif %}
+
+  {% if section.settings.custom_block_title_font %}
+    #Star-Cards-{{ section.id }} .vso-star-cards__block-title {
+      font-family: {{ section.settings.block_title_font.family }}, {{ section.settings.block_title_font.fallback_families }};
+      font-style: {{ section.settings.block_title_font.style }};
+    }
+  {% endif %}
+
+  {% if section.settings.custom_block_description_font %}
+    #Star-Cards-{{ section.id }} .vso-star-cards__block-description {
+      font-family: {{ section.settings.block_description_font.family }}, {{ section.settings.block_description_font.fallback_families }};
+      font-style: {{ section.settings.block_description_font.style }};
+    }
+  {% endif %}
+
+  .vso-star-cards {
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .vso-star-cards__title {
+    margin: 0;
+    text-align: center;
+  }
+
+  {% if heading_block != blank %}
+    #Star-Cards-{{ section.id }} .vso-star-cards__title:not(.vso-star-cards__title--custom) {
+      color: {{ heading_block.settings.heading_color | default: '#000000' }};
+    }
+  {% endif %}
+
+  .vso-star-cards__title--custom {
+    line-height: {{ heading_block.settings.heading_line_height | default: 130 }}%;
+    font-size: {{ heading_block.settings.heading_size_desktop | default: 40 }}px;
+    color: {{ heading_block.settings.heading_color | default: '#000000' }};
+    font-weight: {{ heading_block.settings.heading_font_weight | default: 700 }};
+  }
+
+  .vso-star-cards__header {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+  }
+
+  {% if review_summary_block != blank %}
+    .vso-star-cards__review-summary-wrap {
+      width: 100%;
+      display: flex;
+      justify-content: center;
+    }
+
+  .vso-star-cards__review-summary-wrap {
+    margin-top: var(--vso-block-spacing-top-mobile, 0px);
+    margin-bottom: var(--vso-block-spacing-bottom-mobile, 0px);
+  }
+
+  @media screen and (min-width: 750px) {
+    .vso-star-cards__review-summary-wrap {
+      margin-top: var(--vso-block-spacing-top-desktop, 0px);
+      margin-bottom: var(--vso-block-spacing-bottom-desktop, 0px);
+    }
+  }
+
+    .vso-star-cards__review-summary {
+      display: inline-flex;
+      align-items: center;
+      gap: {{ review_summary_block.settings.gap | default: 10 }}px;
+      padding: {{ review_summary_block.settings.padding_y | default: 8 }}px {{ review_summary_block.settings.padding_x | default: 14 }}px;
+      border-radius: {{ review_summary_block.settings.radius | default: 999 }}px;
+      background-color: {{ review_summary_block.settings.bg_color | default: '#111111' }};
+      color: {{ review_summary_block.settings.text_color | default: '#FFFFFF' }};
+      line-height: {{ review_summary_block.settings.line_height | default: 140 }}%;
+      font-size: {{ review_summary_block.settings.size_desktop | default: 14 }}px;
+      {% if section.settings.enable_advanced_settings %}
+        font-weight: {{ review_summary_block.settings.font_weight | default: 500 }};
+      {% endif %}
+    }
+
+    .vso-star-cards__review-summary-stars {
+      display: inline-flex;
+      align-items: center;
+      gap: 2px;
+      color: {{ review_summary_block.settings.stars_color | default: '#FFFFFF' }};
+    }
+
+    .vso-star-cards__review-summary-star {
+      width: {{ review_summary_block.settings.stars_size | default: 16 }}px;
+      height: {{ review_summary_block.settings.stars_size | default: 16 }}px;
+      display: block;
+      flex-shrink: 0;
+    }
+
+    .vso-star-cards__review-summary-text {
+      color: inherit;
+    }
+  {% endif %}
+
+  .vso-star-cards__header {
+    margin-top: var(--vso-block-spacing-top-mobile, 0px);
+    margin-bottom: var(--vso-block-spacing-bottom-mobile, 0px);
+  }
+
+  @media screen and (min-width: 750px) {
+    .vso-star-cards__header {
+      margin-top: var(--vso-block-spacing-top-desktop, 0px);
+      margin-bottom: var(--vso-block-spacing-bottom-desktop, 0px);
+    }
+  }
+
+  .vso-star-cards__swiper {
+    width: 100%;
+    padding: 30px 0px !important;
+    overflow: visible;
+    position: relative;
+  }
+
+
+  .vso-node { display: none; }
+  .vso-node--v2 { display: block; }
+
+  @media screen and (min-width: 750px) {
+    .vso-star-cards__swiper {
+      mask: linear-gradient(to right, transparent 0%, black 10%, black 90%, transparent 100%);
+      -webkit-mask: linear-gradient(to right, transparent 0%, black 10%, black 90%, transparent 100%);
+    }
+  }
+  @media screen and (max-width: 749px) {
+    .vso-star-cards__swiper {
+      mask: linear-gradient(to right, transparent 0%, black 10%, black 90%, transparent 100%);
+      -webkit-mask: linear-gradient(to right, transparent 0%, black 10%, black 90%, transparent 100%);
+    }
+  }
+
+  {% if section.settings.enable_equal_height %}
+    .vso-star-cards__swiper {
+      height: auto;
+    }
+
+    .vso-star-cards__swiper .swiper-wrapper {
+      align-items: stretch;
+      display: flex;
+    }
+
+    .vso-star-cards__swiper .swiper-slide {
+      height: auto;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .vso-star-cards__block {
+      justify-content: flex-start;
+    }
+
+    .vso-star-cards__author-container {
+      margin-top: auto;
+    }
+  {% endif %}
+
+  .vso-star-cards__slide {
+    width: auto;
+    max-width: {{ section.settings.desktop_card_width }}px;
+    min-width: 280px;
+    padding-bottom: 12px;
+    box-sizing: border-box;
+    {% if section.settings.enable_equal_height %}
+      display: flex;
+      height: 100%;
+    {% endif %}
+  }
+
+  .vso-star-cards__block {
+    --vso-star-card-padding: {{ block_padding }}px;
+    display: flex;
+    flex-direction: column;
+    align-items: {{ blocks_alignment }};
+    padding: var(--vso-star-card-padding);
+    background-color: {{ section.settings.block_background_color }};
+    border-radius: {{ section.settings.block_border_radius }}px;
+    border: {{ section.settings.block_border_width }}px solid {{ section.settings.block_border_color }};
+    gap: {{ block_elements_gap }}px;
+    text-align: {{ blocks_alignment }};
+    transition: transform 0.3s ease;
+    {% if section.settings.enable_card_shadow %}
+      box-shadow: {{ section.settings.card_shadow_color | color_modify: 'alpha', 0.24 }} 0px 3px 8px;
+    {% endif %}
+    {% if section.settings.enable_equal_height %}
+      width: 100%;
+      height: 100%;
+    {% endif %}
+  }
+
+  @media screen and (min-width: 750px) {
+    .swiper-slide-active .vso-star-cards__block,
+    .swiper-slide-duplicate-active .vso-star-cards__block {
+      transform: scale(1.1);
+    }
+  }
+
+  .vso-star-cards__stars {
+    display: flex;
+    gap: 1px;
+    margin-bottom: 0px;
+  }
+
+  .vso-star-cards__star {
+    width: {{ section.settings.star_size }}px;
+    height: {{ section.settings.star_size }}px;
+  }
+
+  .vso-star-cards__star svg {
+    width: 100%;
+    height: 100%;
+  }
+
+  .vso-star-cards__star svg path { fill: {{ section.settings.star_color }}; }
+
+  .vso-star-cards__block-description {
+    width: 100%;
+    margin: 0;
+    position: relative;
+    padding-left: 0;
+  }
+
+  .vso-star-cards__block-title {
+    width: 100%;
+    margin: 0;
+    font-weight: 400;
+  }
+
+  .vso-star-cards__block-title--custom {
+    line-height: {{ section.settings.block_title_line_height }}%;
+    font-size: {{ section.settings.block_title_size_desktop }}px;
+    color: {{ section.settings.block_title_color }};
+  }
+
+  .vso-star-cards__block-description--custom {
+    line-height: {{ section.settings.block_description_line_height }}%;
+    font-size: {{ section.settings.block_description_size_desktop }}px;
+    color: {{ section.settings.block_description_color }};
+    font-weight: {{ section.settings.block_description_font_weight }};
+  }
+
+  .vso-star-cards__block-description::before { display: none; }
+
+  .vso-star-cards__media {
+    width: 100%;
+    max-height: {{ section.settings.card_image_max_height_mobile }}px;
+    border-radius: {{ section.settings.block_border_radius }}px;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+  }
+
+  .vso-star-cards__media-image {
+    width: 100%;
+    height: auto;
+    display: block;
+  }
+
+  @media screen and (min-width: 750px) {
+    .vso-star-cards__media {
+      max-height: {{ section.settings.card_image_max_height_desktop }}px;
+    }
+  }
+
+  .vso-star-cards__block--full-image .vso-star-cards__media {
+    margin-top: calc(var(--vso-star-card-padding) * -1);
+    margin-left: calc(var(--vso-star-card-padding) * -1);
+    margin-right: calc(var(--vso-star-card-padding) * -1);
+    width: calc(100% + (var(--vso-star-card-padding) * 2));
+    border-top-left-radius: max(0px, calc({{ section.settings.block_border_radius }}px - {{ section.settings.block_border_width }}px));
+    border-top-right-radius: max(0px, calc({{ section.settings.block_border_radius }}px - {{ section.settings.block_border_width }}px));
+    border-bottom-left-radius: 0;
+    border-bottom-right-radius: 0;
+  }
+
+  .vso-star-cards__block--full-image .vso-star-cards__media-image {
+    border-radius: 0;
+  }
+
+  .vso-star-cards__verified-row {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    gap: 4px;
+  }
+
+  .vso-star-cards__verified-icon {
+    width: 18px;
+    height: 18px;
+    flex-shrink: 0;
+    color: {{ section.settings.block_verified_color }};
+  }
+
+  .vso-star-cards__footer {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-top: auto;
+  }
+
+  .vso-star-cards__footer .vso-star-cards__author-container {
+    margin-top: 0;
+  }
+
+  .vso-star-cards__author-container {
+    width: auto;
+    display: flex;
+    align-items: center;
+    gap: {{ section.settings.author_container_gap }}px;
+    flex: 1;
+    min-width: 0;
+  }
+
+  .vso-star-cards__author-circle {
+    width: {{ section.settings.author_circle_size }}px;
+    height: {{ section.settings.author_circle_size }}px;
+    border-radius: 50%;
+    background-color: {{ section.settings.author_circle_background_color }};
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 22px;
+    font-weight: 600;
+    color: {{ section.settings.author_circle_text_color }};
+    flex-shrink: 0;
+    overflow: hidden;
+  }
+
+  .vso-star-cards__author-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+
+  .vso-star-cards__author-info {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    flex: 1;
+    min-width: 0;
+  }
+
+  .vso-star-cards__block-author {
+    width: auto;
+    margin: 0;
+    line-height: {{ section.settings.block_author_line_height }}%;
+    font-size: {{ section.settings.block_author_size_desktop }}px;
+    color: {{ section.settings.block_author_color }};
+    font-weight: {{ section.settings.block_author_font_weight }};
+  }
+
+  .vso-star-cards__block-verified {
+    width: auto;
+    margin: 0;
+    line-height: {{ section.settings.block_verified_line_height }}%;
+    font-size: {{ section.settings.block_verified_size_desktop }}px;
+    color: {{ section.settings.block_verified_color }};
+    font-weight: {{ section.settings.block_verified_font_weight }};
+  }
+
+  .vso-star-cards__author-meta {
+    margin: 0;
+    line-height: {{ section.settings.block_verified_line_height }}%;
+    font-size: {{ section.settings.block_verified_size_desktop }}px;
+    color: {{ section.settings.block_verified_color }};
+    font-weight: {{ section.settings.block_verified_font_weight }};
+  }
+
+	  .vso-star-cards__stars {
+	    margin-left: auto;
+	  }
+
+	  @media screen and (max-width: 749px) {
+	    .vso-star-cards__swiper {
+	      padding: 10px 0px !important;
+	    }
+
+	    .vso-star-cards__review-summary-wrap {
+	      padding-left: 15px;
+	      padding-right: 15px;
+	      box-sizing: border-box;
+	    }
+
+	    .vso-star-cards__slide {
+	      min-width: 260px;
+	      max-width: 300px;
+        padding-bottom: 10px;
+	    }
+
+	    .vso-star-cards__title--custom {
+	      font-size: {{ heading_block.settings.heading_size_mobile | default: 32 }}px;
+	    }
+
+	    {% if review_summary_block != blank %}
+	      .vso-star-cards__review-summary {
+	        font-size: {{ review_summary_block.settings.size_mobile | default: 13 }}px;
+	      }
+	    {% endif %}
+
+	    .vso-star-cards__block-description--custom {
+	      font-size: {{ section.settings.block_description_size_mobile }}px;
+	    }
+
+	    .vso-star-cards__block-title--custom {
+	      font-size: {{ section.settings.block_title_size_mobile }}px;
+	    }
+
+	    .vso-star-cards__block-author {
+	      font-size: {{ section.settings.block_author_size_mobile }}px;
+	    }
+
+	    .vso-star-cards__block-verified {
+	      font-size: {{ section.settings.block_verified_size_mobile }}px;
+	    }
+
+	    .vso-star-cards__author-meta {
+	      font-size: {{ section.settings.block_verified_size_mobile }}px;
+	    }
+
+	    .vso-star-cards__author-circle {
+	      width: {{ section.settings.author_circle_size_mobile }}px;
+	      height: {{ section.settings.author_circle_size_mobile }}px;
+	      font-size: 20px;
+	    }
+
+	    /* Rating summary removed (will be replaced). */
+	  }
+
+  /* ── Section root ── */
+  #shopify-section-{{ section.id }} {
+    --section-border-radius: 0px;
+    margin-top: {{ section.settings.margin_top_mobile }}px;
+    margin-bottom: {{ section.settings.margin_bottom_mobile }}px;
+    border-radius: var(--section-border-radius);
+    padding: 0;
+    width: 100%;
+    max-width: 100%;
+  }
+
+  @media screen and (max-width: 749px) {
+    #shopify-section-{{ section.id }} {
+      {% if section.settings.background_style == 'gradient' %}
+        background: {{ section.settings.background_gradient | default: 'linear-gradient(180deg, #F7F7F7 0%, #FFFFFF 100%)' }};
+      {% else %}
+        background-color: {{ section.settings.background_color }};
+      {% endif %}
+    }
+  }
+
+  @media screen and (min-width: 750px) {
+    #shopify-section-{{ section.id }} {
+      --section-border-radius: {% if section.settings.full_width_desktop %}0{% else %}{{ section.settings.section_border_radius | default: 16 }}{% endif %}px;
+      margin-top: {{ section.settings.margin_top_desktop }}px;
+      margin-bottom: {{ section.settings.margin_bottom_desktop }}px;
+      {% if section.settings.full_width_desktop %}
+        {% if section.settings.background_style == 'gradient' %}
+          background: {{ section.settings.background_gradient | default: 'linear-gradient(180deg, #F7F7F7 0%, #FFFFFF 100%)' }};
+        {% else %}
+          background-color: {{ section.settings.background_color }};
+        {% endif %}
+      {% else %}
+        background: transparent;
+      {% endif %}
+    }
+  }
+
+  /* ── Container ── */
+  #shopify-section-{{ section.id }} .vso-star-cards {
+    margin-left: auto;
+    margin-right: auto;
+    width: 100%;
+    max-width: var(--page-content-width, var(--page-width, 1440px));
+    padding-top: {{ section.settings.padding_top_mobile }}px;
+    padding-bottom: {{ section.settings.padding_bottom_mobile }}px;
+    border-radius: var(--section-border-radius);
+  }
+
+  @media screen and (max-width: 749px) {
+    #shopify-section-{{ section.id }} .vso-star-cards {
+      background: transparent;
+    }
+  }
+
+  @media screen and (min-width: 750px) {
+    #shopify-section-{{ section.id }} .vso-star-cards {
+      padding-top: {{ section.settings.padding_top_desktop }}px;
+      padding-bottom: {{ section.settings.padding_bottom_desktop }}px;
+      {% if section.settings.full_width_desktop %}
+        max-width: 100%;
+        background: transparent;
+      {% else %}
+        {% if section.settings.background_style == 'gradient' %}
+          background: {{ section.settings.background_gradient | default: 'linear-gradient(180deg, #F7F7F7 0%, #FFFFFF 100%)' }};
+        {% else %}
+          background-color: {{ section.settings.background_color }};
+        {% endif %}
+      {% endif %}
+    }
+  }
+
+  {% unless section.settings.full_width_desktop %}
+    @media screen and (min-width: 750px) {
+      #shopify-section-{{ section.id }} .vso-star-cards {
+        width: calc(100% - (2 * var(--page-margin, 40px)));
+      }
+    }
+  {% endunless %}
+
+  .vso-star-cards__navigation {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    z-index: 5;
+  }
+  @media screen and (min-width: 750px) {
+    {% unless section.settings.show_navigation_desktop %}
+      .vso-star-cards__navigation {
+        display: none;
+      }
+    {% endunless %}
+  }
+
+  @media screen and (max-width: 749px) {
+    {% unless section.settings.show_navigation_mobile %}
+      .vso-star-cards__navigation {
+        display: none;
+      }
+    {% endunless %}
+  }
+
+  .vso-star-cards__nav-prev,
+  .vso-star-cards__nav-next {
+    position: absolute;
+    width: {{ section.settings.nav_arrow_size }}px;
+    height: {{ section.settings.nav_arrow_size }}px;
+    background-color: {{ section.settings.nav_arrow_bg_color }};
+    border: {{ section.settings.nav_arrow_border_width }}px solid {{ section.settings.nav_arrow_border_color }};
+    border-radius: 50%;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    pointer-events: auto;
+    {% if section.settings.nav_arrow_shadow_enable %}
+      box-shadow: {{ section.settings.nav_arrow_shadow_color | color_modify: 'alpha', 0.24 }} 0px 3px 8px;
+    {% endif %}
+  }
+
+  .vso-star-cards__nav-prev svg,
+  .vso-star-cards__nav-next svg {
+    width: {{ section.settings.nav_arrow_size | times: 0.4 | round: 0 }}px;
+    height: {{ section.settings.nav_arrow_size | times: 0.4 | round: 0 }}px;
+    color: {{ section.settings.nav_arrow_icon_color }};
+    transition: color 0.3s ease;
+  }
+
+  .vso-star-cards__nav-prev:hover,
+  .vso-star-cards__nav-next:hover {
+    border-color: {{ section.settings.nav_arrow_border_color | color_darken: 10 }};
+    {% if section.settings.nav_arrow_shadow_enable %}
+      box-shadow: {{ section.settings.nav_arrow_shadow_color | color_modify: 'alpha', 0.32 }} 0px 4px 12px;
+    {% endif %}
+  }
+
+  .vso-star-cards__nav-prev:hover svg,
+  .vso-star-cards__nav-next:hover svg {
+    color: {{ section.settings.nav_arrow_icon_color | color_darken: 20 }};
+  }
+
+  .vso-star-cards__nav-prev.swiper-button-disabled,
+  .vso-star-cards__nav-next.swiper-button-disabled {
+    opacity: 0.4;
+    cursor: not-allowed;
+  }
+{%- endstyle -%}
+
+
+
+{%- if request.design_mode -%}
+  <div class="vso-require-script">
+    <div class="vso-warning">
+      <div class="vso-warning__left">
+        <div class="vso-warning__badge">
+          <svg width="14" height="14" viewBox="0 0 20 20" fill="none">
+            <path d="M10 6.75a.75.75 0 0 1 .75.75v3.5a.75.75 0 1 1-1.5 0v-3.5a.75.75 0 0 1 .75-.75Z" fill="currentColor"/>
+            <path d="M11 13.5a1 1 0 1 1-2 0 1 1 0 0 1 2 0Z" fill="currentColor"/>
+            <path fill-rule="evenodd" d="M10 3.5c-1.045 0-1.784.702-2.152 1.447a449.26 449.26 0 0 1-2.005 3.847l-.028.052a403.426 403.426 0 0 0-2.008 3.856c-.372.752-.478 1.75.093 2.614.57.863 1.542 1.184 2.464 1.184h7.272c.922 0 1.895-.32 2.464-1.184.57-.864.465-1.862.093-2.614-.21-.424-1.113-2.147-2.004-3.847l-.032-.061a429.497 429.497 0 0 1-2.005-3.847c-.368-.745-1.107-1.447-2.152-1.447Zm-.808 2.112c.404-.816 1.212-.816 1.616 0 .202.409 1.112 2.145 2.022 3.88a418.904 418.904 0 0 1 2.018 3.875c.404.817 0 1.633-1.212 1.633h-7.272c-1.212 0-1.617-.816-1.212-1.633.202-.408 1.113-2.147 2.023-3.883a421.932 421.932 0 0 0 2.017-3.872Z" fill="currentColor"/>
+          </svg>
+          <span>Action Required</span>
+        </div>
+        <h2 class="vso-warning__title">App Embeds Are Disabled</h2>
+        <p class="vso-warning__subtitle">Enable the Versio Sections app embed in your theme editor to use this section.</p>
+        <div class="vso-warning__steps">
+          <div class="vso-warning__step">
+            <span class="vso-warning__step-number">1</span>
+            <span>Click the <strong>App embeds</strong> icon (puzzle piece) at the top of the left sidebar</span>
+          </div>
+          <div class="vso-warning__step">
+            <span class="vso-warning__step-number">2</span>
+            <span>Toggle on <strong>Versio Sections</strong></span>
+          </div>
+          <div class="vso-warning__step">
+            <span class="vso-warning__step-number">3</span>
+            <span>Click <strong>Save</strong> in the top right</span>
+          </div>
+        </div>
+      </div>
+      <div class="vso-warning__image">
+        <img src="https://cdn.shopify.com/s/files/1/0970/2880/0861/files/1.png?v=1773296966" alt="How to enable app embeds" loading="lazy" width="640" height="880" />
+      </div>
+    </div>
+  </div>
+  <style>
+    .vso-hidden {
+      display: none !important;
+      height: 0 !important;
+      overflow: hidden !important;
+      visibility: hidden !important;
+      width: 0 !important;
+      opacity: 0 !important;
+    }
+    .vso-require-script .vso-warning {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      max-width: 900px;
+      margin: 24px auto;
+      background: #ffffff;
+      border: 1px solid #e2e2e2;
+      border-radius: 16px;
+      padding: 32px;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.04), 0 4px 12px rgba(0,0,0,0.03);
+      display: flex;
+      gap: 32px;
+      align-items: center;
+    }
+    .vso-warning__left {
+      flex: 1;
+      min-width: 0;
+    }
+    .vso-warning__badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: #fef2f2;
+      color: #dc2626;
+      font-size: 11px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      padding: 5px 12px;
+      border-radius: 100px;
+      margin-bottom: 14px;
+      border: 1px solid #fecaca;
+    }
+    .vso-warning__badge svg {
+      flex-shrink: 0;
+    }
+    .vso-warning__title {
+      font-size: 22px;
+      font-weight: 700;
+      color: #1a1a1a;
+      margin: 0 0 6px 0;
+      line-height: 1.3;
+    }
+    .vso-warning__subtitle {
+      font-size: 13px;
+      color: #777;
+      margin: 0 0 20px 0;
+      line-height: 1.5;
+      max-width: 340px;
+    }
+    .vso-warning__steps {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+    .vso-warning__step {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-size: 14px;
+      color: #444;
+      line-height: 1.4;
+    }
+    .vso-warning__step strong {
+      color: #1a1a1a;
+    }
+    .vso-warning__step-number {
+      flex-shrink: 0;
+      width: 26px;
+      height: 26px;
+      background: #f3f3f3;
+      color: #555;
+      font-size: 12px;
+      font-weight: 700;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border: 1px solid #e0e0e0;
+    }
+    .vso-warning__image {
+      flex: 1;
+      min-width: 0;
+    }
+    .vso-warning__image img {
+      display: block;
+      width: 100%;
+      height: auto;
+      object-fit: contain;
+      border-radius: 10px;
+    }
+    @media screen and (max-width: 749px) {
+      .vso-require-script .vso-warning {
+        margin: 16px;
+        padding: 24px 20px;
+        flex-direction: column;
+        gap: 24px;
+      }
+      .vso-warning__title {
+        font-size: 18px;
+      }
+      .vso-warning__subtitle {
+        max-width: none;
+      }
+      .vso-warning__image {
+        flex: none;
+        max-width: 100%;
+      }
+    }
+  </style>
+{%- endif -%}
+
+
+  <div class="vso-node vd-l vso-hidden">
+  <div class="vso-star-cards" id="Star-Cards-{{ section.id }}">
+        {% for block in section.blocks %}
+          {% case block.type %}
+            {% when 'review_summary' %}
+              {% if block.settings.show_block %}
+                <div
+                  class="vso-star-cards__review-summary-wrap"
+                  style="
+                    --vso-block-spacing-top-desktop: {{ block.settings.spacing_top_desktop | default: 0 }}px;
+                    --vso-block-spacing-bottom-desktop: {{ block.settings.spacing_bottom_desktop | default: 14 }}px;
+                    --vso-block-spacing-top-mobile: {{ block.settings.spacing_top_mobile | default: 0 }}px;
+                    --vso-block-spacing-bottom-mobile: {{ block.settings.spacing_bottom_mobile | default: 14 }}px;
+                  "
+                  {{ block.shopify_attributes }}
+                >
+	                  <div class="vso-star-cards__review-summary">
+	                    {% if block.settings.stars_count > 0 %}
+	                      <div class="vso-star-cards__review-summary-stars" aria-label="{{ block.settings.stars_count }} out of 5 stars" role="img">
+	                        {% for i in (1..5) %}
+	                          {% assign is_filled = false %}
+	                          {% if i <= block.settings.stars_count %}
+	                            {% assign is_filled = true %}
+	                          {% endif %}
+	                          <svg
+	                            class="vso-star-cards__review-summary-star"
+	                            viewBox="0 0 24 24"
+	                            fill="currentColor"
+	                            aria-hidden="true"
+	                            focusable="false"
+	                            xmlns="http://www.w3.org/2000/svg"
+	                            style="
+	                              color: {% if is_filled %}{{ block.settings.stars_color }}{% else %}{{ block.settings.empty_stars_color | default: '#BDBDBD' }}{% endif %};
+	                            "
+	                          >
+	                            <path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/>
+	                          </svg>
+	                        {% endfor %}
+	                      </div>
+	                    {% endif %}
+                    {% if block.settings.text != blank %}
+                      <div class="vso-star-cards__review-summary-text">
+                        {{ block.settings.text }}
+                      </div>
+                    {% endif %}
+                  </div>
+                </div>
+              {% endif %}
+            {% when 'heading' %}
+              {% if block.settings.heading != blank %}
+                <div
+                  class="vso-star-cards__header"
+                  style="
+                    --vso-block-spacing-top-desktop: {{ block.settings.spacing_top_desktop | default: 0 }}px;
+                    --vso-block-spacing-bottom-desktop: {{ block.settings.spacing_bottom_desktop | default: 0 }}px;
+                    --vso-block-spacing-top-mobile: {{ block.settings.spacing_top_mobile | default: 0 }}px;
+                    --vso-block-spacing-bottom-mobile: {{ block.settings.spacing_bottom_mobile | default: 0 }}px;
+                  "
+                  {{ block.shopify_attributes }}
+                >
+                  {% if block.settings.heading_custom_font %}
+                    <h2 class="vso-star-cards__title vso-star-cards__title--custom">
+                      {{ block.settings.heading }}
+                    </h2>
+                  {% else %}
+                    <{{ block.settings.heading_as | default: 'h2' }} class="vso-star-cards__title">
+                      {{ block.settings.heading }}
+                    </{{ block.settings.heading_as | default: 'h2' }}>
+                  {% endif %}
+                </div>
+              {% endif %}
+          {% endcase %}
+        {% endfor %}
+
+        {%- comment -%}
+          Rating summary block removed (will be replaced).
+        {%- endcomment -%}
+
+        {% if testimonial_blocks.size > 0 %}
+          <div class="swiper vso-star-cards__swiper">
+            <div class="swiper-wrapper">
+              {% for block in testimonial_blocks %}
+                <div class="swiper-slide vso-star-cards__slide">
+                  <div class="vso-star-cards__block{% if section.settings.enable_full_width_card_image and block.settings.card_image != blank %} vso-star-cards__block--full-image{% endif %}" {{ block.shopify_attributes }}>
+                    {% if block.settings.card_image != blank %}
+                      <div class="vso-star-cards__media">
+                        {{ block.settings.card_image | image_url: width: 1000 | image_tag: class: 'vso-star-cards__media-image', loading: 'lazy', widths: '320, 480, 640, 800, 1000', alt: block.settings.author | strip | default: 'Testimonial image' }}
+                      </div>
+                    {% endif %}
+
+                    {% if block.settings.title != blank %}
+                      {% if section.settings.custom_block_title_font %}
+                        <p class="vso-star-cards__block-title vso-star-cards__block-title--custom">
+                          {{ block.settings.title }}
+                        </p>
+                      {% else %}
+                        <{{ section.settings.block_title_as | default: 'h3' }} class="vso-star-cards__block-title">
+                          {{ block.settings.title }}
+                        </{{ section.settings.block_title_as | default: 'h3' }}>
+                      {% endif %}
+                    {% endif %}
+
+                    {% if block.settings.description != blank %}
+                      {% if section.settings.custom_block_description_font %}
+                        <p class="vso-star-cards__block-description vso-star-cards__block-description--custom">
+                          {{ block.settings.description }}
+                        </p>
+                      {% else %}
+                        <{{ section.settings.block_description_as | default: 'p' }} class="vso-star-cards__block-description">
+                          {{ block.settings.description }}
+                        </{{ section.settings.block_description_as | default: 'p' }}>
+                      {% endif %}
+                    {% endif %}
+
+                    {% if block.settings.verified_text != blank %}
+                      <div class="vso-star-cards__verified-row">
+                        <svg class="vso-star-cards__verified-icon" viewBox="0 0 24 24" fill="none" aria-hidden="true" focusable="false" xmlns="http://www.w3.org/2000/svg">
+                          <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
+                          <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g>
+                          <g id="SVGRepo_iconCarrier">
+                            <path d="M11.5283 1.5999C11.7686 1.29437 12.2314 1.29437 12.4717 1.5999L14.2805 3.90051C14.4309 4.09173 14.6818 4.17325 14.9158 4.10693L17.7314 3.3089C18.1054 3.20292 18.4799 3.475 18.4946 3.86338L18.6057 6.78783C18.615 7.03089 18.77 7.24433 18.9984 7.32823L21.7453 8.33761C22.1101 8.47166 22.2532 8.91189 22.0368 9.23478L20.4078 11.666C20.2724 11.8681 20.2724 12.1319 20.4078 12.334L22.0368 14.7652C22.2532 15.0881 22.1101 15.5283 21.7453 15.6624L18.9984 16.6718C18.77 16.7557 18.615 16.9691 18.6057 17.2122L18.4946 20.1366C18.4799 20.525 18.1054 20.7971 17.7314 20.6911L14.9158 19.8931C14.6818 19.8267 14.4309 19.9083 14.2805 20.0995L12.4717 22.4001C12.2314 22.7056 11.7686 22.7056 11.5283 22.4001L9.71949 20.0995C9.56915 19.9083 9.31823 19.8267 9.08421 19.8931L6.26856 20.6911C5.89463 20.7971 5.52014 20.525 5.50539 20.1366L5.39427 17.2122C5.38503 16.9691 5.22996 16.7557 5.00164 16.6718L2.25467 15.6624C1.88986 15.5283 1.74682 15.0881 1.96317 14.7652L3.59221 12.334C3.72761 12.1319 3.72761 11.8681 3.59221 11.666L1.96317 9.23478C1.74682 8.91189 1.88986 8.47166 2.25467 8.33761L5.00165 7.32823C5.22996 7.24433 5.38503 7.03089 5.39427 6.78783L5.50539 3.86338C5.52014 3.475 5.89463 3.20292 6.26857 3.3089L9.08421 4.10693C9.31823 4.17325 9.56915 4.09173 9.71949 3.90051L11.5283 1.5999Z" stroke="currentColor" stroke-width="1.5"></path>
+                            <path d="M9 12L11 14L15 10" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
+                          </g>
+                        </svg>
+                        <p class="vso-star-cards__block-verified">{{ block.settings.verified_text }}</p>
+                      </div>
+                    {% endif %}
+
+                    <div class="vso-star-cards__footer">
+                      {% if block.settings.author != blank or block.settings.author_image != blank or block.settings.author_subtitle != blank %}
+                        {%- liquid
+                          assign author_name = block.settings.author | strip
+                          assign first_initial = author_name | slice: 0, 1 | upcase
+                        -%}
+                        <div class="vso-star-cards__author-container">
+                          {% if block.settings.author_image != blank or author_name != blank %}
+                            <div class="vso-star-cards__author-circle">
+                              {% if block.settings.author_image != blank %}
+                                {{ block.settings.author_image | image_url: width: 200 | image_tag: class: 'vso-star-cards__author-image', loading: 'lazy', widths: '80, 120, 160, 200', alt: author_name }}
+                              {% else %}
+                                {{ first_initial }}
+                              {% endif %}
+                            </div>
+                          {% endif %}
+                          <div class="vso-star-cards__author-info">
+                            {% if author_name != blank %}
+                              <p class="vso-star-cards__block-author">{{ author_name }}</p>
+                            {% endif %}
+                            {% if block.settings.author_subtitle != blank %}
+                              <p class="vso-star-cards__author-meta">{{ block.settings.author_subtitle }}</p>
+                            {% endif %}
+                          </div>
+                        </div>
+                      {% endif %}
+
+                      <div class="vso-star-cards__stars" aria-label="5 out of 5 stars" role="img">
+                        {% for i in (1..5) %}
+                          <div class="vso-star-cards__star">
+                            <svg fill="{{ section.settings.star_color }}" viewBox="0 0 940.688 940.688" aria-hidden="true" focusable="false" xmlns="http://www.w3.org/2000/svg" xml:space="preserve">
+                              <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
+                              <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g>
+                              <g id="SVGRepo_iconCarrier">
+                                <g>
+                                  <path d="M885.344,319.071l-258-3.8l-102.7-264.399c-19.8-48.801-88.899-48.801-108.6,0l-102.7,264.399l-258,3.8 c-53.4,3.101-75.1,70.2-33.7,103.9l209.2,181.4l-71.3,247.7c-14,50.899,41.1,92.899,86.5,65.899l224.3-122.7l224.3,122.601 c45.4,27,100.5-15,86.5-65.9l-71.3-247.7l209.2-181.399C960.443,389.172,938.744,322.071,885.344,319.071z"></path>
+                                </g>
+                              </g>
+                            </svg>
+                          </div>
+                        {% endfor %}
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              {% endfor %}
+              
+              {% for block in testimonial_blocks %}
+                <div class="swiper-slide vso-star-cards__slide">
+                  <div class="vso-star-cards__block{% if section.settings.enable_full_width_card_image and block.settings.card_image != blank %} vso-star-cards__block--full-image{% endif %}">
+                    {% if block.settings.card_image != blank %}
+                      <div class="vso-star-cards__media">
+                        {{ block.settings.card_image | image_url: width: 1000 | image_tag: class: 'vso-star-cards__media-image', loading: 'lazy', widths: '320, 480, 640, 800, 1000', alt: block.settings.author | strip | default: 'Testimonial image' }}
+                      </div>
+                    {% endif %}
+
+                    {% if block.settings.title != blank %}
+                      {% if section.settings.custom_block_title_font %}
+                        <p class="vso-star-cards__block-title vso-star-cards__block-title--custom">
+                          {{ block.settings.title }}
+                        </p>
+                      {% else %}
+                        <{{ section.settings.block_title_as | default: 'h3' }} class="vso-star-cards__block-title">
+                          {{ block.settings.title }}
+                        </{{ section.settings.block_title_as | default: 'h3' }}>
+                      {% endif %}
+                    {% endif %}
+
+                    {% if block.settings.description != blank %}
+                      {% if section.settings.custom_block_description_font %}
+                        <p class="vso-star-cards__block-description vso-star-cards__block-description--custom">
+                          {{ block.settings.description }}
+                        </p>
+                      {% else %}
+                        <{{ section.settings.block_description_as | default: 'p' }} class="vso-star-cards__block-description">
+                          {{ block.settings.description }}
+                        </{{ section.settings.block_description_as | default: 'p' }}>
+                      {% endif %}
+                    {% endif %}
+
+                    {% if block.settings.verified_text != blank %}
+                      <div class="vso-star-cards__verified-row">
+                        <svg class="vso-star-cards__verified-icon" viewBox="0 0 24 24" fill="none" aria-hidden="true" focusable="false" xmlns="http://www.w3.org/2000/svg">
+                          <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
+                          <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g>
+                          <g id="SVGRepo_iconCarrier">
+                            <path d="M11.5283 1.5999C11.7686 1.29437 12.2314 1.29437 12.4717 1.5999L14.2805 3.90051C14.4309 4.09173 14.6818 4.17325 14.9158 4.10693L17.7314 3.3089C18.1054 3.20292 18.4799 3.475 18.4946 3.86338L18.6057 6.78783C18.615 7.03089 18.77 7.24433 18.9984 7.32823L21.7453 8.33761C22.1101 8.47166 22.2532 8.91189 22.0368 9.23478L20.4078 11.666C20.2724 11.8681 20.2724 12.1319 20.4078 12.334L22.0368 14.7652C22.2532 15.0881 22.1101 15.5283 21.7453 15.6624L18.9984 16.6718C18.77 16.7557 18.615 16.9691 18.6057 17.2122L18.4946 20.1366C18.4799 20.525 18.1054 20.7971 17.7314 20.6911L14.9158 19.8931C14.6818 19.8267 14.4309 19.9083 14.2805 20.0995L12.4717 22.4001C12.2314 22.7056 11.7686 22.7056 11.5283 22.4001L9.71949 20.0995C9.56915 19.9083 9.31823 19.8267 9.08421 19.8931L6.26856 20.6911C5.89463 20.7971 5.52014 20.525 5.50539 20.1366L5.39427 17.2122C5.38503 16.9691 5.22996 16.7557 5.00164 16.6718L2.25467 15.6624C1.88986 15.5283 1.74682 15.0881 1.96317 14.7652L3.59221 12.334C3.72761 12.1319 3.72761 11.8681 3.59221 11.666L1.96317 9.23478C1.74682 8.91189 1.88986 8.47166 2.25467 8.33761L5.00165 7.32823C5.22996 7.24433 5.38503 7.03089 5.39427 6.78783L5.50539 3.86338C5.52014 3.475 5.89463 3.20292 6.26857 3.3089L9.08421 4.10693C9.31823 4.17325 9.56915 4.09173 9.71949 3.90051L11.5283 1.5999Z" stroke="currentColor" stroke-width="1.5"></path>
+                            <path d="M9 12L11 14L15 10" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
+                          </g>
+                        </svg>
+                        <p class="vso-star-cards__block-verified">{{ block.settings.verified_text }}</p>
+                      </div>
+                    {% endif %}
+
+                    <div class="vso-star-cards__footer">
+                      {% if block.settings.author != blank or block.settings.author_image != blank or block.settings.author_subtitle != blank %}
+                        {%- liquid
+                          assign author_name = block.settings.author | strip
+                          assign first_initial = author_name | slice: 0, 1 | upcase
+                        -%}
+                        <div class="vso-star-cards__author-container">
+                          {% if block.settings.author_image != blank or author_name != blank %}
+                            <div class="vso-star-cards__author-circle">
+                              {% if block.settings.author_image != blank %}
+                                {{ block.settings.author_image | image_url: width: 200 | image_tag: class: 'vso-star-cards__author-image', loading: 'lazy', widths: '80, 120, 160, 200', alt: author_name }}
+                              {% else %}
+                                {{ first_initial }}
+                              {% endif %}
+                            </div>
+                          {% endif %}
+                          <div class="vso-star-cards__author-info">
+                            {% if author_name != blank %}
+                              <p class="vso-star-cards__block-author">{{ author_name }}</p>
+                            {% endif %}
+                            {% if block.settings.author_subtitle != blank %}
+                              <p class="vso-star-cards__author-meta">{{ block.settings.author_subtitle }}</p>
+                            {% endif %}
+                          </div>
+                        </div>
+                      {% endif %}
+
+                      <div class="vso-star-cards__stars" aria-label="5 out of 5 stars" role="img">
+                        {% for i in (1..5) %}
+                          <div class="vso-star-cards__star">
+                            <svg fill="{{ section.settings.star_color }}" viewBox="0 0 940.688 940.688" aria-hidden="true" focusable="false" xmlns="http://www.w3.org/2000/svg" xml:space="preserve">
+                              <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
+                              <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g>
+                              <g id="SVGRepo_iconCarrier">
+                                <g>
+                                  <path d="M885.344,319.071l-258-3.8l-102.7-264.399c-19.8-48.801-88.899-48.801-108.6,0l-102.7,264.399l-258,3.8 c-53.4,3.101-75.1,70.2-33.7,103.9l209.2,181.4l-71.3,247.7c-14,50.899,41.1,92.899,86.5,65.899l224.3-122.7l224.3,122.601 c45.4,27,100.5-15,86.5-65.9l-71.3-247.7l209.2-181.399C960.443,389.172,938.744,322.071,885.344,319.071z"></path>
+                                </g>
+                              </g>
+                            </svg>
+                          </div>
+                        {% endfor %}
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              {% endfor %}
+            </div>
+
+            <div class="vso-star-cards__navigation">
+              <div class="vso-star-cards__nav-prev" aria-label="Previous testimonial" role="button" tabindex="0">
+                <svg viewBox="0 0 24 24" fill="none" aria-hidden="true" focusable="false" xmlns="http://www.w3.org/2000/svg" style="transform: scaleX(-1);">
+                  <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
+                  <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g>
+                  <g id="SVGRepo_iconCarrier">
+                    <path fill-rule="evenodd" clip-rule="evenodd" d="M8.29289 4.29289C8.68342 3.90237 9.31658 3.90237 9.70711 4.29289L16.7071 11.2929C17.0976 11.6834 17.0976 12.3166 16.7071 12.7071L9.70711 19.7071C9.31658 20.0976 8.68342 20.0976 8.29289 19.7071C7.90237 19.3166 7.90237 18.6834 8.29289 18.2929L14.5858 12L8.29289 5.70711C7.90237 5.31658 7.90237 4.68342 8.29289 4.29289Z" fill="currentColor"></path>
+                  </g>
+                </svg>
+              </div>
+              <div class="vso-star-cards__nav-next" aria-label="Next testimonial" role="button" tabindex="0">
+                <svg viewBox="0 0 24 24" fill="none" aria-hidden="true" focusable="false" xmlns="http://www.w3.org/2000/svg">
+                  <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
+                  <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g>
+                  <g id="SVGRepo_iconCarrier">
+                    <path fill-rule="evenodd" clip-rule="evenodd" d="M8.29289 4.29289C8.68342 3.90237 9.31658 3.90237 9.70711 4.29289L16.7071 11.2929C17.0976 11.6834 17.0976 12.3166 16.7071 12.7071L9.70711 19.7071C9.31658 20.0976 8.68342 20.0976 8.29289 19.7071C7.90237 19.3166 7.90237 18.6834 8.29289 18.2929L14.5858 12L8.29289 5.70711C7.90237 5.31658 7.90237 4.68342 8.29289 4.29289Z" fill="currentColor"></path>
+                  </g>
+                </svg>
+              </div>
+            </div>
+          </div>
+        {% endif %}
+  </div>
+  </div>
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
+<script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js" defer></script>
+
+<script defer>
+document.addEventListener('DOMContentLoaded', function() {
+  const starCardsSection = document.getElementById('Star-Cards-{{ section.id }}');
+  if (!starCardsSection) return;
+
+  const swiperEl = starCardsSection.querySelector('.vso-star-cards__swiper');
+  if (!swiperEl) return;
+
+  const prevEl = starCardsSection.querySelector('.vso-star-cards__nav-prev');
+  const nextEl = starCardsSection.querySelector('.vso-star-cards__nav-next');
+
+  const starCardsSwiper = new Swiper(swiperEl, {
+    loop: true,
+    slidesPerView: 'auto',
+    centeredSlides: true,
+    spaceBetween: {{ desktop_blocks_gap }},
+    grabCursor: true,
+    speed: 600,
+    
+    {% if section.settings.enable_equal_height %}
+    watchSlidesProgress: true,
+    {% endif %}
+    
+    navigation: {
+      nextEl: nextEl,
+      prevEl: prevEl,
+    },
+    
+	    breakpoints: {
+	      0: {
+	        spaceBetween: {{ mobile_blocks_gap }},
+	      },
+	      750: {
+	        spaceBetween: {{ desktop_blocks_gap }},
+	      }
+	    },
+	    on: {
+	      init: function() {
+	        setTimeout(() => {
+	          this.updateSlidesClasses();
+	          {% if section.settings.enable_equal_height %}
+	            equalizeSlideHeights();
+	          {% endif %}
+	          positionNavButtons(this);
+	        }, 100);
+	      },
+	      slideChangeTransitionEnd: function() {
+	        {% if section.settings.enable_equal_height %}
+	          equalizeSlideHeights();
+	        {% endif %}
+	        positionNavButtons(this);
+	      }
+	    }
+	  });
+
+  {% if section.settings.enable_equal_height %}
+  function equalizeSlideHeights() {
+    const slides = swiperEl.querySelectorAll('.swiper-slide');
+    const blocks = swiperEl.querySelectorAll('.vso-star-cards__block');
+    
+    if (slides.length === 0 || blocks.length === 0) return;
+    
+    blocks.forEach(block => {
+      block.style.height = 'auto';
+    });
+    
+    let maxHeight = 0;
+    blocks.forEach(block => {
+      const height = block.offsetHeight;
+      if (height > maxHeight) {
+        maxHeight = height;
+      }
+    });
+    
+    blocks.forEach(block => {
+      block.style.height = maxHeight + 'px';
+    });
+  }
+
+  window.addEventListener('resize', function() {
+    setTimeout(() => {
+      equalizeSlideHeights();
+      positionNavButtons(starCardsSwiper);
+    }, 100);
+  });
+  {% endif %}
+
+	  function positionNavButtons(swiper) {
+	    if (!swiper || !swiper.el || !prevEl || !nextEl) return;
+	    if (!swiper.slides || swiper.slides.length === 0) return;
+
+    const activeIndex = swiper.activeIndex;
+    const prevSlide = swiper.slides[activeIndex - 1] || swiper.slides[swiper.slides.length - 1];
+    const nextSlide = swiper.slides[activeIndex + 1] || swiper.slides[0];
+
+    if (!prevSlide || !nextSlide) return;
+
+	    const swiperRect = swiper.el.getBoundingClientRect();
+	    const prevRect = prevSlide.getBoundingClientRect();
+	    const nextRect = nextSlide.getBoundingClientRect();
+
+	    const prevW = prevEl.offsetWidth || 0;
+	    const nextW = nextEl.offsetWidth || 0;
+	    const prevH = prevEl.offsetHeight || 0;
+	    const nextH = nextEl.offsetHeight || 0;
+
+	    const arrowOutset = {% if section.settings.enable_advanced_settings %}{{ section.settings.nav_arrow_gap | default: 10 | json }}{% else %}10{% endif %};
+	    const arrowYOffset = {% if section.settings.enable_advanced_settings %}{{ section.settings.nav_arrow_top_spacing | default: 0 | json }}{% else %}0{% endif %};
+	    const minLeftPrev = -prevW;
+	    const minLeftNext = -nextW;
+	    const maxLeftPrev = swiperRect.width;
+	    const maxLeftNext = swiperRect.width;
+	    const maxTopPrev = Math.max(0, swiperRect.height - prevH);
+	    const maxTopNext = Math.max(0, swiperRect.height - nextH);
+
+	    const prevLeftRaw = (prevRect.left - swiperRect.left) - (prevW / 2) - arrowOutset;
+	    const nextLeftRaw = (nextRect.right - swiperRect.left) - (nextW / 2) + arrowOutset;
+	    const prevLeft = Math.min(maxLeftPrev, Math.max(minLeftPrev, prevLeftRaw));
+	    const nextLeft = Math.min(maxLeftNext, Math.max(minLeftNext, nextLeftRaw));
+
+	    const prevTopRaw = (prevRect.top - swiperRect.top) + (prevRect.height / 2) - (prevH / 2) + arrowYOffset;
+	    const nextTopRaw = (nextRect.top - swiperRect.top) + (nextRect.height / 2) - (nextH / 2) + arrowYOffset;
+	    const prevTop = Math.min(maxTopPrev, Math.max(0, prevTopRaw));
+	    const nextTop = Math.min(maxTopNext, Math.max(0, nextTopRaw));
+
+	    prevEl.style.top = `${prevTop}px`;
+	    nextEl.style.top = `${nextTop}px`;
+	    prevEl.style.left = `${prevLeft}px`;
+	    nextEl.style.left = `${nextLeft}px`;
+	  }
+
+  if (!{{ section.settings.enable_equal_height | json }}) {
+    window.addEventListener('resize', function() {
+      setTimeout(() => positionNavButtons(starCardsSwiper), 100);
+    });
+  }
+});
+</script>
+
+<script>
+(function(){
+  const sectionId = '{{ section.id }}';
+  const outer = document.getElementById('shopify-section-' + sectionId);
+  if(outer){
+    outer.classList.add('section--full-width');
+  }
+})();
+</script>
+
+{% schema %}
+{
+  "name": "VSO - Testimonials 14",
+  "tag": "section",
+  "class": "section vso-node vso-node--v2",
+  "max_blocks": 12,
+  "settings": [
+    {
+      "type": "header",
+      "content": "Section Settings"
+    },
+    {
+      "type": "checkbox",
+      "id": "enable_advanced_settings",
+      "label": "Enable advanced settings",
+      "default": false,
+      "info": "Shows additional settings for spacing, layout, and typography."
+    },
+    {
+      "type": "header",
+      "content": "Section Background"
+    },
+    {
+      "type": "select",
+      "id": "background_style",
+      "label": "Section background type",
+      "options": [
+        {
+          "value": "solid",
+          "label": "Solid"
+        },
+        {
+          "value": "gradient",
+          "label": "Gradient"
+        }
+      ],
+      "default": "gradient"
+    },
+    {
+      "type": "color",
+      "id": "background_color",
+      "label": "Section background color",
+      "default": "#F7F7F7",
+      "visible_if": "{{ section.settings.background_style == 'solid' }}"
+    },
+	    {
+	      "type": "color_background",
+	      "id": "background_gradient",
+	      "label": "Section background gradient",
+	      "default": "linear-gradient(180deg, #F7F7F7 0%, #FFFFFF 100%)",
+	      "visible_if": "{{ section.settings.background_style == 'gradient' }}"
+	    },
+    {
+      "type": "header",
+      "content": "Desktop Layout"
+    },
+    {
+      "type": "checkbox",
+      "id": "full_width_desktop",
+      "label": "Full width on desktop",
+      "default": true,
+      "info": "When off, the section displays as a card with rounded corners."
+    },
+    {
+      "type": "range",
+      "id": "section_border_radius",
+      "label": "Desktop card border radius",
+      "min": 0,
+      "max": 40,
+      "step": 2,
+      "unit": "px",
+      "default": 12,
+      "visible_if": "{{ section.settings.full_width_desktop == false }}"
+    },
+    {
+      "type": "header",
+      "content": "Section Padding"
+    },
+    {
+      "type": "range",
+      "id": "padding_top_desktop",
+      "label": "Desktop padding top",
+      "min": 0,
+      "max": 180,
+      "step": 4,
+      "unit": "px",
+      "default": 40
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom_desktop",
+      "label": "Desktop padding bottom",
+      "min": 0,
+      "max": 180,
+      "step": 4,
+      "unit": "px",
+      "default": 40
+    },
+    {
+      "type": "range",
+      "id": "padding_top_mobile",
+      "label": "Mobile padding top",
+      "min": 0,
+      "max": 80,
+      "step": 4,
+      "unit": "px",
+      "default": 20
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom_mobile",
+      "label": "Mobile padding bottom",
+      "min": 0,
+      "max": 80,
+      "step": 4,
+      "unit": "px",
+      "default": 20
+    },
+    {
+      "type": "header",
+      "content": "Section Margin"
+    },
+    {
+      "type": "range",
+      "id": "margin_top_desktop",
+      "label": "Desktop margin top",
+      "min": 0,
+      "max": 120,
+      "step": 4,
+      "unit": "px",
+      "default": 40
+    },
+    {
+      "type": "range",
+      "id": "margin_bottom_desktop",
+      "label": "Desktop margin bottom",
+      "min": 0,
+      "max": 120,
+      "step": 4,
+      "unit": "px",
+      "default": 40
+    },
+    {
+      "type": "range",
+      "id": "margin_top_mobile",
+      "label": "Mobile margin top",
+      "min": 0,
+      "max": 80,
+      "step": 4,
+      "unit": "px",
+      "default": 20
+    },
+    {
+      "type": "range",
+      "id": "margin_bottom_mobile",
+      "label": "Mobile margin bottom",
+      "min": 0,
+      "max": 80,
+      "step": 4,
+      "unit": "px",
+      "default": 20
+    },
+    {
+      "type": "header",
+      "content": "Cards"
+    },
+	    {
+	      "type": "color",
+	      "id": "block_background_color",
+	      "label": "Card background color",
+	      "default": "#ffffff"
+	    },
+	    {
+	      "type": "range",
+	      "id": "block_padding",
+	      "label": "Card padding",
+      "min": 0,
+      "max": 60,
+      "step": 4,
+      "unit": "px",
+      "default": 24,
+      "visible_if": "{{ section.settings.enable_advanced_settings == true }}"
+    },
+    {
+      "type": "header",
+      "content": "Card Images"
+    },
+    {
+      "type": "checkbox",
+      "id": "enable_full_width_card_image",
+      "label": "Make card image full width",
+      "default": false,
+      "info": "Removes top image inset so the card image touches the card edges."
+    },
+    {
+      "type": "range",
+      "id": "card_image_max_height_desktop",
+      "label": "Desktop image max height",
+      "min": 120,
+      "max": 700,
+      "step": 10,
+      "unit": "px",
+      "default": 260
+    },
+    {
+      "type": "range",
+      "id": "card_image_max_height_mobile",
+      "label": "Mobile image max height",
+      "min": 70,
+      "max": 700,
+      "step": 10,
+      "unit": "px",
+      "default": 200
+    },
+    {
+      "type": "range",
+      "id": "block_elements_gap",
+      "label": "Card gap between elements",
+      "min": 4,
+      "max": 20,
+      "step": 1,
+      "unit": "px",
+      "default": 10,
+      "visible_if": "{{ section.settings.enable_advanced_settings == true }}"
+    },
+    {
+      "type": "range",
+      "id": "block_border_radius",
+      "label": "Card border radius",
+      "min": 0,
+      "max": 40,
+      "step": 2,
+      "unit": "px",
+      "default": 8,
+      "visible_if": "{{ section.settings.enable_advanced_settings == true }}"
+    },
+    {
+      "type": "header",
+      "content": "Cards (Advanced)",
+      "visible_if": "{{ section.settings.enable_advanced_settings == true }}"
+    },
+    {
+      "type": "range",
+      "id": "desktop_card_width",
+      "label": "Desktop card max width",
+      "min": 280,
+      "max": 500,
+      "step": 10,
+      "unit": "px",
+      "default": 350,
+      "visible_if": "{{ section.settings.enable_advanced_settings == true }}"
+    },
+    {
+      "type": "range",
+      "id": "desktop_blocks_gap",
+      "label": "Desktop gap between cards",
+      "min": 16,
+      "max": 200,
+      "step": 4,
+      "unit": "px",
+      "default": 32,
+      "visible_if": "{{ section.settings.enable_advanced_settings == true }}"
+    },
+	    {
+	      "type": "range",
+	      "id": "mobile_blocks_gap",
+	      "label": "Mobile gap between cards",
+	      "min": 8,
+	      "max": 200,
+	      "step": 4,
+	      "unit": "px",
+	      "default": 16,
+	      "visible_if": "{{ section.settings.enable_advanced_settings == true }}"
+	    },
+	    {
+	      "type": "checkbox",
+	      "id": "enable_equal_height",
+	      "label": "Enable equal height cards",
+	      "default": false,
+	      "visible_if": "{{ section.settings.enable_advanced_settings == true }}"
+	    },
+    {
+      "type": "range",
+      "id": "block_border_width",
+      "label": "Card border width",
+      "min": 0,
+      "max": 10,
+      "step": 1,
+      "unit": "px",
+      "default": 0,
+      "visible_if": "{{ section.settings.enable_advanced_settings == true }}"
+    },
+    {
+      "type": "color",
+      "id": "block_border_color",
+      "label": "Card border color",
+      "default": "#e0e0e0",
+      "visible_if": "{{ section.settings.enable_advanced_settings == true }}"
+    },
+    {
+      "type": "checkbox",
+      "id": "enable_card_shadow",
+      "label": "Enable card shadow",
+      "default": true,
+      "visible_if": "{{ section.settings.enable_advanced_settings == true }}"
+    },
+    {
+      "type": "color",
+      "id": "card_shadow_color",
+      "label": "Card shadow color",
+      "default": "#696969",
+      "visible_if": "{{ section.settings.enable_advanced_settings == true }}"
+    },
+    {
+      "type": "header",
+      "content": "Card Stars"
+    },
+	    {
+	      "type": "range",
+	      "id": "star_size",
+	      "label": "Star size",
+	      "min": 16,
+	      "max": 60,
+	      "step": 1,
+	      "unit": "px",
+	      "default": 18
+	    },
+	    {
+	      "type": "color",
+	      "id": "star_color",
+	      "label": "Star color",
+	      "default": "#030303"
+	    },
+    {
+      "type": "header",
+      "content": "Testimonial Title"
+    },
+    {
+      "type": "checkbox",
+      "id": "custom_block_title_font",
+      "label": "Enable custom font settings",
+      "default": false
+    },
+    {
+      "type": "select",
+      "id": "block_title_as",
+      "label": "Title render as",
+      "options": [
+        {
+          "value": "h2",
+          "label": "H2"
+        },
+        {
+          "value": "h3",
+          "label": "H3"
+        },
+        {
+          "value": "h4",
+          "label": "H4"
+        },
+        {
+          "value": "h5",
+          "label": "H5"
+        },
+        {
+          "value": "p",
+          "label": "Paragraph (p)"
+        }
+      ],
+      "default": "h3",
+      "visible_if": "{{ section.settings.custom_block_title_font == false }}"
+    },
+    {
+      "type": "font_picker",
+      "id": "block_title_font",
+      "label": "Font family",
+      "default": "helvetica_n4",
+      "visible_if": "{{ section.settings.custom_block_title_font }}"
+    },
+    {
+      "type": "range",
+      "id": "block_title_size_desktop",
+      "label": "Desktop font size",
+      "min": 12,
+      "max": 36,
+      "step": 1,
+      "unit": "px",
+      "default": 18,
+      "visible_if": "{{ section.settings.custom_block_title_font }}"
+    },
+    {
+      "type": "range",
+      "id": "block_title_size_mobile",
+      "label": "Mobile font size",
+      "min": 12,
+      "max": 28,
+      "step": 1,
+      "unit": "px",
+      "default": 16,
+      "visible_if": "{{ section.settings.custom_block_title_font }}"
+    },
+    {
+      "type": "range",
+      "id": "block_title_line_height",
+      "label": "Line height",
+      "min": 50,
+      "max": 200,
+      "step": 10,
+      "unit": "%",
+      "default": 130,
+      "visible_if": "{{ section.settings.custom_block_title_font }}"
+    },
+    {
+      "type": "color",
+      "id": "block_title_color",
+      "label": "Color",
+      "default": "#111111",
+      "visible_if": "{{ section.settings.custom_block_title_font }}"
+    },
+    {
+      "type": "header",
+      "content": "Testimonial Text"
+    },
+    {
+      "type": "checkbox",
+      "id": "custom_block_description_font",
+      "label": "Enable custom font settings",
+      "default": false
+    },
+    {
+      "type": "select",
+      "id": "block_description_as",
+      "label": "Text render as",
+      "options": [
+        {
+          "value": "h2",
+          "label": "H2"
+        },
+        {
+          "value": "h3",
+          "label": "H3"
+        },
+        {
+          "value": "h4",
+          "label": "H4"
+        },
+        {
+          "value": "h5",
+          "label": "H5"
+        },
+        {
+          "value": "p",
+          "label": "Paragraph (p)"
+        }
+      ],
+      "default": "p",
+      "visible_if": "{{ section.settings.custom_block_description_font == false }}"
+    },
+    {
+      "type": "font_picker",
+      "id": "block_description_font",
+      "label": "Font family",
+      "default": "helvetica_n4",
+      "visible_if": "{{ section.settings.custom_block_description_font }}"
+    },
+    {
+      "type": "range",
+      "id": "block_description_size_desktop",
+      "label": "Desktop font size",
+      "min": 12,
+      "max": 24,
+      "step": 1,
+      "unit": "px",
+      "default": 16,
+      "visible_if": "{{ section.settings.custom_block_description_font }}"
+    },
+    {
+      "type": "range",
+      "id": "block_description_size_mobile",
+      "label": "Mobile font size",
+      "min": 12,
+      "max": 20,
+      "step": 1,
+      "unit": "px",
+      "default": 14,
+      "visible_if": "{{ section.settings.custom_block_description_font }}"
+    },
+    {
+      "type": "range",
+      "id": "block_description_line_height",
+      "label": "Line height",
+      "min": 50,
+      "max": 200,
+      "step": 10,
+      "unit": "%",
+      "default": 150,
+      "visible_if": "{{ section.settings.custom_block_description_font }}"
+    },
+    {
+      "type": "color",
+      "id": "block_description_color",
+      "label": "Color",
+      "default": "#232323",
+      "visible_if": "{{ section.settings.custom_block_description_font }}"
+    },
+    {
+      "type": "range",
+      "id": "block_description_font_weight",
+      "label": "Font weight",
+      "min": 100,
+      "max": 900,
+      "step": 100,
+      "default": 400,
+      "visible_if": "{{ section.settings.custom_block_description_font and section.settings.enable_advanced_settings == true }}"
+    },
+    {
+      "type": "header",
+      "content": "Avatar"
+    },
+    {
+      "type": "range",
+      "id": "author_circle_size",
+      "label": "Desktop avatar size",
+      "min": 30,
+      "max": 60,
+      "step": 2,
+      "unit": "px",
+      "default": 40
+    },
+    {
+      "type": "range",
+      "id": "author_circle_size_mobile",
+      "label": "Mobile avatar size",
+      "min": 24,
+      "max": 50,
+      "step": 2,
+      "unit": "px",
+      "default": 36
+    },
+	    {
+	      "type": "color",
+	      "id": "author_circle_background_color",
+	      "label": "Avatar background color",
+	      "default": "#111111"
+	    },
+    {
+      "type": "color",
+      "id": "author_circle_text_color",
+      "label": "Avatar text color",
+      "default": "#ffffff"
+    },
+    {
+      "type": "range",
+      "id": "author_container_gap",
+      "label": "Gap between avatar and text",
+      "min": 0,
+      "max": 24,
+      "step": 1,
+      "unit": "px",
+      "default": 8,
+      "visible_if": "{{ section.settings.enable_advanced_settings == true }}"
+    },
+    {
+      "type": "header",
+      "content": "Name"
+    },
+    {
+      "type": "range",
+      "id": "block_author_size_desktop",
+      "label": "Name desktop font size",
+      "min": 12,
+      "max": 24,
+      "step": 1,
+      "unit": "px",
+      "default": 14
+    },
+    {
+      "type": "range",
+      "id": "block_author_size_mobile",
+      "label": "Name mobile font size",
+      "min": 12,
+      "max": 20,
+      "step": 1,
+      "unit": "px",
+      "default": 13
+    },
+    {
+      "type": "range",
+      "id": "block_author_line_height",
+      "label": "Name line height",
+      "min": 50,
+      "max": 200,
+      "step": 10,
+      "unit": "%",
+      "default": 140
+    },
+    {
+      "type": "color",
+      "id": "block_author_color",
+      "label": "Name color",
+      "default": "#333333"
+    },
+    {
+      "type": "range",
+      "id": "block_author_font_weight",
+      "label": "Name font weight",
+      "min": 100,
+      "max": 900,
+      "step": 100,
+      "default": 600,
+      "visible_if": "{{ section.settings.enable_advanced_settings == true }}"
+    },
+    {
+      "type": "header",
+      "content": "Verified & subtitle"
+    },
+    {
+      "type": "range",
+      "id": "block_verified_size_desktop",
+      "label": "Verified & subtitle desktop font size",
+      "min": 10,
+      "max": 20,
+      "step": 1,
+      "unit": "px",
+      "default": 12
+    },
+    {
+      "type": "range",
+      "id": "block_verified_size_mobile",
+      "label": "Verified & subtitle mobile font size",
+      "min": 10,
+      "max": 18,
+      "step": 1,
+      "unit": "px",
+      "default": 11
+    },
+    {
+      "type": "range",
+      "id": "block_verified_line_height",
+      "label": "Verified & subtitle line height",
+      "min": 50,
+      "max": 200,
+      "step": 10,
+      "unit": "%",
+      "default": 130
+    },
+    {
+      "type": "color",
+      "id": "block_verified_color",
+      "label": "Verified & subtitle color",
+      "default": "#888888"
+    },
+    {
+      "type": "range",
+      "id": "block_verified_font_weight",
+      "label": "Verified & subtitle font weight",
+      "min": 100,
+      "max": 900,
+      "step": 100,
+      "default": 400,
+      "visible_if": "{{ section.settings.enable_advanced_settings == true }}"
+    },
+    {
+      "type": "header",
+      "content": "Navigation"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_navigation_desktop",
+      "label": "Show arrows on desktop",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "show_navigation_mobile",
+      "label": "Show arrows on mobile",
+      "default": true
+    },
+    {
+      "type": "range",
+      "id": "nav_arrow_size",
+      "label": "Arrow size",
+      "min": 40,
+      "max": 80,
+      "step": 5,
+      "unit": "px",
+      "default": 50
+    },
+    {
+      "type": "color",
+      "id": "nav_arrow_bg_color",
+      "label": "Background color",
+      "default": "#ffffff"
+    },
+    {
+      "type": "color",
+      "id": "nav_arrow_icon_color",
+      "label": "Icon color",
+      "default": "#6b7280"
+    },
+    {
+      "type": "range",
+      "id": "nav_arrow_border_width",
+      "label": "Border width",
+      "min": 0,
+      "max": 5,
+      "step": 1,
+      "unit": "px",
+      "default": 0,
+      "visible_if": "{{ section.settings.enable_advanced_settings == true }}"
+    },
+    {
+      "type": "color",
+      "id": "nav_arrow_border_color",
+      "label": "Border color",
+      "default": "#e5e7eb",
+      "visible_if": "{{ section.settings.enable_advanced_settings == true }}"
+    },
+    {
+      "type": "checkbox",
+      "id": "nav_arrow_shadow_enable",
+      "label": "Enable shadow",
+      "default": true
+    },
+    {
+      "type": "color",
+      "id": "nav_arrow_shadow_color",
+      "label": "Shadow color",
+      "default": "#000000"
+    },
+    {
+      "type": "header",
+      "content": "Navigation (Advanced)",
+      "visible_if": "{{ section.settings.enable_advanced_settings == true }}"
+    },
+    {
+      "type": "range",
+      "id": "nav_arrow_gap",
+      "label": "Arrow outward offset",
+      "min": 0,
+      "max": 60,
+      "step": 1,
+      "unit": "px",
+      "default": 10,
+      "visible_if": "{{ section.settings.enable_advanced_settings == true }}",
+      "info": "Moves the arrows further outside the adjacent cards."
+    },
+    {
+      "type": "range",
+      "id": "nav_arrow_top_spacing",
+      "label": "Arrow vertical offset",
+      "min": -80,
+      "max": 80,
+      "step": 2,
+      "unit": "px",
+      "default": 0,
+      "visible_if": "{{ section.settings.enable_advanced_settings == true }}",
+      "info": "Positive moves down, negative moves up."
+    }
+  ],
+  "blocks": [
+    {
+      "type": "heading",
+      "name": "Heading",
+      "limit": 1,
+      "settings": [
+        {
+          "type": "header",
+          "content": "Heading"
+        },
+        {
+          "type": "inline_richtext",
+          "id": "heading",
+          "label": "Title",
+          "default": "Customer Reviews"
+        },
+        {
+          "type": "checkbox",
+          "id": "heading_custom_font",
+          "label": "Enable custom font settings",
+          "default": false
+        },
+        {
+          "type": "select",
+          "id": "heading_as",
+          "label": "Title render as",
+          "options": [
+            {
+              "value": "h2",
+              "label": "H2"
+            },
+            {
+              "value": "h3",
+              "label": "H3"
+            },
+            {
+              "value": "h4",
+              "label": "H4"
+            },
+            {
+              "value": "h5",
+              "label": "H5"
+            },
+            {
+              "value": "p",
+              "label": "Paragraph (p)"
+            }
+          ],
+          "default": "h2",
+          "visible_if": "{{ block.settings.heading_custom_font == false }}"
+        },
+        {
+          "type": "font_picker",
+          "id": "heading_font",
+          "label": "Font family",
+          "default": "helvetica_n4",
+          "visible_if": "{{ block.settings.heading_custom_font }}"
+        },
+        {
+          "type": "range",
+          "id": "heading_size_desktop",
+          "label": "Desktop font size",
+          "min": 20,
+          "max": 80,
+          "step": 2,
+          "unit": "px",
+          "default": 40,
+          "visible_if": "{{ block.settings.heading_custom_font }}"
+        },
+        {
+          "type": "range",
+          "id": "heading_size_mobile",
+          "label": "Mobile font size",
+          "min": 16,
+          "max": 60,
+          "step": 2,
+          "unit": "px",
+          "default": 32,
+          "visible_if": "{{ block.settings.heading_custom_font }}"
+        },
+        {
+          "type": "range",
+          "id": "heading_line_height",
+          "label": "Line height",
+          "min": 50,
+          "max": 200,
+          "step": 10,
+          "unit": "%",
+          "default": 130,
+          "visible_if": "{{ block.settings.heading_custom_font }}"
+        },
+	        {
+	          "type": "color",
+	          "id": "heading_color",
+	          "label": "Color",
+	          "default": "#000000"
+	        },
+        {
+          "type": "range",
+          "id": "heading_font_weight",
+          "label": "Font weight",
+          "min": 100,
+          "max": 900,
+          "step": 100,
+          "default": 700,
+          "visible_if": "{{ block.settings.heading_custom_font and section.settings.enable_advanced_settings == true }}"
+        },
+        {
+          "type": "header",
+          "content": "Spacing"
+        },
+        {
+          "type": "range",
+          "id": "spacing_top_desktop",
+          "label": "Desktop spacing top",
+          "min": 0,
+          "max": 120,
+          "step": 2,
+          "unit": "px",
+          "default": 0
+        },
+        {
+          "type": "range",
+          "id": "spacing_bottom_desktop",
+          "label": "Desktop spacing bottom",
+          "min": 0,
+          "max": 120,
+          "step": 2,
+          "unit": "px",
+          "default": 0
+        },
+        {
+          "type": "range",
+          "id": "spacing_top_mobile",
+          "label": "Mobile spacing top",
+          "min": 0,
+          "max": 80,
+          "step": 2,
+          "unit": "px",
+          "default": 0
+        },
+        {
+          "type": "range",
+          "id": "spacing_bottom_mobile",
+          "label": "Mobile spacing bottom",
+          "min": 0,
+          "max": 80,
+          "step": 2,
+          "unit": "px",
+          "default": 0
+        }
+      ]
+    },
+    {
+      "type": "review_summary",
+      "name": "Review Summary",
+      "limit": 1,
+      "settings": [
+        {
+          "type": "header",
+          "content": "Review Summary"
+        },
+	        {
+	          "type": "checkbox",
+	          "id": "show_block",
+	          "label": "Show review summary",
+	          "default": true
+	        },
+	        {
+	          "type": "header",
+	          "content": "Typography"
+	        },
+	        {
+	          "type": "inline_richtext",
+	          "id": "text",
+	          "label": "Text",
+	          "default": "Rated <strong>4.8/5</strong> based on <strong>+10,839</strong> Total Ratings"
+	        },
+	        {
+	          "type": "checkbox",
+	          "id": "custom_font",
+	          "label": "Enable custom font settings",
+	          "default": false
+	        },
+        {
+          "type": "font_picker",
+          "id": "font",
+          "label": "Font family",
+          "default": "helvetica_n4",
+          "visible_if": "{{ block.settings.custom_font }}"
+        },
+        {
+          "type": "range",
+          "id": "size_desktop",
+          "label": "Desktop font size",
+          "min": 10,
+          "max": 22,
+          "step": 1,
+          "unit": "px",
+          "default": 14,
+          "visible_if": "{{ block.settings.custom_font }}"
+        },
+        {
+          "type": "range",
+          "id": "size_mobile",
+          "label": "Mobile font size",
+          "min": 10,
+          "max": 20,
+          "step": 1,
+          "unit": "px",
+          "default": 13,
+          "visible_if": "{{ block.settings.custom_font }}"
+        },
+        {
+          "type": "range",
+          "id": "line_height",
+          "label": "Line height",
+          "min": 100,
+          "max": 200,
+          "step": 5,
+          "unit": "%",
+          "default": 140,
+          "visible_if": "{{ block.settings.custom_font }}"
+        },
+        {
+          "type": "range",
+          "id": "font_weight",
+          "label": "Font weight",
+          "min": 100,
+          "max": 900,
+          "step": 100,
+	          "default": 500,
+	          "visible_if": "{{ block.settings.custom_font and section.settings.enable_advanced_settings == true }}"
+	        },
+	        {
+	          "type": "color",
+	          "id": "text_color",
+	          "label": "Text color",
+	          "default": "#FFFFFF"
+	        },
+	        {
+	          "type": "header",
+	          "content": "Style"
+	        },
+	        {
+	          "type": "range",
+	          "id": "stars_count",
+	          "label": "Stars",
+	          "min": 0,
+	          "max": 5,
+	          "step": 1,
+	          "default": 5,
+	          "info": "Set to 0 to hide stars."
+	        },
+	        {
+	          "type": "color",
+	          "id": "bg_color",
+	          "label": "Background color",
+	          "default": "#111111"
+	        },
+	        {
+	          "type": "color",
+	          "id": "stars_color",
+	          "label": "Stars color",
+	          "default": "#FFFFFF"
+	        },
+	        {
+	          "type": "color",
+	          "id": "empty_stars_color",
+	          "label": "Empty stars color",
+	          "default": "#BDBDBD",
+	          "visible_if": "{{ block.settings.stars_count != 5 }}"
+	        },
+	        {
+	          "type": "range",
+	          "id": "stars_size",
+	          "label": "Star size",
+	          "min": 10,
+	          "max": 28,
+	          "step": 1,
+	          "unit": "px",
+	          "default": 16
+	        },
+	        {
+	          "type": "range",
+	          "id": "gap",
+	          "label": "Gap",
+	          "min": 0,
+	          "max": 24,
+	          "step": 1,
+	          "unit": "px",
+	          "default": 8,
+	          "visible_if": "{{ section.settings.enable_advanced_settings == true }}"
+	        },
+	        {
+	          "type": "range",
+	          "id": "padding_y",
+	          "label": "Vertical padding",
+	          "min": 0,
+	          "max": 30,
+	          "step": 1,
+	          "unit": "px",
+	          "default": 8,
+	          "visible_if": "{{ section.settings.enable_advanced_settings == true }}"
+	        },
+	        {
+	          "type": "range",
+	          "id": "padding_x",
+	          "label": "Horizontal padding",
+	          "min": 0,
+	          "max": 40,
+	          "step": 1,
+	          "unit": "px",
+	          "default": 14,
+	          "visible_if": "{{ section.settings.enable_advanced_settings == true }}"
+	        },
+	        {
+	          "type": "range",
+	          "id": "radius",
+	          "label": "Border radius",
+	          "min": 0,
+	          "max": 40,
+	          "step": 1,
+	          "unit": "px",
+	          "default": 8,
+	          "visible_if": "{{ section.settings.enable_advanced_settings == true }}"
+	        },
+	        {
+	          "type": "header",
+	          "content": "Spacing"
+	        },
+        {
+          "type": "range",
+          "id": "spacing_top_desktop",
+          "label": "Desktop spacing top",
+          "min": 0,
+          "max": 120,
+          "step": 2,
+          "unit": "px",
+          "default": 0
+        },
+        {
+          "type": "range",
+          "id": "spacing_bottom_desktop",
+          "label": "Desktop spacing bottom",
+          "min": 0,
+          "max": 120,
+          "step": 2,
+          "unit": "px",
+          "default": 14
+        },
+        {
+          "type": "range",
+          "id": "spacing_top_mobile",
+          "label": "Mobile spacing top",
+          "min": 0,
+          "max": 80,
+          "step": 2,
+          "unit": "px",
+          "default": 0
+        },
+        {
+          "type": "range",
+          "id": "spacing_bottom_mobile",
+          "label": "Mobile spacing bottom",
+          "min": 0,
+          "max": 80,
+          "step": 2,
+          "unit": "px",
+          "default": 14
+        }
+      ]
+    },
+    {
+      "type": "star_card",
+      "name": "Testimonial Card",
+      "limit": 10,
+      "settings": [
+        {
+          "type": "header",
+          "content": "Testimonial"
+        },
+        {
+          "type": "inline_richtext",
+          "id": "title",
+          "label": "Title"
+        },
+        {
+          "type": "inline_richtext",
+          "id": "description",
+          "label": "Text",
+          "default": "<em>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam.</em>"
+        },
+        {
+          "type": "header",
+          "content": "Media"
+        },
+        {
+          "type": "image_picker",
+          "id": "card_image",
+          "label": "Card image"
+        },
+        {
+          "type": "header",
+          "content": "Author"
+        },
+        {
+          "type": "inline_richtext",
+          "id": "author",
+          "label": "Name",
+          "default": "Sarah M."
+        },
+        {
+          "type": "image_picker",
+          "id": "author_image",
+          "label": "Avatar image"
+        },
+        {
+          "type": "inline_richtext",
+          "id": "author_subtitle",
+          "label": "Subtitle",
+          "default": "3 days ago"
+        },
+        {
+          "type": "header",
+          "content": "Verified"
+        },
+        {
+          "type": "inline_richtext",
+          "id": "verified_text",
+          "label": "Verified label",
+          "default": "Verified Rating"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "VSO - Testimonials 14",
+      "blocks": [
+        {
+          "type": "review_summary"
+        },
+        {
+          "type": "heading"
+        },
+        {
+          "type": "star_card"
+        },
+        {
+          "type": "star_card"
+        },
+        {
+          "type": "star_card"
+        },
+        {
+          "type": "star_card"
+        },
+        {
+          "type": "star_card"
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

@@ -1,0 +1,673 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "vso_product_info_02_js5fta": {
+      "settings": {
+        "collapsible_style": "line",
+        "collapsible_line_top_border": true,
+        "collapsible_title_size": 18,
+        "collapsible_title_size_mobile": 16
+      },
+      "blocks": {
+        "media_A7uK4p": {
+          "type": "media",
+          "settings": {
+            "media_width_desktop": 60,
+            "image_aspect_ratio": "adapt",
+            "thumbnail_border_radius": 10,
+            "media_border_radius": 12,
+            "media_gap": 12
+          }
+        },
+        "title_VOdzmL": {
+          "type": "title",
+          "settings": {}
+        },
+        "text_JavCMP": {
+          "type": "text",
+          "settings": {
+            "text": "<p>Advanced _probiotic + prebiotic synbiotic_ designed to support gut health, digestion, immunity, and skin balance.</p>",
+            "font_size": 18,
+            "font_size_mobile": 14
+          }
+        },
+        "price_S61Ss1": {
+          "type": "price",
+          "settings": {}
+        },
+        "variant_picker_Fg8fgR": {
+          "type": "variant_picker",
+          "settings": {}
+        },
+        "form_3kbIzo": {
+          "type": "form",
+          "settings": {
+            "show_quantity": false,
+            "button_text_weight": 600,
+            "button_font_size": 22,
+            "button_font_size_mobile": 18,
+            "show_button_subtext": true,
+            "button_subtext": "30 Day Money-Back Guarantee",
+            "button_subtext_spacing_top": 6,
+            "button_subtext_size": 14,
+            "button_subtext_size_mobile": 10,
+            "button_background": "#285028"
+          }
+        },
+        "description_xyLGyq": {
+          "type": "description",
+          "settings": {
+            "description_font_size": 16
+          }
+        },
+        "collapsible_row_1_niI9Ng": {
+          "type": "collapsible_row",
+          "settings": {
+            "title": "How does this synbiotic work?"
+          }
+        },
+        "collapsible_row_2_qxX3lx": {
+          "type": "collapsible_row",
+          "settings": {
+            "title": "When should I take it?"
+          }
+        },
+        "collapsible_row_3_aRGhMe": {
+          "type": "collapsible_row",
+          "settings": {
+            "title": "How long until I notice results?"
+          }
+        },
+        "benefits_cBXc9U": {
+          "type": "benefits",
+          "settings": {
+            "box_border_color": "#597059",
+            "box_background": "#EEF1EA",
+            "box_gap": 12,
+            "box_border_width": 1,
+            "box_padding": 16,
+            "text_size": 13,
+            "text_size_mobile": 14,
+            "text_weight": 600,
+            "text_1": "Supports Gut Balance",
+            "text_2": "Reduces Bloating & Discomfort",
+            "text_3": "Supports Immune & Skin Health",
+            "icon_color": "#1E3B1D",
+            "text_color": "#1E3B1D"
+          }
+        },
+        "media_testimonial_kHdyIi": {
+          "type": "media_testimonial",
+          "settings": {
+            "border_width": 1,
+            "border_color": "#597059",
+            "background_color": "#EEF1EA",
+            "title": "Finally Found Something That Helped My Digestion",
+            "body": "<p>I struggled with bloating for years. After a few weeks of this synbiotic, my digestion improved and bloating reduced significantly.</p>",
+            "author": "— Melissa R.",
+            "text_gap": 4,
+            "image_radius": 6,
+            "gap": 20,
+            "image_size": 90,
+            "image_size_mobile": 48,
+            "title_color": "#111111",
+            "description_color": "#111111",
+            "author_color": "#111111",
+            "title_render_as": "h4"
+          }
+        }
+      },
+      "block_order": [
+        "media_A7uK4p",
+        "title_VOdzmL",
+        "text_JavCMP",
+        "price_S61Ss1",
+        "variant_picker_Fg8fgR",
+        "form_3kbIzo",
+        "description_xyLGyq",
+        "collapsible_row_1_niI9Ng",
+        "collapsible_row_2_qxX3lx",
+        "collapsible_row_3_aRGhMe",
+        "benefits_cBXc9U",
+        "media_testimonial_kHdyIi"
+      ],
+      "name": "VSO - Product Info 02",
+      "type": "vso-product-info-02"
+    },
+    "vso_hero_36_PbGFSD": {
+      "settings": {
+        "section_outer_bg_color": "#1E3B1D",
+        "section_padding_bottom_mobile": 40,
+        "icon_size": 60,
+        "icon_size_mobile": 50,
+        "feature_title_as": "h4",
+        "feature_title_color": "#FFFFFF",
+        "feature_text_color": "#FFFFFF"
+      },
+      "blocks": {
+        "heading_plQ8Dh": {
+          "type": "heading",
+          "settings": {
+            "subtitle": "Science-Backed Gut Health",
+            "subtitle_color": "#FFFFFF",
+            "title": "Feel the difference of a truly healthy gut.",
+            "title_color": "#FFFFFF"
+          }
+        },
+        "media_VyRpze": {
+          "type": "media",
+          "settings": {
+            "mobile_media_position": "middle",
+            "grid_gap_mobile": 32
+          }
+        },
+        "feature_1_lDDMOQ": {
+          "type": "feature",
+          "settings": {
+            "feature_title": "Diverse Probiotic Strains",
+            "feature_text": "24 strains support microbial diversity, the foundation of a healthy gut."
+          }
+        },
+        "feature_2_tni2FW": {
+          "type": "feature",
+          "settings": {
+            "feature_title": "Engineered to Survive",
+            "feature_text": "ViaCap® delivery system safeguards probiotics all the way to the colon."
+          }
+        },
+        "feature_3_DiXaP8": {
+          "type": "feature",
+          "settings": {
+            "feature_title": "Feeds Good Gut Microbes",
+            "feature_text": "Antioxidant-promoting prebiotic feeds beneficial gut microbes."
+          }
+        },
+        "feature_4_cnR5gm": {
+          "type": "feature",
+          "settings": {
+            "feature_title": "Proven in 4 Clinical Trials",
+            "feature_text": "Scientifically validated in four, gold-standard clinical trials."
+          }
+        }
+      },
+      "block_order": [
+        "heading_plQ8Dh",
+        "media_VyRpze",
+        "feature_1_lDDMOQ",
+        "feature_2_tni2FW",
+        "feature_3_DiXaP8",
+        "feature_4_cnR5gm"
+      ],
+      "name": "VSO - Hero 36",
+      "type": "vso-hero-36"
+    },
+    "vso_hero_19_NAxg1C": {
+      "settings": {
+        "timeline_line_color": "#597059",
+        "timeline_dot_color": "#597059",
+        "margin_top": 0,
+        "margin_bottom": 20,
+        "margin_top_mobile": 0,
+        "margin_bottom_mobile": 0
+      },
+      "blocks": {
+        "heading_BHSA3y": {
+          "type": "heading",
+          "settings": {
+            "heading": "A Healthier Gut, _Step by Step",
+            "heading_as": "h3",
+            "heading_highlight_color": "linear-gradient(128deg, rgba(89, 112, 89, 1) 0%, rgba(115, 145, 115, 1) 100%)",
+            "description": "",
+            "block_margin_bottom_desktop": 20,
+            "block_margin_bottom_mobile": 16
+          }
+        },
+        "media_b7hTNQ": {
+          "type": "media",
+          "settings": {
+            "media_sizing_desktop": "4/3"
+          }
+        },
+        "timeline_item_1_BkpmeL": {
+          "type": "timeline_item",
+          "settings": {
+            "subheading": "Weeks 1–2",
+            "heading": "Gut Adjustment Begins",
+            "description": "<p>Your microbiome begins adapting to the probiotic strains. Some users notice less digestive discomfort as beneficial bacteria begin to balance the gut.</p>"
+          }
+        },
+        "timeline_item_2_Wt1DRC": {
+          "type": "timeline_item",
+          "settings": {
+            "subheading": "Weeks 3–4",
+            "heading": "Improved Digestive Balance",
+            "description": "<p>As microbial diversity improves, digestion may feel smoother and occasional bloating may decrease with consistent use.</p>"
+          }
+        },
+        "timeline_item_3_JhVZLm": {
+          "type": "timeline_item",
+          "settings": {
+            "subheading": "Months 2–3+",
+            "heading": "Stronger Gut Support",
+            "description": "<p>With continued daily use, the microbiome becomes more balanced, helping support digestion, immune health, and overall gut wellness.</p>"
+          }
+        }
+      },
+      "block_order": [
+        "heading_BHSA3y",
+        "media_b7hTNQ",
+        "timeline_item_1_BkpmeL",
+        "timeline_item_2_Wt1DRC",
+        "timeline_item_3_JhVZLm"
+      ],
+      "name": "VSO - Hero 19",
+      "type": "vso-hero-19"
+    },
+    "vso_icon_benefits_01_esGeAG": {
+      "settings": {
+        "background_color": "#FFFFFF",
+        "padding_top_desktop": 40,
+        "padding_bottom_desktop": 40,
+        "padding_top_mobile": 20,
+        "padding_bottom_mobile": 20,
+        "margin_top_desktop": 40,
+        "margin_bottom_desktop": 40,
+        "margin_top_mobile": 20,
+        "margin_bottom_mobile": 20,
+        "blocks_alignment": "center",
+        "custom_blocks_text_font": true,
+        "blocks_text_font": "gelasio_n4",
+        "block_text_size_desktop": 20,
+        "block_text_size_mobile": 16,
+        "block_text_line_height": 150,
+        "desktop_icon_size": 180,
+        "mobile_icon_size": 100,
+        "block_border_radius": 0
+      },
+      "blocks": {
+        "heading_NE7NOh": {
+          "type": "heading",
+          "settings": {
+            "content_alignment": "left",
+            "title": "Strengthens your gut at the _source_ for lasting relief.",
+            "title_highlight_color": "#478641",
+            "title_as": "h4",
+            "subtitle": ""
+          }
+        },
+        "benefit_1_0Ckaa2": {
+          "type": "benefit",
+          "settings": {
+            "title": "4.6x",
+            "text": "Increase in beneficial gut bacteria"
+          }
+        },
+        "benefit_2_szRxZ2": {
+          "type": "benefit",
+          "settings": {
+            "title": "85%",
+            "text": "Increase in skin barrier protection"
+          }
+        },
+        "benefit_3_aYG4Yo": {
+          "type": "benefit",
+          "settings": {
+            "title": "50%",
+            "text": "Stronger gut barrier"
+          }
+        },
+        "benefit_4_e47JrX": {
+          "type": "benefit",
+          "settings": {
+            "title": "25%",
+            "text": "Decrease in waist size"
+          }
+        }
+      },
+      "block_order": [
+        "heading_NE7NOh",
+        "benefit_1_0Ckaa2",
+        "benefit_2_szRxZ2",
+        "benefit_3_aYG4Yo",
+        "benefit_4_e47JrX"
+      ],
+      "name": "VSO - Icon Benefits 01",
+      "type": "vso-icon-benefits-01"
+    },
+    "vso_hero_45_0yKIBw": {
+      "settings": {
+        "section_bg_color": "#1E3B1D",
+        "padding_top_mobile": 40,
+        "padding_bottom_mobile": 40,
+        "card_bg_color": "#F6F7EF",
+        "item_icon_bg_color": "#1E3B1D",
+        "item_icon_check_color": "#FFFFFF",
+        "item_icon_cross_color": "#FFFFFF",
+        "crossed_label_color": "#282828",
+        "card_items_two_columns": true
+      },
+      "blocks": {
+        "heading_PP7heF": {
+          "type": "heading",
+          "settings": {
+            "heading": "Designed Without Compromise",
+            "heading_color": "#FFFFFF",
+            "heading_custom_font": true,
+            "heading_font_size_desktop": 50,
+            "heading_font_size_mobile": 36
+          }
+        },
+        "description_cARpdK": {
+          "type": "description",
+          "settings": {
+            "description": "<p>Our formula focuses on what truly supports gut health—without unnecessary additives or fillers.</p>",
+            "description_color": "#FFFFFF"
+          }
+        },
+        "card_item_1_yOONMt": {
+          "type": "card_item",
+          "settings": {
+            "label": "Artificial fillers",
+            "cross_out_label": true
+          }
+        },
+        "card_item_2_OzQxXP": {
+          "type": "card_item",
+          "settings": {
+            "label": "Added sugars",
+            "cross_out_label": true
+          }
+        },
+        "card_item_3_dk8ePB": {
+          "type": "card_item",
+          "settings": {
+            "label": "Artificial flavors",
+            "cross_out_label": true
+          }
+        },
+        "card_item_4_2kOZQt": {
+          "type": "card_item",
+          "settings": {
+            "label": "Low-quality probiotic strains",
+            "cross_out_label": true
+          }
+        },
+        "card_item_5_KbqQHz": {
+          "type": "card_item",
+          "settings": {
+            "label": "Synthetic preservatives",
+            "cross_out_label": true
+          }
+        },
+        "card_item_6_BgzQLC": {
+          "type": "card_item",
+          "settings": {
+            "label": "Artificial colors",
+            "cross_out_label": true
+          }
+        },
+        "card_item_7_jOdxOK": {
+          "type": "card_item",
+          "settings": {
+            "label": "Harsh chemical binders",
+            "cross_out_label": true
+          }
+        },
+        "card_item_8_tTj4X1": {
+          "type": "card_item",
+          "settings": {
+            "label": "One-size-fits-all formulas",
+            "cross_out_label": true
+          }
+        }
+      },
+      "block_order": [
+        "heading_PP7heF",
+        "description_cARpdK",
+        "card_item_1_yOONMt",
+        "card_item_2_OzQxXP",
+        "card_item_3_dk8ePB",
+        "card_item_4_2kOZQt",
+        "card_item_5_KbqQHz",
+        "card_item_6_BgzQLC",
+        "card_item_7_jOdxOK",
+        "card_item_8_tTj4X1"
+      ],
+      "name": "VSO - Hero 45",
+      "type": "vso-hero-45"
+    },
+    "vso_hero_32_K7DUpR": {
+      "settings": {
+        "margin_bottom": 0,
+        "padding_top": 0,
+        "padding_top_mobile": 12,
+        "padding_bottom_mobile": 12,
+        "pagination_dot_color_active": "#1E3B1D",
+        "card_border_color": "#1E3B1D",
+        "tag_bg_color": "#1E3B1D",
+        "tag_color": "#FFFFFF"
+      },
+      "blocks": {
+        "card_1_Mvpclw": {
+          "type": "card",
+          "settings": {
+            "tag_1": "Microbiome",
+            "tag_2": "Digestive Support",
+            "heading": "Probiotic Strains",
+            "description": "<p>A diverse blend of clinically studied probiotic bacteria designed to support gut balance, improve digestion, and promote a healthy microbiome.</p>"
+          }
+        },
+        "card_2_ULo0th": {
+          "type": "card",
+          "settings": {
+            "tag_1": "Prebiotic",
+            "tag_2": "Gut Nourishment",
+            "heading": "Prebiotic Fiber",
+            "description": "<p>Plant-based prebiotics feed beneficial gut bacteria, helping them grow and maintain a balanced digestive environment.</p>"
+          }
+        },
+        "card_3_CHvQVE": {
+          "type": "card",
+          "settings": {
+            "tag_1": "Polyphenols",
+            "tag_2": "Antioxidant Support",
+            "heading": "Plant Polyphenols",
+            "description": "<p>Powerful plant-derived compounds that support beneficial gut microbes while providing antioxidant support for overall wellness.</p>"
+          }
+        },
+        "card_4_IrtVJB": {
+          "type": "card",
+          "settings": {
+            "tag_1": "Hydration",
+            "tag_2": "Plumping",
+            "heading": "Hyaluronic Acid Deep Moisture",
+            "description": "<p>Holds up to 1000x its weight in water to deeply hydrate, plump fine lines, and create a smooth, supple complexion with long-lasting moisture retention.</p>"
+          }
+        },
+        "card_5_N2tJX8": {
+          "type": "card",
+          "settings": {
+            "tag_1": "Anti-Aging",
+            "tag_2": "Immunity",
+            "heading": "Peptides for Firmness",
+            "description": "<p>Stimulates collagen synthesis to improve skin elasticity, reduce wrinkles, and restore firmness for a lifted, more contoured appearance.</p>"
+          }
+        }
+      },
+      "block_order": [
+        "card_1_Mvpclw",
+        "card_2_ULo0th",
+        "card_3_CHvQVE",
+        "card_4_IrtVJB",
+        "card_5_N2tJX8"
+      ],
+      "name": "VSO - Hero 32",
+      "type": "vso-hero-32"
+    },
+    "vso_testimonials_14_8VPO4E": {
+      "settings": {
+        "full_width_desktop": false,
+        "background_style": "gradient",
+        "background_gradient": "linear-gradient(180deg, rgba(238, 241, 234, 1) 0%, rgba(255, 255, 255, 1) 100%)",
+        "margin_top_desktop": 0,
+        "card_shadow_color": "#1E3B1D",
+        "star_color": "#1E3B1D",
+        "nav_arrow_shadow_color": "#1E3B1D",
+        "author_circle_background_color": "#1E3B1D",
+        "block_author_color": "#1E3B1D"
+      },
+      "blocks": {
+        "review_summary_iYsQDU": {
+          "type": "review_summary",
+          "settings": {
+            "bg_color": "#1E3B1D"
+          }
+        },
+        "heading_MPYwK9": {
+          "type": "heading",
+          "settings": {}
+        },
+        "star_card_1_xJ7MMb": {
+          "type": "star_card",
+          "settings": {}
+        },
+        "star_card_2_pkL2pT": {
+          "type": "star_card",
+          "settings": {}
+        },
+        "star_card_3_x8l9bi": {
+          "type": "star_card",
+          "settings": {}
+        },
+        "star_card_4_D1a7ML": {
+          "type": "star_card",
+          "settings": {}
+        },
+        "star_card_5_bf6EUP": {
+          "type": "star_card",
+          "settings": {}
+        }
+      },
+      "block_order": [
+        "review_summary_iYsQDU",
+        "heading_MPYwK9",
+        "star_card_1_xJ7MMb",
+        "star_card_2_pkL2pT",
+        "star_card_3_x8l9bi",
+        "star_card_4_D1a7ML",
+        "star_card_5_bf6EUP"
+      ],
+      "name": "VSO - Testimonials 14",
+      "type": "vso-testimonials-14"
+    },
+    "vso_hero_47_3C51Zv": {
+      "settings": {
+        "section_bg_type": "gradient",
+        "section_bg_gradient": "linear-gradient(135deg, rgba(30, 59, 29, 1) 0%, rgba(29, 29, 29, 1) 100%)",
+        "benefit_text_color": "#FFFFFF"
+      },
+      "blocks": {
+        "heading_dkNJfh": {
+          "type": "heading",
+          "settings": {
+            "heading": "Why People Choose Us"
+          }
+        },
+        "benefit_1_d9QuZs": {
+          "type": "benefit",
+          "settings": {
+            "title": "Clinically Studied Formula",
+            "text": "<p>Developed with scientifically researched probiotic strains.</p>"
+          }
+        },
+        "benefit_2_NleIbX": {
+          "type": "benefit",
+          "settings": {
+            "title": "Advanced Delivery System",
+            "text": "<p>Designed to protect probiotics until they reach your gut.</p>"
+          }
+        },
+        "benefit_3_w4qoDM": {
+          "type": "benefit",
+          "settings": {
+            "title": "30-Day Money-Back Guarantee",
+            "text": "<p>Try it risk-free. If you're not satisfied, return it within 30 days for a full refund.</p>"
+          }
+        }
+      },
+      "block_order": [
+        "heading_dkNJfh",
+        "benefit_1_d9QuZs",
+        "benefit_2_NleIbX",
+        "benefit_3_w4qoDM"
+      ],
+      "name": "VSO - Hero 47",
+      "type": "vso-hero-47"
+    },
+    "vso_faq_02_Gi7yLM": {
+      "settings": {},
+      "blocks": {
+        "title_jblrII": {
+          "type": "title",
+          "settings": {
+            "title_highlight_color": "#478641"
+          }
+        },
+        "subtitle_JYjUkU": {
+          "type": "subtitle",
+          "settings": {}
+        },
+        "team_oWVP31": {
+          "type": "team",
+          "settings": {}
+        },
+        "faq_item_1_7MXEo3": {
+          "type": "faq_item",
+          "settings": {}
+        },
+        "faq_item_2_Szwd8k": {
+          "type": "faq_item",
+          "settings": {}
+        },
+        "faq_item_3_ev9oyA": {
+          "type": "faq_item",
+          "settings": {}
+        },
+        "faq_item_4_07droC": {
+          "type": "faq_item",
+          "settings": {}
+        }
+      },
+      "block_order": [
+        "title_jblrII",
+        "subtitle_JYjUkU",
+        "team_oWVP31",
+        "faq_item_1_7MXEo3",
+        "faq_item_2_Szwd8k",
+        "faq_item_3_ev9oyA",
+        "faq_item_4_07droC"
+      ],
+      "name": "VSO - FAQ 02",
+      "type": "vso-faq-02"
+    }
+  },
+  "order": [
+    "vso_product_info_02_js5fta",
+    "vso_hero_36_PbGFSD",
+    "vso_hero_19_NAxg1C",
+    "vso_icon_benefits_01_esGeAG",
+    "vso_hero_45_0yKIBw",
+    "vso_hero_32_K7DUpR",
+    "vso_testimonials_14_8VPO4E",
+    "vso_hero_47_3C51Zv",
+    "vso_faq_02_Gi7yLM"
+  ]
+}

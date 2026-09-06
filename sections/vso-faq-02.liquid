@@ -1,0 +1,1220 @@
+{% comment %}
+WARNING: UNAUTHORIZED MODIFICATION PROHIBITED
+This code is proprietary property of Versio Studio. Any unauthorized tampering, 
+alteration, or distribution of this file is strictly forbidden and will be prosecuted to the maximum extent permitted by law.
+All modifications are logged.
+
+If you require assistance or have questions regarding this code, please contact support@versio.studio.
+{% endcomment %}
+
+{% liquid
+  assign enable_advanced_settings = false
+  if section.settings.enable_advanced_settings == true
+    assign enable_advanced_settings = true
+  endif
+
+  assign desktop_column_gap = section.settings.desktop_column_gap
+  assign section_full_width = section.settings.section_full_width
+  assign section_max_width_desktop = section.settings.section_max_width_desktop
+  assign padding_top = section.settings.padding_top
+  assign padding_bottom = section.settings.padding_bottom
+  assign padding_horizontal = section.settings.padding_horizontal
+  assign padding_top_mobile = section.settings.padding_top_mobile
+  assign padding_bottom_mobile = section.settings.padding_bottom_mobile
+  assign padding_horizontal_mobile = section.settings.padding_horizontal_mobile
+  assign left_column_padding_right_desktop = section.settings.left_column_padding_right_desktop
+  assign margin_top = section.settings.margin_top
+  assign margin_bottom = section.settings.margin_bottom
+  assign margin_top_mobile = section.settings.margin_top_mobile
+  assign margin_bottom_mobile = section.settings.margin_bottom_mobile
+  assign faq_item_gap = section.settings.faq_item_gap
+  assign faq_question_color = section.settings.faq_question_color
+  assign faq_question_font_size = section.settings.faq_question_font_size
+  assign faq_question_font_size_mobile = section.settings.faq_question_font_size_mobile
+  assign faq_question_font_weight = section.settings.faq_question_font_weight
+  assign faq_question_padding_vertical = section.settings.faq_question_padding_vertical
+  assign faq_question_padding_vertical_mobile = section.settings.faq_question_padding_vertical_mobile
+  assign faq_question_custom_font = section.settings.faq_question_custom_font
+  assign faq_question_as = section.settings.faq_question_as
+  assign faq_answer_color = section.settings.faq_answer_color
+  assign faq_answer_font_size = section.settings.faq_answer_font_size
+  assign faq_answer_font_size_mobile = section.settings.faq_answer_font_size_mobile
+  assign faq_answer_custom_font = section.settings.faq_answer_custom_font
+  assign faq_divider_width = section.settings.faq_divider_width
+
+  if enable_advanced_settings
+    assign faq_icon_size = section.settings.faq_icon_size
+    assign faq_icon_color = section.settings.faq_icon_color
+  else
+    assign faq_icon_size = 18
+  assign faq_icon_color = faq_question_color
+  endif
+
+  assign title_block = section.blocks | where: "type", "title" | first
+  assign subtitle_block = section.blocks | where: "type", "subtitle" | first
+  assign team_block = section.blocks | where: "type", "team" | first
+-%}
+  
+  {% style %}
+  .vd-l { display: none !important; }
+    #shopify-section-{{ section.id }} {
+      --section-border-radius: 0px;
+      --section-horizontal-padding: var(--page-margin, 16px);
+      background: transparent;
+      margin-top: {{ margin_top_mobile }}px;
+      margin-bottom: {{ margin_bottom_mobile }}px;
+      border-radius: var(--section-border-radius);
+      overflow: hidden;
+      padding: 0;
+    }
+
+    {% if enable_advanced_settings %}
+      #shopify-section-{{ section.id }} {
+        --section-horizontal-padding: {{ padding_horizontal_mobile }}px;
+      }
+    {% endif %}
+
+    @media screen and (max-width: 990px) {
+      #shopify-section-{{ section.id }} {
+        {% if section.settings.section_bg_type == 'gradient' %}
+          background: {{ section.settings.section_bg_gradient }};
+        {% else %}
+          background-color: {{ section.settings.section_bg_color }};
+        {% endif %}
+      }
+    }
+
+    @media screen and (min-width: 991px) {
+      #shopify-section-{{ section.id }} {
+        {% if section.settings.full_width_desktop %}
+          --section-border-radius: 0px;
+        {% else %}
+          --section-border-radius: {{ section.settings.section_border_radius }}px;
+        {% endif %}
+        --section-horizontal-padding: 0px;
+        margin-top: {{ margin_top }}px;
+        margin-bottom: {{ margin_bottom }}px;
+        border-radius: var(--section-border-radius);
+        {% if section.settings.full_width_desktop %}
+          {% if section.settings.section_bg_type == 'gradient' %}
+            background: {{ section.settings.section_bg_gradient }};
+          {% else %}
+            background-color: {{ section.settings.section_bg_color }};
+          {% endif %}
+        {% else %}
+          background: transparent;
+        {% endif %}
+      }
+    }
+
+    {% if enable_advanced_settings == false and section.settings.full_width_desktop == false %}
+      @media screen and (min-width: 991px) {
+        #shopify-section-{{ section.id }} {
+          --section-horizontal-padding: 40px;
+        }
+      }
+    {% endif %}
+
+    {% if enable_advanced_settings == false and section.settings.full_width_desktop %}
+      @media screen and (min-width: 991px) {
+        #shopify-section-{{ section.id }} {
+          --section-container-max-width: var(--page-content-width, var(--page-width, 1440px));
+          --section-outer-gutter: max(0px, calc((100vw - var(--section-container-max-width)) / 2));
+          --section-horizontal-padding: max(0px, calc(var(--page-margin, 40px) - var(--section-outer-gutter)));
+        }
+      }
+    {% endif %}
+
+    {% if enable_advanced_settings %}
+      @media screen and (min-width: 991px) {
+        #shopify-section-{{ section.id }} {
+          --section-horizontal-padding: {{ padding_horizontal }}px;
+        }
+      }
+    {% endif %}
+
+    #shopify-section-{{ section.id }} > .vso-template-faq__container {
+      margin-left: auto;
+      margin-right: auto;
+      width: 100%;
+      max-width: var(--page-content-width, var(--page-width, 1440px));
+      border-radius: var(--section-border-radius);
+      overflow: hidden;
+      padding-left: var(--section-horizontal-padding);
+      padding-right: var(--section-horizontal-padding);
+      padding-top: {{ padding_top_mobile }}px;
+      padding-bottom: {{ padding_bottom_mobile }}px;
+      position: relative;
+    }
+
+    @media screen and (max-width: 990px) {
+      #shopify-section-{{ section.id }} > .vso-template-faq__container {
+        background: transparent;
+      }
+    }
+
+    @media screen and (min-width: 991px) {
+      #shopify-section-{{ section.id }} > .vso-template-faq__container {
+        {% if section.settings.full_width_desktop %}
+          background: transparent;
+        {% else %}
+          {% if section.settings.section_bg_type == 'gradient' %}
+            background: {{ section.settings.section_bg_gradient }};
+          {% else %}
+            background-color: {{ section.settings.section_bg_color }};
+          {% endif %}
+        {% endif %}
+        padding-top: {{ padding_top }}px;
+        padding-bottom: {{ padding_bottom }}px;
+      }
+    }
+
+    {% if enable_advanced_settings %}
+      #shopify-section-{{ section.id }} > .vso-template-faq__container {
+        {% if section_full_width %}
+          max-width: none;
+        {% else %}
+          max-width: {{ section_max_width_desktop }}rem;
+        {% endif %}
+      }
+    {% endif %}
+
+    {% if section.settings.full_width_desktop == false %}
+      @media screen and (min-width: 991px) {
+        #shopify-section-{{ section.id }} > .vso-template-faq__container {
+          width: calc(100% - (2 * var(--page-margin, 40px)));
+        }
+      }
+    {% endif %}
+
+    #shopify-section-{{ section.id }} .vso-faq-02__container {
+      display: flex;
+      width: 100%;
+      gap: {{ desktop_column_gap }}px;
+      align-items: flex-start;
+    }
+
+    #shopify-section-{{ section.id }} .vso-faq-02__left-column {
+      flex: 0 1 40%;
+      min-width: 0;
+      box-sizing: border-box;
+      display: flex;
+      flex-direction: column;
+      padding-right: {{ left_column_padding_right_desktop }}px;
+    }
+    #shopify-section-{{ section.id }} .vso-faq-02__right-column {
+      flex: 0 1 60%;
+      min-width: 0;
+      box-sizing: border-box;
+    }
+    {% if title_block %}
+      #shopify-section-{{ section.id }} .vso-faq-02__title {
+        text-align: {{ title_block.settings.title_alignment_desktop }};
+        margin-top: {{ title_block.settings.margin_top }}px;
+        margin-bottom: {{ title_block.settings.margin_bottom }}px;
+      }
+      #shopify-section-{{ section.id }} .vso-faq-02__title h1,
+      #shopify-section-{{ section.id }} .vso-faq-02__title h2,
+      #shopify-section-{{ section.id }} .vso-faq-02__title h3,
+      #shopify-section-{{ section.id }} .vso-faq-02__title h4,
+      #shopify-section-{{ section.id }} .vso-faq-02__title h5,
+      #shopify-section-{{ section.id }} .vso-faq-02__title p {
+        margin: 0;
+        color: {{ title_block.settings.title_color }};
+      }
+      {% if title_block.settings.custom_font %}
+        #shopify-section-{{ section.id }} .vso-faq-02__title h2 {
+          font-size: {{ title_block.settings.title_size }}px;
+          font-weight: bold;
+        }
+      {% endif %}
+      #shopify-section-{{ section.id }} .vso-faq-02__important-word {
+        color: {{ title_block.settings.title_highlight_color }};
+      }
+    {% endif %}
+    {% if subtitle_block %}
+      #shopify-section-{{ section.id }} .vso-faq-02__subtitle {
+        text-align: {{ subtitle_block.settings.subtitle_alignment_desktop }};
+        margin-top: {{ subtitle_block.settings.margin_top }}px;
+        margin-bottom: {{ subtitle_block.settings.margin_bottom }}px;
+      }
+      #shopify-section-{{ section.id }} .vso-faq-02__subtitle h2,
+      #shopify-section-{{ section.id }} .vso-faq-02__subtitle h3,
+      #shopify-section-{{ section.id }} .vso-faq-02__subtitle h4,
+      #shopify-section-{{ section.id }} .vso-faq-02__subtitle h5,
+      #shopify-section-{{ section.id }} .vso-faq-02__subtitle p {
+        margin: 0;
+        color: {{ subtitle_block.settings.subtitle_color }};
+      }
+      {% if subtitle_block.settings.custom_font %}
+        #shopify-section-{{ section.id }} .vso-faq-02__subtitle p {
+          font-size: {{ subtitle_block.settings.subtitle_size }}px;
+        }
+      {% endif %}
+    {% endif %}
+    {% if team_block %}
+      #shopify-section-{{ section.id }} .vso-faq-02__team {
+        text-align: {{ team_block.settings.team_alignment_desktop }};
+        margin-top: {{ team_block.settings.margin_top }}px;
+        margin-bottom: {{ team_block.settings.margin_bottom }}px;
+      }
+      #shopify-section-{{ section.id }} .vso-faq-02__team-images {
+        display: flex;
+        margin-bottom: {{ team_block.settings.team_images_margin_bottom }}px;
+        {% if team_block.settings.team_alignment_desktop == 'left' %}
+          justify-content: flex-start;
+        {% elsif team_block.settings.team_alignment_desktop == 'center' %}
+          justify-content: center;
+        {% else %}
+          justify-content: flex-end;
+        {% endif %}
+      }
+      #shopify-section-{{ section.id }} .vso-faq-02__team-images img {
+        width: {{ team_block.settings.team_image_size }}px;
+        height: {{ team_block.settings.team_image_size }}px;
+        border-radius: 50%;
+        margin-right: -{{ team_block.settings.team_images_overlap }}px;
+        border: {{ team_block.settings.team_image_border_width }}px solid {{ team_block.settings.team_image_border_color }};
+        box-sizing: border-box;
+        object-fit: cover;
+      }
+      #shopify-section-{{ section.id }} .vso-faq-02__team-image-placeholder {
+        width: {{ team_block.settings.team_image_size }}px;
+        height: {{ team_block.settings.team_image_size }}px;
+        border-radius: 50%;
+        margin-right: -{{ team_block.settings.team_images_overlap }}px;
+        border: {{ team_block.settings.team_image_border_width }}px solid {{ team_block.settings.team_image_border_color }};
+        box-sizing: border-box;
+        background-color: #E5E7EB;
+        display: block;
+      }
+      #shopify-section-{{ section.id }} .vso-faq-02__team-paragraph h2,
+      #shopify-section-{{ section.id }} .vso-faq-02__team-paragraph h3,
+      #shopify-section-{{ section.id }} .vso-faq-02__team-paragraph h4,
+      #shopify-section-{{ section.id }} .vso-faq-02__team-paragraph h5,
+      #shopify-section-{{ section.id }} .vso-faq-02__team-paragraph p {
+        margin: 0;
+        color: {{ team_block.settings.team_paragraph_color }};
+      }
+      {% if team_block.settings.custom_font %}
+        #shopify-section-{{ section.id }} .vso-faq-02__team-paragraph p {
+          font-size: {{ team_block.settings.team_paragraph_size }}px;
+        }
+      {% endif %}
+    {% endif %}
+    #shopify-section-{{ section.id }} .vso-faq-02__faq-item {
+      margin-bottom: {{ faq_item_gap }}px;
+      overflow: hidden;
+      border-bottom: {{ faq_divider_width }}px solid {{ faq_question_color }};
+    }
+    #shopify-section-{{ section.id }} .vso-faq-02__faq-question {
+      position: relative;
+      padding-top: {{ faq_question_padding_vertical }}px;
+      padding-bottom: {{ faq_question_padding_vertical }}px;
+      padding-left: 0;
+      padding-right: 0;
+      cursor: pointer;
+      user-select: none;
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      gap: 15px;
+      margin: 0 !important;
+      color: {{ faq_question_color }};
+      background: transparent;
+    }
+    {% if faq_question_custom_font %}
+      #shopify-section-{{ section.id }} .vso-faq-02__faq-question,
+      #shopify-section-{{ section.id }} .vso-faq-02__faq-question p {
+        font-size: {{ faq_question_font_size }}px;
+        font-weight: {{ faq_question_font_weight }};
+        margin: 0 !important;
+      }
+    {% endif %}
+    #shopify-section-{{ section.id }} .vso-faq-02__faq-question p { margin: 0 !important; }
+    #shopify-section-{{ section.id }} .vso-faq-02__faq-toggle {
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      width: 24px;
+      height: 24px;
+      margin-top: 2px;
+    }
+    #shopify-section-{{ section.id }} .vso-faq-02__faq-toggle svg {
+      width: {{ faq_icon_size }}px;
+      height: {{ faq_icon_size }}px;
+      color: {{ faq_icon_color }};
+      transition: transform 0.3s ease;
+    }
+    #shopify-section-{{ section.id }} .vso-faq-02__faq-item.active .vso-faq-02__faq-toggle svg { transform: rotate(180deg); }
+	    #shopify-section-{{ section.id }} .vso-faq-02__faq-answer {
+	      height: 0;
+	      overflow: hidden;
+	      transition: height 0.4s ease;
+	      padding-left: 0;
+	      padding-right: 0;
+	      background: transparent;
+	    }
+	    #shopify-section-{{ section.id }} .vso-faq-02__faq-item.active .vso-faq-02__faq-answer {
+	    }
+	    #shopify-section-{{ section.id }} .vso-faq-02__faq-answer-content {
+	      color: {{ faq_answer_color }};
+	      /* Keep spacing on the content so JS height calculation includes it. */
+	      padding-bottom: 10px;
+	    }
+	    {% if faq_answer_custom_font %}
+	      #shopify-section-{{ section.id }} .vso-faq-02__faq-answer-content {
+	        line-height: 1.6;
+	        font-size: {{ faq_answer_font_size }}px;
+	      }
+	    {% endif %}
+	    #shopify-section-{{ section.id }} .vso-faq-02__faq-answer-content > *:first-child { margin-top: 0; }
+	    #shopify-section-{{ section.id }} .vso-faq-02__faq-answer-content > *:last-child { margin-bottom: 0; }
+    .vso-node { display: none; }
+    .vso-node--v2 { display: block; }
+    .vso-hide-on-desktop { display: none !important; }
+    @media(max-width: 990px) {
+      .vso-hide-on-desktop { display: flex !important; }
+      #shopify-section-{{ section.id }} .vso-faq-02__container {
+        flex-direction: column;
+      }
+      #shopify-section-{{ section.id }} .vso-faq-02__left-column {
+        display: none;
+      }
+      #shopify-section-{{ section.id }} .vso-faq-02__right-column {
+        display: none;
+      }
+      #shopify-section-{{ section.id }} .vso-faq-02__mobile-specific-order-blocks {
+        flex-direction: column;
+        width: 100%;
+      }
+      {% if title_block %}
+        #shopify-section-{{ section.id }} .vso-faq-02__title {
+          text-align: {{ title_block.settings.title_alignment_mobile }};
+          margin-top: {{ title_block.settings.margin_top_mobile }}px;
+          margin-bottom: {{ title_block.settings.margin_bottom_mobile }}px;
+        }
+        {% if title_block.settings.custom_font %}
+          #shopify-section-{{ section.id }} .vso-faq-02__title h2 {
+            font-size: {{ title_block.settings.title_size_mobile }}px;
+          }
+        {% endif %}
+      {% endif %}
+      {% if subtitle_block %}
+        #shopify-section-{{ section.id }} .vso-faq-02__subtitle {
+          text-align: {{ subtitle_block.settings.subtitle_alignment_mobile }};
+          margin-top: {{ subtitle_block.settings.margin_top_mobile }}px;
+          margin-bottom: {{ subtitle_block.settings.margin_bottom_mobile }}px;
+        }
+        {% if subtitle_block.settings.custom_font %}
+          #shopify-section-{{ section.id }} .vso-faq-02__subtitle p {
+            font-size: {{ subtitle_block.settings.subtitle_size_mobile }}px;
+          }
+        {% endif %}
+      {% endif %}
+      {% if team_block %}
+        #shopify-section-{{ section.id }} .vso-faq-02__team {
+          text-align: {{ team_block.settings.team_alignment_mobile }};
+          margin-top: {{ team_block.settings.margin_top_mobile }}px;
+          margin-bottom: {{ team_block.settings.margin_bottom_mobile }}px;
+        }
+        #shopify-section-{{ section.id }} .vso-faq-02__team-images {
+          {% if team_block.settings.team_alignment_mobile == 'left' %}
+            justify-content: flex-start;
+          {% elsif team_block.settings.team_alignment_mobile == 'center' %}
+            justify-content: center;
+          {% else %}
+            justify-content: flex-end;
+          {% endif %}
+        }
+        {% if team_block.settings.custom_font %}
+          #shopify-section-{{ section.id }} .vso-faq-02__team-paragraph p {
+            font-size: {{ team_block.settings.team_paragraph_size_mobile }}px;
+          }
+        {% endif %}
+      {% endif %}
+      #shopify-section-{{ section.id }} .vso-faq-02__faq-question {
+        padding-top: {{ faq_question_padding_vertical_mobile }}px;
+        padding-bottom: {{ faq_question_padding_vertical_mobile }}px;
+      }
+      {% if faq_question_custom_font %}
+        #shopify-section-{{ section.id }} .vso-faq-02__faq-question,
+        #shopify-section-{{ section.id }} .vso-faq-02__faq-question p {
+          font-size: {{ faq_question_font_size_mobile }}px;
+        }
+      {% endif %}
+      {% if faq_answer_custom_font %}
+        #shopify-section-{{ section.id }} .vso-faq-02__faq-answer-content {
+          font-size: {{ faq_answer_font_size_mobile }}px;
+        }
+      {% endif %}
+    }
+  {% endstyle %}
+  
+  {% if faq_question_custom_font %}
+    <style>
+      #shopify-section-{{ section.id }} .vso-faq-02__faq-question,
+      #shopify-section-{{ section.id }} .vso-faq-02__faq-question p {
+        font-family: {{ section.settings.faq_question_font.family }}, {{ section.settings.faq_question_font.fallback_families }};
+        font-style: {{ section.settings.faq_question_font.style }};
+      }
+    </style>
+  {% endif %}
+  
+  {% if faq_answer_custom_font %}
+    <style>
+      #shopify-section-{{ section.id }} .vso-faq-02__faq-answer-content {
+        font-family: {{ section.settings.faq_answer_font.family }}, {{ section.settings.faq_answer_font.fallback_families }};
+        font-style: {{ section.settings.faq_answer_font.style }};
+      }
+    </style>
+  {% endif %}
+  
+  {% for block in section.blocks %}
+    {% case block.type %}
+      {% when 'title' %}
+        {% if block.settings.custom_font %}
+          <style>
+            #shopify-section-{{ section.id }} .vso-faq-02__title h2 {
+              font-family: {{ block.settings.font.family }}, {{ block.settings.font.fallback_families }};
+              font-style: {{ block.settings.font.style }};
+            }
+          </style>
+        {% endif %}
+      {% when 'subtitle' %}
+        {% if block.settings.custom_font %}
+          <style>
+            #shopify-section-{{ section.id }} .vso-faq-02__subtitle {
+              font-family: {{ block.settings.font.family }}, {{ block.settings.font.fallback_families }};
+              font-style: {{ block.settings.font.style }};
+            }
+          </style>
+        {% endif %}
+      {% when 'team' %}
+        {% if block.settings.custom_font %}
+          <style>
+            #shopify-section-{{ section.id }} .vso-faq-02__team-paragraph {
+              font-family: {{ block.settings.font.family }}, {{ block.settings.font.fallback_families }};
+              font-style: {{ block.settings.font.style }};
+            }
+          </style>
+        {% endif %}
+    {% endcase %}
+  {% endfor %}
+  
+{%- if request.design_mode -%}
+  <div class="vso-require-script">
+    <div class="vso-warning">
+      <div class="vso-warning__left">
+        <div class="vso-warning__badge">
+          <svg width="14" height="14" viewBox="0 0 20 20" fill="none">
+            <path d="M10 6.75a.75.75 0 0 1 .75.75v3.5a.75.75 0 1 1-1.5 0v-3.5a.75.75 0 0 1 .75-.75Z" fill="currentColor"/>
+            <path d="M11 13.5a1 1 0 1 1-2 0 1 1 0 0 1 2 0Z" fill="currentColor"/>
+            <path fill-rule="evenodd" d="M10 3.5c-1.045 0-1.784.702-2.152 1.447a449.26 449.26 0 0 1-2.005 3.847l-.028.052a403.426 403.426 0 0 0-2.008 3.856c-.372.752-.478 1.75.093 2.614.57.863 1.542 1.184 2.464 1.184h7.272c.922 0 1.895-.32 2.464-1.184.57-.864.465-1.862.093-2.614-.21-.424-1.113-2.147-2.004-3.847l-.032-.061a429.497 429.497 0 0 1-2.005-3.847c-.368-.745-1.107-1.447-2.152-1.447Zm-.808 2.112c.404-.816 1.212-.816 1.616 0 .202.409 1.112 2.145 2.022 3.88a418.904 418.904 0 0 1 2.018 3.875c.404.817 0 1.633-1.212 1.633h-7.272c-1.212 0-1.617-.816-1.212-1.633.202-.408 1.113-2.147 2.023-3.883a421.932 421.932 0 0 0 2.017-3.872Z" fill="currentColor"/>
+          </svg>
+          <span>Action Required</span>
+        </div>
+        <h2 class="vso-warning__title">App Embeds Are Disabled</h2>
+        <p class="vso-warning__subtitle">Enable the Versio Sections app embed in your theme editor to use this section.</p>
+        <div class="vso-warning__steps">
+          <div class="vso-warning__step">
+            <span class="vso-warning__step-number">1</span>
+            <span>Click the <strong>App embeds</strong> icon (puzzle piece) at the top of the left sidebar</span>
+          </div>
+          <div class="vso-warning__step">
+            <span class="vso-warning__step-number">2</span>
+            <span>Toggle on <strong>Versio Sections</strong></span>
+          </div>
+          <div class="vso-warning__step">
+            <span class="vso-warning__step-number">3</span>
+            <span>Click <strong>Save</strong> in the top right</span>
+          </div>
+        </div>
+      </div>
+      <div class="vso-warning__image">
+        <img src="https://cdn.shopify.com/s/files/1/0970/2880/0861/files/1.png?v=1773296966" alt="How to enable app embeds" loading="lazy" width="640" height="880" />
+      </div>
+    </div>
+  </div>
+  <style>
+    .vso-hidden {
+      display: none !important;
+      height: 0 !important;
+      overflow: hidden !important;
+      visibility: hidden !important;
+      width: 0 !important;
+      opacity: 0 !important;
+    }
+    .vso-require-script .vso-warning {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      max-width: 900px;
+      margin: 24px auto;
+      background: #ffffff;
+      border: 1px solid #e2e2e2;
+      border-radius: 16px;
+      padding: 32px;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.04), 0 4px 12px rgba(0,0,0,0.03);
+      display: flex;
+      gap: 32px;
+      align-items: center;
+    }
+    .vso-warning__left {
+      flex: 1;
+      min-width: 0;
+    }
+    .vso-warning__badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: #fef2f2;
+      color: #dc2626;
+      font-size: 11px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      padding: 5px 12px;
+      border-radius: 100px;
+      margin-bottom: 14px;
+      border: 1px solid #fecaca;
+    }
+    .vso-warning__badge svg {
+      flex-shrink: 0;
+    }
+    .vso-warning__title {
+      font-size: 22px;
+      font-weight: 700;
+      color: #1a1a1a;
+      margin: 0 0 6px 0;
+      line-height: 1.3;
+    }
+    .vso-warning__subtitle {
+      font-size: 13px;
+      color: #777;
+      margin: 0 0 20px 0;
+      line-height: 1.5;
+      max-width: 340px;
+    }
+    .vso-warning__steps {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+    .vso-warning__step {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-size: 14px;
+      color: #444;
+      line-height: 1.4;
+    }
+    .vso-warning__step strong {
+      color: #1a1a1a;
+    }
+    .vso-warning__step-number {
+      flex-shrink: 0;
+      width: 26px;
+      height: 26px;
+      background: #f3f3f3;
+      color: #555;
+      font-size: 12px;
+      font-weight: 700;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border: 1px solid #e0e0e0;
+    }
+    .vso-warning__image {
+      flex: 1;
+      min-width: 0;
+    }
+    .vso-warning__image img {
+      display: block;
+      width: 100%;
+      height: auto;
+      object-fit: contain;
+      border-radius: 10px;
+    }
+    @media screen and (max-width: 749px) {
+      .vso-require-script .vso-warning {
+        margin: 16px;
+        padding: 24px 20px;
+        flex-direction: column;
+        gap: 24px;
+      }
+      .vso-warning__title {
+        font-size: 18px;
+      }
+      .vso-warning__subtitle {
+        max-width: none;
+      }
+      .vso-warning__image {
+        flex: none;
+        max-width: 100%;
+      }
+    }
+  </style>
+{%- endif -%}
+
+
+  <div class="vso-template-faq__container vso-faq-02-section-{{ section.id }} vso-node vd-l vso-hidden">
+    <div class="vso-faq-02__container">
+      <div class="vso-faq-02__left-column">
+        {% for block in section.blocks %}
+          {% case block.type %}
+            {% when 'title' %}
+              <div class="vso-faq-02__title" {{ block.shopify_attributes }}>
+                {% assign title_tag = block.settings.title_as | default: 'h2' %}
+                {% if block.settings.custom_font %}
+                  <h2>
+                    {% assign title_parts = block.settings.title | split: '_' %}
+                    {% assign highlight_toggle = 'false' %}
+                    {% for part in title_parts %}
+                      {% if highlight_toggle == 'true' %}
+                        <span class="vso-faq-02__important-word">{{ part }}</span>
+                        {% assign highlight_toggle = 'false' %}
+                      {% else %}
+                        {{ part }}
+                        {% assign highlight_toggle = 'true' %}
+                      {% endif %}
+                    {% endfor %}
+                  </h2>
+                {% else %}
+                  <{{ title_tag }}>
+                    {% assign title_parts = block.settings.title | split: '_' %}
+                    {% assign highlight_toggle = 'false' %}
+                    {% for part in title_parts %}
+                      {% if highlight_toggle == 'true' %}
+                        <span class="vso-faq-02__important-word">{{ part }}</span>
+                        {% assign highlight_toggle = 'false' %}
+                      {% else %}
+                        {{ part }}
+                        {% assign highlight_toggle = 'true' %}
+                      {% endif %}
+                    {% endfor %}
+                  </{{ title_tag }}>
+                {% endif %}
+              </div>
+            {% when 'subtitle' %}
+              <div class="vso-faq-02__subtitle" {{ block.shopify_attributes }}>
+                {% assign subtitle_tag = block.settings.subtitle_as | default: 'p' %}
+                {% if block.settings.custom_font %}
+                  <p>{{ block.settings.subtitle }}</p>
+                {% else %}
+                  <{{ subtitle_tag }}>{{ block.settings.subtitle | strip_html }}</{{ subtitle_tag }}>
+                {% endif %}
+              </div>
+            {% when 'team' %}
+              <div class="vso-faq-02__team" {{ block.shopify_attributes }}>
+                {% liquid
+                  assign current_team_block = block
+                  assign team_images_count = current_team_block.settings.team_images_count | default: 3
+                  assign show_team_images = false
+                  if team_images_count > 0
+                    assign show_team_images = true
+                  endif
+                %}
+                {% if show_team_images %}
+                  <div class="vso-faq-02__team-images">
+                    {% if team_images_count >= 1 %}
+                      {% if current_team_block.settings.image_1 %}<img src="{{ current_team_block.settings.image_1 | image_url: width: 100, height: 100, crop: 'center' }}" alt="{{ current_team_block.settings.image_1.alt | default: 'Team member 1' }}" loading="lazy" width="{{ current_team_block.settings.team_image_size }}" height="{{ current_team_block.settings.team_image_size }}">{% else %}<span class="vso-faq-02__team-image-placeholder" aria-hidden="true"></span>{% endif %}
+                    {% endif %}
+                    {% if team_images_count >= 2 %}
+                      {% if current_team_block.settings.image_2 %}<img src="{{ current_team_block.settings.image_2 | image_url: width: 100, height: 100, crop: 'center' }}" alt="{{ current_team_block.settings.image_2.alt | default: 'Team member 2' }}" loading="lazy" width="{{ current_team_block.settings.team_image_size }}" height="{{ current_team_block.settings.team_image_size }}">{% else %}<span class="vso-faq-02__team-image-placeholder" aria-hidden="true"></span>{% endif %}
+                    {% endif %}
+                    {% if team_images_count >= 3 %}
+                      {% if current_team_block.settings.image_3 %}<img src="{{ current_team_block.settings.image_3 | image_url: width: 100, height: 100, crop: 'center' }}" alt="{{ current_team_block.settings.image_3.alt | default: 'Team member 3' }}" loading="lazy" width="{{ current_team_block.settings.team_image_size }}" height="{{ current_team_block.settings.team_image_size }}">{% else %}<span class="vso-faq-02__team-image-placeholder" aria-hidden="true"></span>{% endif %}
+                    {% endif %}
+                    {% if team_images_count >= 4 %}
+                      {% if current_team_block.settings.image_4 %}<img src="{{ current_team_block.settings.image_4 | image_url: width: 100, height: 100, crop: 'center' }}" alt="{{ current_team_block.settings.image_4.alt | default: 'Team member 4' }}" loading="lazy" width="{{ current_team_block.settings.team_image_size }}" height="{{ current_team_block.settings.team_image_size }}">{% else %}<span class="vso-faq-02__team-image-placeholder" aria-hidden="true"></span>{% endif %}
+                    {% endif %}
+                    {% if team_images_count >= 5 %}
+                      {% if current_team_block.settings.image_5 %}<img src="{{ current_team_block.settings.image_5 | image_url: width: 100, height: 100, crop: 'center' }}" alt="{{ current_team_block.settings.image_5.alt | default: 'Team member 5' }}" loading="lazy" width="{{ current_team_block.settings.team_image_size }}" height="{{ current_team_block.settings.team_image_size }}">{% else %}<span class="vso-faq-02__team-image-placeholder" aria-hidden="true"></span>{% endif %}
+                    {% endif %}
+                  </div>
+                {% endif %}
+                {% if current_team_block.settings.paragraph != blank %}
+                  <div class="vso-faq-02__team-paragraph">
+                    {% assign team_paragraph_tag = current_team_block.settings.team_paragraph_as | default: 'p' %}
+                    {% if current_team_block.settings.custom_font %}
+                      <p>{{ current_team_block.settings.paragraph }}</p>
+                    {% else %}
+                      <{{ team_paragraph_tag }}>{{ current_team_block.settings.paragraph | strip_html }}</{{ team_paragraph_tag }}>
+                    {% endif %}
+                  </div>
+                {% endif %}
+              </div>
+          {% endcase %}
+        {% endfor %}
+      </div>
+      <div class="vso-faq-02__right-column">
+        {% for block in section.blocks %}
+          {% if block.type == 'faq_item' %}
+            <div class="vso-faq-02__faq-item" {{ block.shopify_attributes }} id="vso-faq-item-{{ section.id }}-{{ block.id }}">
+              <div class="vso-faq-02__faq-question" tabindex="0" role="button" aria-expanded="false" aria-controls="vso-faq-answer-{{ section.id }}-{{ block.id }}">
+                {% assign question_tag = faq_question_as | default: 'p' %}
+                {% if faq_question_custom_font %}
+                  <p>{{ block.settings.question }}</p>
+                {% else %}
+                  <{{ question_tag }}>{{ block.settings.question }}</{{ question_tag }}>
+                {% endif %}
+                <div class="vso-faq-02__faq-toggle" aria-hidden="true">
+                  <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M12 5V19" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/><path d="M5 12H19" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                </div>
+              </div>
+	              <div class="vso-faq-02__faq-answer" id="vso-faq-answer-{{ section.id }}-{{ block.id }}">
+	                <div class="vso-faq-02__faq-answer-content">{{ block.settings.answer }}</div>
+	              </div>
+	            </div>
+	          {% endif %}
+	        {% endfor %}
+      </div>
+      <div class="vso-hide-on-desktop vso-faq-02__mobile-specific-order-blocks">
+        {% for block in section.blocks %}
+          {% case block.type %}
+            {% when 'title' %}
+              <div class="vso-faq-02__title" {{ block.shopify_attributes }}>
+                {% assign title_tag = block.settings.title_as | default: 'h2' %}
+                {% if block.settings.custom_font %}
+                  <h2>
+                    {% assign title_parts = block.settings.title | split: '_' %}
+                    {% assign highlight_toggle = 'false' %}
+                    {% for part in title_parts %}
+                      {% if highlight_toggle == 'true' %}
+                        <span class="vso-faq-02__important-word">{{ part }}</span>
+                        {% assign highlight_toggle = 'false' %}
+                      {% else %}
+                        {{ part }}
+                        {% assign highlight_toggle = 'true' %}
+                      {% endif %}
+                    {% endfor %}
+                  </h2>
+                {% else %}
+                  <{{ title_tag }}>
+                    {% assign title_parts = block.settings.title | split: '_' %}
+                    {% assign highlight_toggle = 'false' %}
+                    {% for part in title_parts %}
+                      {% if highlight_toggle == 'true' %}
+                        <span class="vso-faq-02__important-word">{{ part }}</span>
+                        {% assign highlight_toggle = 'false' %}
+                      {% else %}
+                        {{ part }}
+                        {% assign highlight_toggle = 'true' %}
+                      {% endif %}
+                    {% endfor %}
+                  </{{ title_tag }}>
+                {% endif %}
+              </div>
+            {% when 'subtitle' %}
+              <div class="vso-faq-02__subtitle" {{ block.shopify_attributes }}>
+                {% assign subtitle_tag = block.settings.subtitle_as | default: 'p' %}
+                {% if block.settings.custom_font %}
+                  <p>{{ block.settings.subtitle }}</p>
+                {% else %}
+                  <{{ subtitle_tag }}>{{ block.settings.subtitle | strip_html }}</{{ subtitle_tag }}>
+                {% endif %}
+              </div>
+            {% when 'team' %}
+              <div class="vso-faq-02__team" {{ block.shopify_attributes }}>
+                {% liquid
+                  assign current_team_block = block
+                  assign team_images_count = current_team_block.settings.team_images_count | default: 3
+                  assign show_team_images = false
+                  if team_images_count > 0
+                    assign show_team_images = true
+                  endif
+                %}
+                {% if show_team_images %}
+                  <div class="vso-faq-02__team-images">
+                    {% if team_images_count >= 1 %}
+                      {% if current_team_block.settings.image_1 %}<img src="{{ current_team_block.settings.image_1 | image_url: width: 100, height: 100, crop: 'center' }}" alt="{{ current_team_block.settings.image_1.alt | default: 'Team member 1' }}" loading="lazy" width="{{ current_team_block.settings.team_image_size }}" height="{{ current_team_block.settings.team_image_size }}">{% else %}<span class="vso-faq-02__team-image-placeholder" aria-hidden="true"></span>{% endif %}
+                    {% endif %}
+                    {% if team_images_count >= 2 %}
+                      {% if current_team_block.settings.image_2 %}<img src="{{ current_team_block.settings.image_2 | image_url: width: 100, height: 100, crop: 'center' }}" alt="{{ current_team_block.settings.image_2.alt | default: 'Team member 2' }}" loading="lazy" width="{{ current_team_block.settings.team_image_size }}" height="{{ current_team_block.settings.team_image_size }}">{% else %}<span class="vso-faq-02__team-image-placeholder" aria-hidden="true"></span>{% endif %}
+                    {% endif %}
+                    {% if team_images_count >= 3 %}
+                      {% if current_team_block.settings.image_3 %}<img src="{{ current_team_block.settings.image_3 | image_url: width: 100, height: 100, crop: 'center' }}" alt="{{ current_team_block.settings.image_3.alt | default: 'Team member 3' }}" loading="lazy" width="{{ current_team_block.settings.team_image_size }}" height="{{ current_team_block.settings.team_image_size }}">{% else %}<span class="vso-faq-02__team-image-placeholder" aria-hidden="true"></span>{% endif %}
+                    {% endif %}
+                    {% if team_images_count >= 4 %}
+                      {% if current_team_block.settings.image_4 %}<img src="{{ current_team_block.settings.image_4 | image_url: width: 100, height: 100, crop: 'center' }}" alt="{{ current_team_block.settings.image_4.alt | default: 'Team member 4' }}" loading="lazy" width="{{ current_team_block.settings.team_image_size }}" height="{{ current_team_block.settings.team_image_size }}">{% else %}<span class="vso-faq-02__team-image-placeholder" aria-hidden="true"></span>{% endif %}
+                    {% endif %}
+                    {% if team_images_count >= 5 %}
+                      {% if current_team_block.settings.image_5 %}<img src="{{ current_team_block.settings.image_5 | image_url: width: 100, height: 100, crop: 'center' }}" alt="{{ current_team_block.settings.image_5.alt | default: 'Team member 5' }}" loading="lazy" width="{{ current_team_block.settings.team_image_size }}" height="{{ current_team_block.settings.team_image_size }}">{% else %}<span class="vso-faq-02__team-image-placeholder" aria-hidden="true"></span>{% endif %}
+                    {% endif %}
+                  </div>
+                {% endif %}
+                {% if current_team_block.settings.paragraph != blank %}
+                  <div class="vso-faq-02__team-paragraph">
+                    {% assign team_paragraph_tag = current_team_block.settings.team_paragraph_as | default: 'p' %}
+                    {% if current_team_block.settings.custom_font %}
+                      <p>{{ current_team_block.settings.paragraph }}</p>
+                    {% else %}
+                      <{{ team_paragraph_tag }}>{{ current_team_block.settings.paragraph | strip_html }}</{{ team_paragraph_tag }}>
+                    {% endif %}
+                  </div>
+                {% endif %}
+              </div>
+            {% when 'faq_item' %}
+              <div class="vso-faq-02__faq-item" {{ block.shopify_attributes }} id="vso-faq-item-{{ section.id }}-{{ block.id }}">
+                <div class="vso-faq-02__faq-question" tabindex="0" role="button" aria-expanded="false" aria-controls="vso-faq-answer-{{ section.id }}-{{ block.id }}">
+                  {% assign question_tag = faq_question_as | default: 'p' %}
+                  {% if faq_question_custom_font %}
+                    <p>{{ block.settings.question }}</p>
+                  {% else %}
+                    <{{ question_tag }}>{{ block.settings.question }}</{{ question_tag }}>
+                  {% endif %}
+                  <div class="vso-faq-02__faq-toggle" aria-hidden="true">
+                    <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M12 5V19" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/><path d="M5 12H19" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                  </div>
+                </div>
+	                <div class="vso-faq-02__faq-answer" id="vso-faq-answer-{{ section.id }}-{{ block.id }}">
+	                  <div class="vso-faq-02__faq-answer-content">{{ block.settings.answer }}</div>
+	                </div>
+	              </div>
+	          {% endcase %}
+	        {% endfor %}
+      </div>
+    </div>
+  </div>
+  
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      const sectionId = '{{ section.id }}';
+      const accordionItems = document.querySelectorAll(`.vso-faq-02-section-${sectionId} .vso-faq-02__faq-item`);
+      const icons = {
+        open: '<path d="M5 12H19" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>',
+        closed: '<path d="M12 5V19" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/><path d="M5 12H19" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>'
+      };
+      function closeAll(except) {
+        accordionItems.forEach(item => {
+          if (except && item === except) return;
+          const answer = item.querySelector('.vso-faq-02__faq-answer');
+          const toggle = item.querySelector('.vso-faq-02__faq-toggle svg');
+          item.classList.remove('active');
+          item.querySelector('.vso-faq-02__faq-question').setAttribute('aria-expanded', 'false');
+          answer.style.height = '0px';
+          if (toggle) toggle.innerHTML = icons.closed;
+        });
+      }
+      function toggle(item) {
+        const active = item.classList.contains('active');
+        const answer = item.querySelector('.vso-faq-02__faq-answer');
+        const toggle = item.querySelector('.vso-faq-02__faq-toggle svg');
+        if (active) {
+          item.classList.remove('active');
+          item.querySelector('.vso-faq-02__faq-question').setAttribute('aria-expanded', 'false');
+          answer.style.height = '0px';
+          if (toggle) toggle.innerHTML = icons.closed;
+        } else {
+          closeAll(item);
+          item.classList.add('active');
+          item.querySelector('.vso-faq-02__faq-question').setAttribute('aria-expanded', 'true');
+          answer.style.height = answer.scrollHeight + 'px';
+          if (toggle) toggle.innerHTML = icons.open;
+        }
+      }
+      accordionItems.forEach(item => {
+        const question = item.querySelector('.vso-faq-02__faq-question');
+        question.addEventListener('click', () => toggle(item));
+        question.addEventListener('keydown', e => {
+          if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); toggle(item); }
+        });
+      });
+    });
+  </script>
+  
+	  {% schema %}
+		  {
+		    "name": "VSO - FAQ 02",
+		    "class": "section vso-node vso-node--v2",
+		    "tag": "section",
+		    "max_blocks": 25,
+		    "settings": [
+	      { "type": "header", "content": "Section Settings" },
+	      {
+	        "type": "checkbox",
+	        "id": "enable_advanced_settings",
+	        "label": "Enable advanced settings",
+	        "default": false,
+	        "info": "Shows additional settings for spacing, layout, and typography."
+	      },
+	      { "type": "checkbox", "id": "section_full_width", "label": "Full width content", "default": false, "visible_if": "{{ section.settings.enable_advanced_settings == true }}" },
+	      { "type": "range", "id": "section_max_width_desktop", "label": "Content max width", "min": 30, "max": 200, "step": 2, "unit": "rem", "default": 120, "visible_if": "{{ section.settings.enable_advanced_settings == true }}" },
+	      { "type": "range", "id": "padding_horizontal", "label": "Desktop side spacing", "min": 0, "max": 100, "step": 1, "unit": "px", "default": 20, "info": "Adds spacing on the left and right sides of this section on desktop.", "visible_if": "{{ section.settings.enable_advanced_settings == true }}" },
+	      { "type": "range", "id": "padding_horizontal_mobile", "label": "Mobile side spacing", "min": 0, "max": 100, "step": 1, "unit": "px", "default": 15, "info": "Adds spacing on the left and right sides of this section on mobile.", "visible_if": "{{ section.settings.enable_advanced_settings == true }}" },
+
+	      { "type": "header", "content": "Layout Settings", "visible_if": "{{ section.settings.enable_advanced_settings == true }}" },
+	      { "type": "range", "id": "desktop_column_gap", "label": "Column gap", "min": 0, "max": 100, "step": 2, "unit": "px", "default": 20, "info": "Space between left content and FAQ columns on desktop", "visible_if": "{{ section.settings.enable_advanced_settings == true }}" },
+	      { "type": "range", "id": "left_column_padding_right_desktop", "label": "Left column right padding", "min": 0, "max": 100, "step": 2, "unit": "px", "default": 40, "visible_if": "{{ section.settings.enable_advanced_settings == true }}" },
+	  
+			      { "type": "header", "content": "Section Background" },
+            {
+              "type": "select",
+              "id": "section_bg_type",
+              "label": "Background type",
+              "options": [
+                { "value": "solid", "label": "Solid" },
+                { "value": "gradient", "label": "Gradient" }
+              ],
+              "default": "solid"
+            },
+            { "type": "color", "id": "section_bg_color", "label": "Section background color", "default": "#FFFFFF", "visible_if": "{{ section.settings.section_bg_type == 'solid' }}", "info": "Background color for the section" },
+            { "type": "color_background", "id": "section_bg_gradient", "label": "Section background gradient", "default": "linear-gradient(360deg, #F5F5F5 0%, #FFFFFF 100%)", "visible_if": "{{ section.settings.section_bg_type == 'gradient' }}", "info": "Background gradient for the section" },
+			      { "type": "checkbox", "id": "full_width_desktop", "label": "Full width background on desktop", "default": true, "info": "Mobile is always full width. Disable to apply the background to the inner container on desktop." },
+
+		      { "type": "range", "id": "section_border_radius", "label": "Desktop border radius", "min": 0, "max": 40, "step": 1, "unit": "px", "default": 12, "visible_if": "{{ section.settings.full_width_desktop == false }}" },
+	  
+	      { "type": "header", "content": "Section Padding" },
+	      { "type": "range", "id": "padding_top", "label": "Desktop padding top", "min": 0, "max": 140, "step": 4, "unit": "px", "default": 40 },
+	      { "type": "range", "id": "padding_bottom", "label": "Desktop padding bottom", "min": 0, "max": 140, "step": 4, "unit": "px", "default": 40 },
+	      { "type": "range", "id": "padding_top_mobile", "label": "Mobile padding top", "min": 0, "max": 100, "step": 4, "unit": "px", "default": 20 },
+	      { "type": "range", "id": "padding_bottom_mobile", "label": "Mobile padding bottom", "min": 0, "max": 100, "step": 4, "unit": "px", "default": 20 },
+
+	      { "type": "header", "content": "Section Margin" },
+	      { "type": "range", "id": "margin_top", "label": "Desktop margin top", "min": 0, "max": 140, "step": 4, "unit": "px", "default": 40 },
+	      { "type": "range", "id": "margin_bottom", "label": "Desktop margin bottom", "min": 0, "max": 140, "step": 4, "unit": "px", "default": 40 },
+	      { "type": "range", "id": "margin_top_mobile", "label": "Mobile margin top", "min": 0, "max": 100, "step": 4, "unit": "px", "default": 20 },
+	      { "type": "range", "id": "margin_bottom_mobile", "label": "Mobile margin bottom", "min": 0, "max": 100, "step": 4, "unit": "px", "default": 20 },
+	      { "type": "header", "content": "FAQ Styling", "visible_if": "{{ section.settings.enable_advanced_settings == true }}" },
+	      { "type": "range", "id": "faq_item_gap", "label": "Gap between items", "min": 0, "max": 40, "step": 2, "unit": "px", "default": 10, "visible_if": "{{ section.settings.enable_advanced_settings == true }}" },
+      { "type": "range", "id": "faq_divider_width", "label": "Divider width", "min": 1, "max": 5, "step": 1, "unit": "px", "default": 1, "info": "Line between question and answer", "visible_if": "{{ section.settings.enable_advanced_settings == true }}" },
+  
+      { "type": "header", "content": "Question Styling" },
+      { "type": "color", "id": "faq_question_color", "label": "Question text color", "default": "#000000" },
+      { "type": "checkbox", "id": "faq_question_custom_font", "label": "Enable custom font settings", "default": false },
+      { "type": "select", "id": "faq_question_as", "label": "Render as", "options": [
+        { "value": "h2", "label": "H2" },
+        { "value": "h3", "label": "H3" },
+        { "value": "h4", "label": "H4" },
+        { "value": "h5", "label": "H5" },
+        { "value": "h6", "label": "H6" },
+        { "value": "p", "label": "Paragraph (p)" }
+      ], "default": "p", "visible_if": "{{ section.settings.faq_question_custom_font == false }}" },
+      { "type": "font_picker", "id": "faq_question_font", "label": "Font family", "default": "bricolage_grotesque_n4", "visible_if": "{{ section.settings.faq_question_custom_font }}" },
+      { "type": "range", "id": "faq_question_font_size", "label": "Desktop text size", "min": 12, "max": 30, "step": 1, "unit": "px", "default": 18, "visible_if": "{{ section.settings.faq_question_custom_font }}" },
+      { "type": "range", "id": "faq_question_font_size_mobile", "label": "Mobile text size", "min": 12, "max": 24, "step": 1, "unit": "px", "default": 16, "visible_if": "{{ section.settings.faq_question_custom_font }}" },
+      { "type": "select", "id": "faq_question_font_weight", "label": "Font weight", "options": [
+        { "value": "300", "label": "Light" },
+        { "value": "400", "label": "Normal" },
+        { "value": "500", "label": "Medium" },
+        { "value": "600", "label": "Semi-bold" },
+        { "value": "700", "label": "Bold" }
+      ], "default": "500", "visible_if": "{{ section.settings.faq_question_custom_font }}" },
+      { "type": "range", "id": "faq_question_padding_vertical", "label": "Desktop padding vertical", "min": 5, "max": 30, "step": 1, "unit": "px", "default": 10, "visible_if": "{{ section.settings.enable_advanced_settings == true }}" },
+      { "type": "range", "id": "faq_question_padding_vertical_mobile", "label": "Mobile padding vertical", "min": 5, "max": 25, "step": 1, "unit": "px", "default": 10, "visible_if": "{{ section.settings.enable_advanced_settings == true }}" },
+  
+      { "type": "header", "content": "Answer Styling" },
+      { "type": "color", "id": "faq_answer_color", "label": "Answer text color", "default": "#333333" },
+      { "type": "checkbox", "id": "faq_answer_custom_font", "label": "Enable custom font settings", "default": false },
+      { "type": "font_picker", "id": "faq_answer_font", "label": "Font family", "default": "bricolage_grotesque_n4", "visible_if": "{{ section.settings.faq_answer_custom_font }}" },
+      { "type": "range", "id": "faq_answer_font_size", "label": "Desktop text size", "min": 10, "max": 24, "step": 1, "unit": "px", "default": 16, "visible_if": "{{ section.settings.faq_answer_custom_font }}" },
+      { "type": "range", "id": "faq_answer_font_size_mobile", "label": "Mobile text size", "min": 10, "max": 20, "step": 1, "unit": "px", "default": 15, "visible_if": "{{ section.settings.faq_answer_custom_font }}" },
+  
+      { "type": "header", "content": "FAQ Icons", "visible_if": "{{ section.settings.enable_advanced_settings == true }}" },
+      { "type": "range", "id": "faq_icon_size", "label": "Icon size", "min": 10, "max": 30, "step": 1, "unit": "px", "default": 18, "visible_if": "{{ section.settings.enable_advanced_settings == true }}" },
+      { "type": "color", "id": "faq_icon_color", "label": "Icon color", "default": "#000000", "visible_if": "{{ section.settings.enable_advanced_settings == true }}" }
+    ],
+    "blocks": [
+      {
+        "type": "title",
+        "name": "Title",
+        "limit": 1,
+        "settings": [
+          { "type": "header", "content": "Title" },
+          { "type": "inline_richtext", "id": "title", "label": "Title text", "default": "Answers to Your _Important_ Questions", "info": "Wrap text in underscores (_) to highlight specific words" },
+          { "type": "color", "id": "title_color", "label": "Text color", "default": "#000000" },
+          { "type": "color", "id": "title_highlight_color", "label": "Highlight color", "default": "#FFD700", "info": "Color for text wrapped in underscores" },
+          { "type": "checkbox", "id": "custom_font", "label": "Enable custom font settings", "default": false },
+          { "type": "select", "id": "title_as", "label": "Render as", "options": [
+            { "value": "h1", "label": "H1" },
+            { "value": "h2", "label": "H2" },
+            { "value": "h3", "label": "H3" },
+            { "value": "h4", "label": "H4" },
+            { "value": "h5", "label": "H5" },
+            { "value": "p", "label": "Paragraph (p)" }
+          ], "default": "h2", "visible_if": "{{ block.settings.custom_font == false }}" },
+          { "type": "font_picker", "id": "font", "label": "Font family", "default": "bricolage_grotesque_n4", "visible_if": "{{ block.settings.custom_font }}" },
+          { "type": "range", "id": "title_size", "label": "Desktop text size", "min": 18, "max": 72, "step": 1, "unit": "px", "default": 40, "visible_if": "{{ block.settings.custom_font }}" },
+          { "type": "range", "id": "title_size_mobile", "label": "Mobile text size", "min": 16, "max": 48, "step": 1, "unit": "px", "default": 26, "visible_if": "{{ block.settings.custom_font }}" },
+  
+          { "type": "header", "content": "Text Alignment" },
+          { "type": "select", "id": "title_alignment_desktop", "label": "Desktop alignment", "options": [
+            { "value": "left", "label": "Left" },
+            { "value": "center", "label": "Center" },
+            { "value": "right", "label": "Right" }
+          ], "default": "left" },
+          { "type": "select", "id": "title_alignment_mobile", "label": "Mobile alignment", "options": [
+            { "value": "left", "label": "Left" },
+            { "value": "center", "label": "Center" },
+            { "value": "right", "label": "Right" }
+          ], "default": "center" },
+  
+          { "type": "header", "content": "Block Spacing" },
+          { "type": "range", "id": "margin_top", "label": "Desktop margin top", "min": 0, "max": 100, "step": 1, "unit": "px", "default": 0 },
+          { "type": "range", "id": "margin_bottom", "label": "Desktop margin bottom", "min": 0, "max": 100, "step": 1, "unit": "px", "default": 0 },
+          { "type": "range", "id": "margin_top_mobile", "label": "Mobile margin top", "min": 0, "max": 100, "step": 1, "unit": "px", "default": 0 },
+          { "type": "range", "id": "margin_bottom_mobile", "label": "Mobile margin bottom", "min": 0, "max": 100, "step": 1, "unit": "px", "default": 0 }
+        ]
+      },
+      {
+        "type": "subtitle",
+        "name": "Subtitle",
+        "limit": 1,
+        "settings": [
+          { "type": "header", "content": "Subtitle" },
+          { "type": "richtext", "id": "subtitle", "label": "Subtitle text", "default": "<p>Didn't find what you were looking for? Contact us and our support team will be happy to help.</p>" },
+          { "type": "color", "id": "subtitle_color", "label": "Text color", "default": "#333333" },
+          { "type": "checkbox", "id": "custom_font", "label": "Enable custom font settings", "default": false },
+          { "type": "select", "id": "subtitle_as", "label": "Render as", "options": [
+            { "value": "h2", "label": "H2" },
+            { "value": "h3", "label": "H3" },
+            { "value": "h4", "label": "H4" },
+            { "value": "h5", "label": "H5" },
+            { "value": "p", "label": "Paragraph (p)" }
+          ], "default": "p", "visible_if": "{{ block.settings.custom_font == false }}" },
+          { "type": "font_picker", "id": "font", "label": "Font family", "default": "bricolage_grotesque_n4", "visible_if": "{{ block.settings.custom_font }}" },
+          { "type": "range", "id": "subtitle_size", "label": "Desktop text size", "min": 12, "max": 36, "step": 1, "unit": "px", "default": 20, "visible_if": "{{ block.settings.custom_font }}" },
+          { "type": "range", "id": "subtitle_size_mobile", "label": "Mobile text size", "min": 10, "max": 24, "step": 1, "unit": "px", "default": 18, "visible_if": "{{ block.settings.custom_font }}" },
+  
+          { "type": "header", "content": "Text Alignment" },
+          { "type": "select", "id": "subtitle_alignment_desktop", "label": "Desktop alignment", "options": [
+            { "value": "left", "label": "Left" },
+            { "value": "center", "label": "Center" },
+            { "value": "right", "label": "Right" }
+          ], "default": "left" },
+          { "type": "select", "id": "subtitle_alignment_mobile", "label": "Mobile alignment", "options": [
+            { "value": "left", "label": "Left" },
+            { "value": "center", "label": "Center" },
+            { "value": "right", "label": "Right" }
+          ], "default": "center" },
+  
+          { "type": "header", "content": "Block Spacing" },
+          { "type": "range", "id": "margin_top", "label": "Desktop margin top", "min": 0, "max": 100, "step": 1, "unit": "px", "default": 10 },
+          { "type": "range", "id": "margin_bottom", "label": "Desktop margin bottom", "min": 0, "max": 100, "step": 1, "unit": "px", "default": 10 },
+          { "type": "range", "id": "margin_top_mobile", "label": "Mobile margin top", "min": 0, "max": 100, "step": 1, "unit": "px", "default": 10 },
+          { "type": "range", "id": "margin_bottom_mobile", "label": "Mobile margin bottom", "min": 0, "max": 100, "step": 1, "unit": "px", "default": 10 }
+        ]
+      },
+      {
+        "type": "team",
+        "name": "Team",
+        "limit": 1,
+        "settings": [
+          { "type": "header", "content": "Team Images" },
+          { "type": "range", "id": "team_images_count", "label": "Images to show", "min": 0, "max": 5, "step": 1, "default": 3, "info": "Set to 0 if you don't want to display any images." },
+          { "type": "image_picker", "id": "image_1", "label": "Image 1", "visible_if": "{{ block.settings.team_images_count >= 1 }}" },
+          { "type": "image_picker", "id": "image_2", "label": "Image 2", "visible_if": "{{ block.settings.team_images_count >= 2 }}" },
+          { "type": "image_picker", "id": "image_3", "label": "Image 3", "visible_if": "{{ block.settings.team_images_count >= 3 }}" },
+          { "type": "image_picker", "id": "image_4", "label": "Image 4", "visible_if": "{{ block.settings.team_images_count >= 4 }}" },
+          { "type": "image_picker", "id": "image_5", "label": "Image 5", "visible_if": "{{ block.settings.team_images_count >= 5 }}" },
+          { "type": "range", "id": "team_image_size", "min": 20, "max": 200, "step": 2, "unit": "px", "label": "Image size", "default": 60 },
+          { "type": "range", "id": "team_image_border_width", "label": "Image border width", "min": 0, "max": 3, "step": 1, "unit": "px", "default": 2 },
+          { "type": "color", "id": "team_image_border_color", "label": "Image border color", "default": "#FFFFFF" },
+          { "type": "range", "id": "team_images_overlap", "label": "Image overlap", "min": 0, "max": 30, "step": 1, "unit": "px", "default": 10 },
+          { "type": "range", "id": "team_images_margin_bottom", "min": 0, "max": 30, "step": 1, "unit": "px", "label": "Images margin bottom", "default": 10 },
+  
+          { "type": "header", "content": "Team Text" },
+          { "type": "inline_richtext", "id": "paragraph", "label": "Paragraph text", "default": "Meet our team of experts who are ready to assist you with any questions you may have." },
+          { "type": "color", "id": "team_paragraph_color", "label": "Text color", "default": "#333333" },
+          { "type": "checkbox", "id": "custom_font", "label": "Enable custom font settings", "default": false },
+          { "type": "select", "id": "team_paragraph_as", "label": "Render as", "options": [
+            { "value": "h2", "label": "H2" },
+            { "value": "h3", "label": "H3" },
+            { "value": "h4", "label": "H4" },
+            { "value": "h5", "label": "H5" },
+            { "value": "p", "label": "Paragraph (p)" }
+          ], "default": "p", "visible_if": "{{ block.settings.custom_font == false }}" },
+          { "type": "font_picker", "id": "font", "label": "Font family", "default": "bricolage_grotesque_n4", "visible_if": "{{ block.settings.custom_font }}" },
+          { "type": "range", "id": "team_paragraph_size", "label": "Desktop text size", "min": 10, "max": 36, "step": 1, "unit": "px", "default": 18, "visible_if": "{{ block.settings.custom_font }}" },
+          { "type": "range", "id": "team_paragraph_size_mobile", "label": "Mobile text size", "min": 10, "max": 24, "step": 1, "unit": "px", "default": 16, "visible_if": "{{ block.settings.custom_font }}" },
+  
+          { "type": "header", "content": "Text Alignment" },
+          { "type": "select", "id": "team_alignment_desktop", "label": "Desktop alignment", "options": [
+            { "value": "left", "label": "Left" },
+            { "value": "center", "label": "Center" },
+            { "value": "right", "label": "Right" }
+          ], "default": "left" },
+          { "type": "select", "id": "team_alignment_mobile", "label": "Mobile alignment", "options": [
+            { "value": "left", "label": "Left" },
+            { "value": "center", "label": "Center" },
+            { "value": "right", "label": "Right" }
+          ], "default": "center" },
+  
+          { "type": "header", "content": "Block Spacing" },
+          { "type": "range", "id": "margin_top", "label": "Desktop margin top", "min": 0, "max": 100, "step": 1, "unit": "px", "default": 0 },
+          { "type": "range", "id": "margin_bottom", "label": "Desktop margin bottom", "min": 0, "max": 100, "step": 1, "unit": "px", "default": 0 },
+          { "type": "range", "id": "margin_top_mobile", "label": "Mobile margin top", "min": 0, "max": 100, "step": 1, "unit": "px", "default": 0 },
+          { "type": "range", "id": "margin_bottom_mobile", "label": "Mobile margin bottom", "min": 0, "max": 100, "step": 1, "unit": "px", "default": 30 }
+        ]
+      },
+      {
+        "type": "faq_item",
+        "name": "FAQ Item",
+        "limit": 25,
+        "settings": [
+          {
+            "type": "inline_richtext",
+            "id": "question",
+            "label": "Question",
+            "default": "What is the return policy?"
+          },
+          {
+            "type": "richtext",
+            "id": "answer",
+            "label": "Answer",
+            "default": "<p>Our return policy allows for returns within 30 days of purchase. Please see our website for more details.</p>"
+          }
+        ]
+      }
+    ],
+    "presets": [
+      {
+        "name": "VSO - FAQ 02",
+        "blocks": [
+          {
+            "type": "title",
+            "settings": {
+              "title": "Answers to Your _Important_ Questions"
+            }
+          },
+          {
+            "type": "subtitle"
+          },
+          {
+            "type": "team",
+            "settings": {
+              "paragraph": "Expect a reply within one business day."
+            }
+          },
+          {
+            "type": "faq_item",
+            "settings": {
+              "question": "How do I use this product?"
+            }
+          },
+          {
+            "type": "faq_item",
+            "settings": {
+              "question": "What makes your product different from competitors?"
+            }
+          },
+          {
+            "type": "faq_item",
+            "settings": {
+              "question": "How long until I see results?"
+            }
+          },
+          {
+            "type": "faq_item",
+            "settings": {
+              "question": "Do you offer a satisfaction guarantee?"
+            }
+          }
+        ]
+      }
+    ]
+  }
+  {% endschema %}
+  
