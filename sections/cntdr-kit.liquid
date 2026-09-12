@@ -232,7 +232,8 @@
         {
           "type": "checkbox",
           "id": "highlight",
-          "label": "This is the main product row (lime highlight, price pulled from the product)",
+          "label": "Highlight as main product row",
+          "info": "Turns on the lime highlight and pulls the price from the selected product instead of the settings below.",
           "default": false
         },
         {
@@ -251,19 +252,22 @@
         {
           "type": "number",
           "id": "strike_price",
-          "label": "Struck-through price (whole currency units, ignored on the highlighted row)",
+          "label": "Struck-through price",
+          "info": "Whole currency units. Ignored on the highlighted row.",
           "default": 38
         },
         {
           "type": "text",
           "id": "free_label",
-          "label": "Price replacement text (ignored on the highlighted row)",
+          "label": "Price replacement text",
+          "info": "Ignored on the highlighted row.",
           "default": "Free"
         },
         {
           "type": "text",
           "id": "price_text",
-          "label": "Fallback price text for the highlighted row (used only if no product is selected)",
+          "label": "Fallback price (highlighted row)",
+          "info": "Used only if no product is selected above.",
           "default": "$69"
         }
       ]
