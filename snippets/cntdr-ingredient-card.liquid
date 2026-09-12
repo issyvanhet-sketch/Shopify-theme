@@ -1,0 +1,28 @@
+{%- doc -%}
+  Renders one CNTDR AM ingredient card.
+
+  @param {string} title - Ingredient name
+  @param {string} dose - Dose chip text, e.g. "5 g"
+  @param {string} description - Short description
+  @param {object} [image] - Image object for the ingredient macro shot
+  @param {string} [shopify_attributes] - block.shopify_attributes passthrough for the theme editor
+{%- enddoc -%}
+
+<div class="cntdr-ingredient-card" {{ shopify_attributes }}>
+  <div class="cntdr-ingredient-card__media">
+    {%- if image != blank -%}
+      {{
+        image
+        | image_url: width: 800
+        | image_tag: loading: 'lazy', widths: '300,400,600,800', alt: image.alt | default: title
+      }}
+    {%- endif -%}
+  </div>
+  <div class="cntdr-ingredient-card__body">
+    <div class="cntdr-ingredient-card__title-row">
+      <h3 class="cntdr-h4">{{ title }}</h3>
+      <span class="cntdr-chip">{{ dose }}</span>
+    </div>
+    <p class="cntdr-ingredient-card__desc">{{ description }}</p>
+  </div>
+</div>

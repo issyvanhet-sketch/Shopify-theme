@@ -1,0 +1,306 @@
+{%- liquid
+  assign kit_product = section.settings.product
+  assign variant = kit_product.selected_or_first_available_variant
+  assign can_add_to_cart = false
+  if variant.available
+    assign can_add_to_cart = true
+  endif
+
+  assign base_cents = variant.price
+  if variant.compare_at_price > variant.price
+    assign base_cents = variant.compare_at_price
+  endif
+
+  assign bonus_cents_sum = 0
+  for block in section.blocks
+    unless block.settings.highlight
+      assign item_cents = block.settings.strike_price | times: 100
+      assign bonus_cents_sum = bonus_cents_sum | plus: item_cents
+    endunless
+  endfor
+  assign total_strike_cents = base_cents | plus: bonus_cents_sum
+-%}
+
+<section id="kit" class="cntdr cntdr-kit">
+  <div class="cntdr-wrap cntdr-kit__grid">
+    <div class="cntdr-kit__media">
+      {%- if section.settings.glow -%}
+        <div class="cntdr-kit__glow" aria-hidden="true"></div>
+      {%- endif -%}
+      {%- if section.settings.image != blank -%}
+        {{
+          section.settings.image
+          | image_url: width: 1200
+          | image_tag: loading: 'lazy', widths: '400,600,800,1000,1200', alt: section.settings.image.alt
+        }}
+      {%- endif -%}
+    </div>
+
+    <div class="cntdr-kit__content">
+      <div class="cntdr-eyebrow">{{ section.settings.label }}</div>
+      <h2 class="cntdr-h2 cntdr-kit__heading">{{ section.settings.heading }}</h2>
+
+      <div class="cntdr-kit__card">
+        {%- for block in section.blocks -%}
+          {%- if block.settings.highlight -%}
+            <div class="cntdr-kit__selected-row" {{ block.shopify_attributes }}>
+              <div class="cntdr-kit__selected-main">
+                <span class="cntdr-kit__check" aria-hidden="true">&#10003;</span>
+                <div>
+                  <div class="cntdr-kit__selected-title">
+                    {{ block.settings.title | default: kit_product.title }}
+                  </div>
+                  <div class="cntdr-kit__selected-sub">{{ block.settings.subtitle }}</div>
+                </div>
+              </div>
+              <div class="cntdr-kit__selected-price">
+                {%- if kit_product != blank -%}
+                  {%- render 'format-price', price: variant.price -%}
+                {%- else -%}
+                  {{ block.settings.price_text }}
+                {%- endif -%}
+                <span>{{ section.settings.price_suffix }}</span>
+              </div>
+            </div>
+          {%- else -%}
+            <div class="cntdr-kit__row" {{ block.shopify_attributes }}>
+              <div>
+                <div class="cntdr-kit__row-title">{{ block.settings.title }}</div>
+                <div class="cntdr-kit__row-sub">{{ block.settings.subtitle }}</div>
+              </div>
+              <div class="cntdr-kit__row-price">
+                {%- if block.settings.strike_price > 0 -%}
+                  <s>{{ block.settings.strike_price | times: 100 | money }}</s>
+                {%- endif -%}
+                {{ block.settings.free_label }}
+              </div>
+            </div>
+          {%- endif -%}
+        {%- endfor -%}
+
+        <div class="cntdr-kit__total">
+          <div class="cntdr-kit__total-label">{{ section.settings.total_label }}</div>
+          <div class="cntdr-kit__total-price">
+            {%- if kit_product != blank -%}
+              <s>{{ total_strike_cents | money }}</s>
+              &nbsp;{%- render 'format-price', price: variant.price -%}<span class="cntdr-kit__suffix">{{ section.settings.price_suffix }}</span>
+            {%- else -%}
+              <s>{{ section.settings.total_strike_price }}</s>
+              &nbsp;{{ section.settings.total_price }}<span class="cntdr-kit__suffix">{{ section.settings.price_suffix }}</span>
+            {%- endif -%}
+          </div>
+        </div>
+
+        {%- if kit_product != blank -%}
+          <product-form-component
+            data-section-id="{{ section.id }}"
+            data-product-id="{{ kit_product.id }}"
+            on:submit="/handleSubmit"
+          >
+            <div class="visually-hidden" aria-live="assertive" role="status" aria-atomic="true" ref="liveRegion"></div>
+            {%- form 'product', kit_product, id: 'CntdrKitForm-' | append: section.id, novalidate: 'novalidate', data-type: 'add-to-cart-form' -%}
+              <input
+                type="hidden"
+                name="id"
+                ref="variantId"
+                value="{{ variant.id }}"
+                {% unless can_add_to_cart %}
+                  disabled
+                {% endunless %}
+              >
+              <input type="hidden" name="quantity" value="1">
+              {%- render 'add-to-cart-button',
+                add_to_cart_text: section.settings.cta_label,
+                class: 'cntdr-btn cntdr-btn--primary cntdr-btn--full cntdr-kit__cta',
+                can_add_to_cart: can_add_to_cart,
+                product: kit_product
+              -%}
+            {%- endform -%}
+          </product-form-component>
+          {%- unless can_add_to_cart -%}
+            <p class="cntdr-kit__unavailable">{{ 'products.product.sold_out' | t }}</p>
+          {%- endunless -%}
+        {%- else -%}
+          <a href="{{ section.settings.cta_fallback_link | default: '#' }}" class="cntdr-btn cntdr-btn--primary cntdr-btn--full cntdr-kit__cta">
+            {{ section.settings.cta_label }}
+          </a>
+        {%- endif -%}
+
+        {%- if section.settings.footnote_1 != blank or section.settings.footnote_2 != blank -%}
+          <div class="cntdr-kit__footnote">
+            {%- if section.settings.footnote_1 != blank -%}<span>{{ section.settings.footnote_1 }}</span>{%- endif -%}
+            {%- if section.settings.footnote_2 != blank -%}<span>{{ section.settings.footnote_2 }}</span>{%- endif -%}
+          </div>
+        {%- endif -%}
+      </div>
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "CNTDR AM Welcome Kit",
+  "tag": "section",
+  "settings": [
+    {
+      "type": "product",
+      "id": "product",
+      "label": "Welcome Kit product",
+      "info": "The subscription product this card sells. Price, availability and the Add to cart button all come from this product's first/selected variant."
+    },
+    {
+      "type": "image_picker",
+      "id": "image",
+      "label": "Product image"
+    },
+    {
+      "type": "checkbox",
+      "id": "glow",
+      "label": "Show lime glow behind product image",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "label",
+      "label": "Eyebrow label",
+      "default": "The Welcome Kit"
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Start with intent"
+    },
+    {
+      "type": "text",
+      "id": "price_suffix",
+      "label": "Price suffix",
+      "default": "/mo"
+    },
+    {
+      "type": "text",
+      "id": "total_label",
+      "label": "Total row label",
+      "default": "Total"
+    },
+    {
+      "type": "text",
+      "id": "total_price",
+      "label": "Fallback total price (used only if no product is selected)",
+      "default": "$69"
+    },
+    {
+      "type": "text",
+      "id": "total_strike_price",
+      "label": "Fallback struck-through total (used only if no product is selected)",
+      "default": "$126"
+    },
+    {
+      "type": "text",
+      "id": "cta_label",
+      "label": "Button label",
+      "default": "Claim the Welcome Kit"
+    },
+    {
+      "type": "url",
+      "id": "cta_fallback_link",
+      "label": "Fallback button link (used only if no product is selected)"
+    },
+    {
+      "type": "header",
+      "content": "Footnote"
+    },
+    {
+      "type": "text",
+      "id": "footnote_1",
+      "label": "Footnote item 1",
+      "default": "60-day guarantee"
+    },
+    {
+      "type": "text",
+      "id": "footnote_2",
+      "label": "Footnote item 2",
+      "default": "Pause or cancel anytime"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "kit_line_item",
+      "name": "Line item",
+      "settings": [
+        {
+          "type": "checkbox",
+          "id": "highlight",
+          "label": "This is the main product row (lime highlight, price pulled from the product)",
+          "default": false
+        },
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Title",
+          "info": "Leave blank on the highlighted row to use the product's title.",
+          "default": "Travel case + steel bottle"
+        },
+        {
+          "type": "text",
+          "id": "subtitle",
+          "label": "Subtitle",
+          "default": "Matte black, 7 sachets"
+        },
+        {
+          "type": "number",
+          "id": "strike_price",
+          "label": "Struck-through price (whole currency units, ignored on the highlighted row)",
+          "default": 38
+        },
+        {
+          "type": "text",
+          "id": "free_label",
+          "label": "Price replacement text (ignored on the highlighted row)",
+          "default": "Free"
+        },
+        {
+          "type": "text",
+          "id": "price_text",
+          "label": "Fallback price text for the highlighted row (used only if no product is selected)",
+          "default": "$69"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "CNTDR AM Welcome Kit",
+      "blocks": [
+        {
+          "type": "kit_line_item",
+          "settings": {
+            "highlight": true,
+            "title": "",
+            "subtitle": "Subscription · ships every 30 days",
+            "price_text": "$69"
+          }
+        },
+        {
+          "type": "kit_line_item",
+          "settings": {
+            "title": "Travel case + steel bottle",
+            "subtitle": "Matte black, 7 sachets",
+            "strike_price": 38,
+            "free_label": "Free"
+          }
+        },
+        {
+          "type": "kit_line_item",
+          "settings": {
+            "title": "AM Protocol guide",
+            "subtitle": "14-day routine build, digital",
+            "strike_price": 19,
+            "free_label": "Free"
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

@@ -1,0 +1,155 @@
+{{ 'cntdr-am.css' | asset_url | stylesheet_tag }}
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link
+  href="https://fonts.googleapis.com/css2?family=Instrument+Serif&family=Space+Grotesk:wght@400;500;700&display=swap"
+  rel="stylesheet"
+>
+
+<section id="{{ section.id }}" class="cntdr cntdr-hero">
+  <div class="cntdr-hero__text">
+    <div class="cntdr-eyebrow">
+      <span class="cntdr-pill" aria-hidden="true"></span>
+      {{ section.settings.eyebrow }}
+    </div>
+
+    <h1 class="cntdr-h1">{{ section.settings.heading }}</h1>
+
+    {%- if section.settings.body != blank -%}
+      <div class="cntdr-body-text cntdr-hero__body">{{ section.settings.body }}</div>
+    {%- endif -%}
+
+    <div class="cntdr-hero__actions">
+      {%- if section.settings.primary_button_label != blank -%}
+        <a href="{{ section.settings.primary_button_link | default: '#kit' }}" class="cntdr-btn cntdr-btn--primary">
+          {{ section.settings.primary_button_label }}
+        </a>
+      {%- endif -%}
+      {%- if section.settings.secondary_button_label != blank -%}
+        <a
+          href="{{ section.settings.secondary_button_link | default: '#formula' }}"
+          class="cntdr-btn cntdr-btn--secondary"
+        >
+          {{ section.settings.secondary_button_label }}
+        </a>
+      {%- endif -%}
+    </div>
+
+    {%- if section.settings.trust_1 != blank or section.settings.trust_2 != blank or section.settings.trust_3 != blank -%}
+      <div class="cntdr-hero__trust">
+        {%- if section.settings.trust_1 != blank -%}
+          <span>{{ section.settings.trust_1 }}</span>
+        {%- endif -%}
+        {%- if section.settings.trust_2 != blank -%}
+          <span class="cntdr-hero__trust-sep">/</span>
+          <span>{{ section.settings.trust_2 }}</span>
+        {%- endif -%}
+        {%- if section.settings.trust_3 != blank -%}
+          <span class="cntdr-hero__trust-sep">/</span>
+          <span>{{ section.settings.trust_3 }}</span>
+        {%- endif -%}
+      </div>
+    {%- endif -%}
+  </div>
+
+  <div class="cntdr-hero__media">
+    {%- if section.settings.image != blank -%}
+      {{
+        section.settings.image
+        | image_url: width: 1600
+        | image_tag:
+          loading: 'eager',
+          fetchpriority: 'high',
+          widths: '400,600,800,1000,1200,1600',
+          alt: section.settings.image.alt | default: section.settings.heading
+      }}
+    {%- else -%}
+      <div class="cntdr-hero__media-placeholder"></div>
+    {%- endif -%}
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "CNTDR AM hero",
+  "tag": "section",
+  "settings": [
+    {
+      "type": "text",
+      "id": "eyebrow",
+      "label": "Eyebrow label",
+      "default": "Daily performance protocol"
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Own the Morning."
+    },
+    {
+      "type": "richtext",
+      "id": "body",
+      "label": "Body text",
+      "default": "<p>One sachet. Creatine, L-Tyrosine, Taurine, Citicoline, Caffeine and electrolytes, clinically dosed for the first hour of the day. Built for people who expect more from their day.</p>"
+    },
+    {
+      "type": "image_picker",
+      "id": "image",
+      "label": "Hero image"
+    },
+    {
+      "type": "header",
+      "content": "Buttons"
+    },
+    {
+      "type": "text",
+      "id": "primary_button_label",
+      "label": "Primary button label",
+      "default": "Start the protocol"
+    },
+    {
+      "type": "url",
+      "id": "primary_button_link",
+      "label": "Primary button link"
+    },
+    {
+      "type": "text",
+      "id": "secondary_button_label",
+      "label": "Secondary button label",
+      "default": "See the formula"
+    },
+    {
+      "type": "url",
+      "id": "secondary_button_link",
+      "label": "Secondary button link"
+    },
+    {
+      "type": "header",
+      "content": "Trust line"
+    },
+    {
+      "type": "text",
+      "id": "trust_1",
+      "label": "Item 1",
+      "default": "Sachets. Not scoops."
+    },
+    {
+      "type": "text",
+      "id": "trust_2",
+      "label": "Item 2",
+      "default": "30 mornings per box"
+    },
+    {
+      "type": "text",
+      "id": "trust_3",
+      "label": "Item 3",
+      "default": "Third-party tested"
+    }
+  ],
+  "presets": [
+    {
+      "name": "CNTDR AM hero"
+    }
+  ]
+}
+{% endschema %}

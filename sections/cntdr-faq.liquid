@@ -1,0 +1,134 @@
+<section id="faq" class="cntdr cntdr-faq">
+  <div class="cntdr-wrap cntdr-faq__wrap">
+    <h2 class="cntdr-h2 cntdr-faq__heading">{{ section.settings.heading }}</h2>
+    <div class="cntdr-faq__list" data-cntdr-faq>
+      {%- for block in section.blocks -%}
+        <details
+          class="cntdr-faq__item"
+          {% if forloop.first and section.settings.first_open %}
+            open
+          {% endif %}
+          {{ block.shopify_attributes }}
+        >
+          <summary class="cntdr-faq__trigger">
+            <span class="cntdr-faq__index" aria-hidden="true">{{ forloop.index | prepend: '00' | slice: -2, 2 }}</span>
+            <span class="cntdr-h4">{{ block.settings.question }}</span>
+            <span class="cntdr-faq__icon" aria-hidden="true"></span>
+          </summary>
+          <div class="cntdr-faq__panel">
+            <span></span>
+            <p class="cntdr-faq__answer">{{ block.settings.answer }}</p>
+            <span></span>
+          </div>
+        </details>
+      {%- endfor -%}
+    </div>
+  </div>
+</section>
+
+<script>
+  (function () {
+    document.querySelectorAll('[data-cntdr-faq]').forEach(function (list) {
+      list.addEventListener(
+        'toggle',
+        function (event) {
+          if (!(event.target instanceof HTMLDetailsElement) || !event.target.open) return;
+          list.querySelectorAll('details[open]').forEach(function (details) {
+            if (details !== event.target) details.removeAttribute('open');
+          });
+        },
+        true
+      );
+    });
+  })();
+</script>
+
+{% schema %}
+{
+  "name": "CNTDR AM FAQ",
+  "tag": "section",
+  "settings": [
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Questions"
+    },
+    {
+      "type": "checkbox",
+      "id": "first_open",
+      "label": "Open the first question by default",
+      "default": true
+    }
+  ],
+  "blocks": [
+    {
+      "type": "faq_item",
+      "name": "Question",
+      "settings": [
+        {
+          "type": "text",
+          "id": "question",
+          "label": "Question",
+          "default": "Who is CNTDR AM for?"
+        },
+        {
+          "type": "richtext",
+          "id": "answer",
+          "label": "Answer",
+          "default": "<p>Anyone with a morning that matters.</p>"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "CNTDR AM FAQ",
+      "blocks": [
+        {
+          "type": "faq_item",
+          "settings": {
+            "question": "Who is CNTDR AM for?",
+            "answer": "<p>Anyone with a morning that matters: founders, operators, professionals, endurance and strength athletes. If your first three hours decide the day, this is built for you.</p>"
+          }
+        },
+        {
+          "type": "faq_item",
+          "settings": {
+            "question": "How do I take it?",
+            "answer": "<p>One sachet in 300 ml of cold water, within 15 minutes of waking. Stir ten seconds. Take it before training or before your first work block — not both.</p>"
+          }
+        },
+        {
+          "type": "faq_item",
+          "settings": {
+            "question": "Why sachets instead of a tub?",
+            "answer": "<p>Dosing accuracy and travel. Every sachet is the same 9.2 g dose, sealed, and it fits in a laptop bag. Sachets. Not scoops.</p>"
+          }
+        },
+        {
+          "type": "faq_item",
+          "settings": {
+            "question": "Is 100 mg of caffeine a lot?",
+            "answer": "<p>It is roughly one coffee, paired with taurine and L-tyrosine to flatten the curve. If you also drink coffee, take CNTDR AM first and adjust from there.</p>"
+          }
+        },
+        {
+          "type": "faq_item",
+          "settings": {
+            "question": "Can I stack it with other supplements?",
+            "answer": "<p>Yes. It replaces most morning stacks — creatine, electrolytes, nootropics, caffeine. Keep your protein, omega-3 or vitamin D if you use them.</p>"
+          }
+        },
+        {
+          "type": "faq_item",
+          "settings": {
+            "question": "How is it tested?",
+            "answer": "<p>Every batch is third-party tested for identity, potency and contaminants. Certificates of analysis are published per batch number.</p>"
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

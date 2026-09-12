@@ -1,0 +1,68 @@
+<section class="cntdr cntdr-positioning">
+  <div class="cntdr-wrap cntdr-positioning__wrap">
+    <div class="cntdr-eyebrow cntdr-positioning__label">{{ section.settings.label }}</div>
+    {%- if section.settings.line_1 != blank -%}
+      <div class="cntdr-positioning__line">{{ section.settings.line_1 }}</div>
+    {%- endif -%}
+    {%- if section.settings.line_2 != blank -%}
+      <div class="cntdr-positioning__line">{{ section.settings.line_2 }}</div>
+    {%- endif -%}
+    {%- if section.settings.line_3 != blank -%}
+      <div class="cntdr-positioning__line">{{ section.settings.line_3 }}</div>
+    {%- endif -%}
+    {%- if section.settings.line_final != blank -%}
+      <div class="cntdr-positioning__line cntdr-positioning__line--final">{{ section.settings.line_final }}</div>
+    {%- endif -%}
+    <p class="cntdr-body-text cntdr-positioning__body">{{ section.settings.body }}</p>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "CNTDR AM positioning",
+  "tag": "section",
+  "settings": [
+    {
+      "type": "text",
+      "id": "label",
+      "label": "Eyebrow label",
+      "default": "Positioning"
+    },
+    {
+      "type": "text",
+      "id": "line_1",
+      "label": "Line 1",
+      "default": "Not a bodybuilding formula."
+    },
+    {
+      "type": "text",
+      "id": "line_2",
+      "label": "Line 2",
+      "default": "Not a vitamin gummy."
+    },
+    {
+      "type": "text",
+      "id": "line_3",
+      "label": "Line 3",
+      "default": "Not another pre-workout."
+    },
+    {
+      "type": "text",
+      "id": "line_final",
+      "label": "Final line (emphasized)",
+      "default": "A morning protocol."
+    },
+    {
+      "type": "richtext",
+      "id": "body",
+      "label": "Closing body",
+      "default": "<p>For people who expect more from their day — and want the first decision of it made already.</p>"
+    }
+  ],
+  "presets": [
+    {
+      "name": "CNTDR AM positioning"
+    }
+  ]
+}
+{% endschema %}

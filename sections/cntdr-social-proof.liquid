@@ -1,0 +1,133 @@
+<section class="cntdr cntdr-social">
+  <div class="cntdr-wrap">
+    <div class="cntdr-social__top">
+      <div class="cntdr-social__stat">{{ section.settings.stat_number }}</div>
+      <div class="cntdr-social__summary">
+        <div class="cntdr-eyebrow">{{ section.settings.rating_label }}</div>
+        <p class="cntdr-social__lead">{{ section.settings.lead }}</p>
+      </div>
+    </div>
+
+    <div class="cntdr-social__grid">
+      {%- for block in section.blocks -%}
+        <div class="cntdr-testimonial" {{ block.shopify_attributes }}>
+          <div class="cntdr-testimonial__stars" aria-hidden="true">
+            {%- for i in (1..5) -%}
+              {%- if i <= block.settings.stars -%}&#9733;{%- else -%}&#9734;{%- endif -%}
+            {%- endfor -%}
+          </div>
+          <p class="cntdr-testimonial__quote">&ldquo;{{ block.settings.quote }}&rdquo;</p>
+          <div class="cntdr-testimonial__author">
+            <div class="cntdr-testimonial__avatar">
+              {%- if block.settings.avatar != blank -%}
+                {{ block.settings.avatar | image_url: width: 80 | image_tag: loading: 'lazy', widths: '40,80', alt: block.settings.author_name }}
+              {%- endif -%}
+            </div>
+            <div class="cntdr-testimonial__meta">
+              {{ block.settings.author_name }}<br>
+              {{ block.settings.author_role }}
+            </div>
+          </div>
+        </div>
+      {%- endfor -%}
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "CNTDR AM social proof",
+  "tag": "section",
+  "settings": [
+    {
+      "type": "text",
+      "id": "stat_number",
+      "label": "Stat number",
+      "default": "3,912"
+    },
+    {
+      "type": "text",
+      "id": "rating_label",
+      "label": "Rating label",
+      "default": "4.8 / 5 average · verified buyers"
+    },
+    {
+      "type": "richtext",
+      "id": "lead",
+      "label": "Lead text",
+      "default": "<p>Operators, founders and athletes running CNTDR AM as their first move of the day.</p>"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "testimonial",
+      "name": "Testimonial",
+      "settings": [
+        {
+          "type": "range",
+          "id": "stars",
+          "label": "Stars",
+          "min": 1,
+          "max": 5,
+          "step": 1,
+          "default": 5
+        },
+        {
+          "type": "textarea",
+          "id": "quote",
+          "label": "Quote",
+          "default": "I stopped negotiating with my morning."
+        },
+        {
+          "type": "image_picker",
+          "id": "avatar",
+          "label": "Avatar"
+        },
+        {
+          "type": "text",
+          "id": "author_name",
+          "label": "Author name",
+          "default": "Daniel R."
+        },
+        {
+          "type": "text",
+          "id": "author_role",
+          "label": "Author role",
+          "default": "Founder, SaaS"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "CNTDR AM social proof",
+      "blocks": [
+        {
+          "type": "testimonial",
+          "settings": {
+            "quote": "I stopped negotiating with my morning. Sachet, water, out the door by six. The 5-to-9 before the 9-to-5 is where the company gets built.",
+            "author_name": "Daniel R.",
+            "author_role": "Founder, SaaS"
+          }
+        },
+        {
+          "type": "testimonial",
+          "settings": {
+            "quote": "Creatine and electrolytes in one dose I actually take on the road. Threshold sessions feel the same in a hotel gym as they do at home.",
+            "author_name": "Marije K.",
+            "author_role": "Marathon, 2:41"
+          }
+        },
+        {
+          "type": "testimonial",
+          "settings": {
+            "quote": "Four bottles gone from my counter. One box, one drawer, no decisions before the first block of deep work.",
+            "author_name": "Tobias L.",
+            "author_role": "Head of Ops"
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

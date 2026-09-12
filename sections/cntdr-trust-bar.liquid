@@ -1,0 +1,51 @@
+{%- if section.settings.enabled -%}
+  <div class="cntdr cntdr-trustbar">
+    {%- for block in section.blocks -%}
+      {%- if forloop.index > 1 -%}
+        <span class="cntdr-trustbar__sep" aria-hidden="true">&bull;</span>
+      {%- endif -%}
+      <span {{ block.shopify_attributes }}>{{ block.settings.claim }}</span>
+    {%- endfor -%}
+  </div>
+{%- endif -%}
+
+{% schema %}
+{
+  "name": "CNTDR AM trust bar",
+  "tag": "section",
+  "settings": [
+    {
+      "type": "checkbox",
+      "id": "enabled",
+      "label": "Show trust bar",
+      "default": true
+    }
+  ],
+  "blocks": [
+    {
+      "type": "claim",
+      "name": "Claim",
+      "settings": [
+        {
+          "type": "text",
+          "id": "claim",
+          "label": "Claim text",
+          "default": "Third-party tested"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "CNTDR AM trust bar",
+      "blocks": [
+        { "type": "claim", "settings": { "claim": "Third-party tested" } },
+        { "type": "claim", "settings": { "claim": "Clinically dosed" } },
+        { "type": "claim", "settings": { "claim": "No fillers" } },
+        { "type": "claim", "settings": { "claim": "No added sugar" } },
+        { "type": "claim", "settings": { "claim": "Pause anytime" } }
+      ]
+    }
+  ]
+}
+{% endschema %}

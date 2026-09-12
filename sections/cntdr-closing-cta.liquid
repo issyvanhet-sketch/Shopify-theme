@@ -1,0 +1,64 @@
+<section class="cntdr cntdr-closing">
+  <div class="cntdr-closing__wrap">
+    <div class="cntdr-eyebrow">{{ section.settings.label }}</div>
+    <h2 class="cntdr-h1 cntdr-closing__heading">{{ section.settings.heading }}</h2>
+    <p class="cntdr-body-text cntdr-closing__body">{{ section.settings.body }}</p>
+    {%- if section.settings.button_label != blank -%}
+      <a href="{{ section.settings.button_link | default: '#kit' }}" class="cntdr-btn cntdr-btn--primary">
+        {{ section.settings.button_label }}
+      </a>
+    {%- endif -%}
+    {%- if section.settings.note != blank -%}
+      <div class="cntdr-closing__note">{{ section.settings.note }}</div>
+    {%- endif -%}
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "CNTDR AM closing CTA",
+  "tag": "section",
+  "settings": [
+    {
+      "type": "text",
+      "id": "label",
+      "label": "Eyebrow label",
+      "default": "One protocol. No excuses."
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Own tomorrow morning"
+    },
+    {
+      "type": "richtext",
+      "id": "body",
+      "label": "Body text",
+      "default": "<p>30 sachets, shipped monthly. Cancel whenever — most people don't.</p>"
+    },
+    {
+      "type": "text",
+      "id": "button_label",
+      "label": "Button label",
+      "default": "Get CNTDR AM"
+    },
+    {
+      "type": "url",
+      "id": "button_link",
+      "label": "Button link"
+    },
+    {
+      "type": "text",
+      "id": "note",
+      "label": "Note",
+      "default": "60-day money-back guarantee"
+    }
+  ],
+  "presets": [
+    {
+      "name": "CNTDR AM closing CTA"
+    }
+  ]
+}
+{% endschema %}

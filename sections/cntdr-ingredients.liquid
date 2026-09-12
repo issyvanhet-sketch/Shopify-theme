@@ -1,0 +1,154 @@
+<section id="ingredients" class="cntdr cntdr-ingredients">
+  <div class="cntdr-wrap">
+    <div class="cntdr-ingredients__header">
+      <div class="cntdr-ingredients__heading-group">
+        <div class="cntdr-eyebrow">{{ section.settings.label }}</div>
+        <h2 class="cntdr-h2 cntdr-ingredients__heading">{{ section.settings.heading }}</h2>
+      </div>
+      {%- if section.settings.badge != blank -%}
+        <div class="cntdr-badge">{{ section.settings.badge }}</div>
+      {%- endif -%}
+    </div>
+
+    <div class="cntdr-ingredients__grid">
+      {%- for block in section.blocks -%}
+        {%- render 'cntdr-ingredient-card',
+          title: block.settings.title,
+          dose: block.settings.dose,
+          description: block.settings.description,
+          image: block.settings.image,
+          shopify_attributes: block.shopify_attributes
+        -%}
+      {%- endfor -%}
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "CNTDR AM ingredients",
+  "tag": "section",
+  "settings": [
+    {
+      "type": "text",
+      "id": "label",
+      "label": "Eyebrow label",
+      "default": "Eight actives · full disclosure"
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Every dose earns its place"
+    },
+    {
+      "type": "text",
+      "id": "badge",
+      "label": "Badge text",
+      "default": "9.2 g per sachet"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "ingredient",
+      "name": "Ingredient",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Image"
+        },
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Name",
+          "default": "Creatine Monohydrate"
+        },
+        {
+          "type": "text",
+          "id": "dose",
+          "label": "Dose",
+          "default": "5 g"
+        },
+        {
+          "type": "textarea",
+          "id": "description",
+          "label": "Description",
+          "default": "The most studied form, at the full daily dose. Strength output, power endurance and cognitive resilience on short sleep."
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "CNTDR AM ingredients",
+      "blocks": [
+        {
+          "type": "ingredient",
+          "settings": {
+            "title": "Creatine Monohydrate",
+            "dose": "5 g",
+            "description": "The most studied form, at the full daily dose. Strength output, power endurance and cognitive resilience on short sleep."
+          }
+        },
+        {
+          "type": "ingredient",
+          "settings": {
+            "title": "L-Tyrosine",
+            "dose": "1.5 g",
+            "description": "Precursor to dopamine and noradrenaline. Holds focus together when the day gets loud."
+          }
+        },
+        {
+          "type": "ingredient",
+          "settings": {
+            "title": "Taurine",
+            "dose": "1 g",
+            "description": "Smooths the caffeine curve. Supports hydration, cardiac output and clean energy without the edge."
+          }
+        },
+        {
+          "type": "ingredient",
+          "settings": {
+            "title": "Citicoline",
+            "dose": "250 mg",
+            "description": "Acetylcholine support, in its most bioavailable form. Working memory and attention that hold through a full deep-work block."
+          }
+        },
+        {
+          "type": "ingredient",
+          "settings": {
+            "title": "Caffeine",
+            "dose": "100 mg",
+            "description": "One coffee's worth, paired with taurine and tyrosine. Enough to move. Not enough to rattle."
+          }
+        },
+        {
+          "type": "ingredient",
+          "settings": {
+            "title": "Sodium Citrate",
+            "dose": "600 mg",
+            "description": "Replaces what sleep and sweat take first. Blood volume, blood pressure and drive from the opening minute."
+          }
+        },
+        {
+          "type": "ingredient",
+          "settings": {
+            "title": "Potassium Citrate",
+            "dose": "400 mg",
+            "description": "Sodium's counterweight. Muscle contraction and nerve signalling stay clean under load."
+          }
+        },
+        {
+          "type": "ingredient",
+          "settings": {
+            "title": "Magnesium Citrate",
+            "dose": "375 mg",
+            "description": "Full daily reference intake. Energy metabolism, nerve function and recovery between hard mornings."
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}
