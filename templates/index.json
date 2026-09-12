@@ -1,659 +1,286 @@
-/*
- * ------------------------------------------------------------
- * IMPORTANT: The contents of this file are auto-generated.
- *
- * This file may be updated by the Shopify admin theme editor
- * or related systems. Please exercise caution as any changes
- * made to this file may be overwritten.
- * ------------------------------------------------------------
- */{
+{
   "sections": {
-    "hero_jVaWmY": {
-      "type": "hero",
-      "blocks": {
-        "text_YLPk4p": {
-          "type": "text",
-          "name": "t:names.heading",
-          "settings": {
-            "text": "<p>E&eacute;n gewoonte die alles verandert</p>",
-            "width": "fit-content",
-            "max_width": "normal",
-            "alignment": "left",
-            "type_preset": "h2",
-            "font": "var(--font-body--family)",
-            "font_size": "1rem",
-            "line_height": "normal",
-            "letter_spacing": "normal",
-            "case": "none",
-            "wrap": "pretty",
-            "color": "var(--color-foreground-heading)",
-            "background": false,
-            "background_color": "#00000026",
-            "corner_radius": 0,
-            "padding-block-start": 0,
-            "padding-block-end": 0,
-            "padding-inline-start": 0,
-            "padding-inline-end": 0
-          },
-          "blocks": {}
-        },
-        "button_H9gpTf": {
-          "type": "button",
-          "name": "t:names.button",
-          "settings": {
-            "label": "Ontdek nu",
-            "link": "shopify://collections/all",
-            "open_in_new_tab": false,
-            "style_class": "button-secondary",
-            "width": "fit-content",
-            "custom_width": 100,
-            "width_mobile": "fit-content",
-            "custom_width_mobile": 100
-          },
-          "blocks": {}
-        }
-      },
-      "block_order": [
-        "text_YLPk4p",
-        "button_H9gpTf"
-      ],
-      "name": "t:names.hero",
-      "settings": {
-        "media_type_1": "image",
-        "media_type_2": "image",
-        "stack_media_on_mobile": false,
-        "custom_mobile_media": false,
-        "media_type_1_mobile": "image",
-        "media_type_2_mobile": "image",
-        "open_in_new_tab": false,
-        "content_direction": "column",
-        "vertical_on_mobile": true,
-        "horizontal_alignment": "space-between",
-        "vertical_alignment": "flex-end",
-        "align_baseline": true,
-        "horizontal_alignment_flex_direction_column": "center",
-        "vertical_alignment_flex_direction_column": "flex-end",
-        "gap": 24,
-        "section_width": "page-width",
-        "section_height": "medium",
-        "section_height_custom": 50,
-        "color_scheme": "scheme-6",
-        "toggle_overlay": true,
-        "overlay_color": "#12121266",
-        "overlay_style": "solid",
-        "gradient_direction": "to bottom",
-        "blurred_reflection": false,
-        "reflection_opacity": 75,
-        "padding-block-start": 100,
-        "padding-block-end": 72
-      }
+    "hero": {
+      "type": "cntdr-hero",
+      "settings": {}
     },
-    "section_benefits_ag1": {
-      "type": "section",
-      "name": "Voordelen",
+    "trust-bar": {
+      "type": "cntdr-trust-bar",
       "blocks": {
-        "heading_benefits": {
-          "type": "text",
+        "claim-1": { "type": "claim", "settings": { "claim": "Third-party tested" } },
+        "claim-2": { "type": "claim", "settings": { "claim": "Clinically dosed" } },
+        "claim-3": { "type": "claim", "settings": { "claim": "No fillers" } },
+        "claim-4": { "type": "claim", "settings": { "claim": "No added sugar" } },
+        "claim-5": { "type": "claim", "settings": { "claim": "Pause anytime" } }
+      },
+      "block_order": ["claim-1", "claim-2", "claim-3", "claim-4", "claim-5"],
+      "settings": {}
+    },
+    "comparison": {
+      "type": "cntdr-comparison",
+      "blocks": {
+        "row-1": { "type": "row", "settings": { "item": "Creatine tub", "price": "$22" } },
+        "row-2": { "type": "row", "settings": { "item": "Nootropic stack", "price": "$34" } },
+        "row-3": { "type": "row", "settings": { "item": "Electrolyte sticks", "price": "$19" } },
+        "row-4": { "type": "row", "settings": { "item": "Caffeine + Taurine", "price": "$16" } },
+        "row-5": { "type": "row", "settings": { "item": "Choline capsules", "price": "$18" } }
+      },
+      "block_order": ["row-1", "row-2", "row-3", "row-4", "row-5"],
+      "settings": {}
+    },
+    "ingredients": {
+      "type": "cntdr-ingredients",
+      "blocks": {
+        "ing-1": {
+          "type": "ingredient",
           "settings": {
-            "text": "<h2>Wat je elke dag mag verwachten</h2>",
-            "width": "100%",
-            "max_width": "normal",
-            "alignment": "center",
-            "type_preset": "h2"
+            "title": "Creatine Monohydrate",
+            "dose": "5 g",
+            "description": "The most studied form, at the full daily dose. Strength output, power endurance and cognitive resilience on short sleep."
           }
         },
-        "row_benefits": {
-          "type": "group",
+        "ing-2": {
+          "type": "ingredient",
           "settings": {
-            "content_direction": "row",
-            "vertical_on_mobile": true,
-            "horizontal_alignment": "space-between",
-            "vertical_alignment": "flex-start",
-            "gap": 24,
-            "width": "fill",
-            "height": "fit",
-            "inherit_color_scheme": true,
-            "padding-block-start": 32
-          },
-          "blocks": {
-            "benefit_1": {
-              "type": "group",
-              "settings": {
-                "content_direction": "column",
-                "horizontal_alignment_flex_direction_column": "center",
-                "vertical_alignment_flex_direction_column": "center",
-                "gap": 12,
-                "width": "fill",
-                "height": "fit",
-                "inherit_color_scheme": true
-              },
-              "blocks": {
-                "icon": {
-                  "type": "icon",
-                  "settings": { "icon": "lightning_bolt", "width": 32 }
-                },
-                "text_group": {
-                  "type": "group",
-                  "settings": { "gap": 4 },
-                  "blocks": {
-                    "heading": {
-                      "type": "text",
-                      "settings": { "text": "<h3>Aanhoudende energie</h3>", "type_preset": "h4", "alignment": "center", "width": "100%" }
-                    },
-                    "desc": {
-                      "type": "text",
-                      "settings": { "text": "<p>Ondersteuning voor je energie, zonder pieken en dalen.</p>", "type_preset": "rte", "alignment": "center", "width": "100%" }
-                    }
-                  },
-                  "block_order": ["heading", "desc"]
-                }
-              },
-              "block_order": ["icon", "text_group"]
-            },
-            "benefit_2": {
-              "type": "group",
-              "settings": {
-                "content_direction": "column",
-                "horizontal_alignment_flex_direction_column": "center",
-                "vertical_alignment_flex_direction_column": "center",
-                "gap": 12,
-                "width": "fill",
-                "height": "fit",
-                "inherit_color_scheme": true
-              },
-              "blocks": {
-                "icon": {
-                  "type": "icon",
-                  "settings": { "icon": "heart", "width": 32 }
-                },
-                "text_group": {
-                  "type": "group",
-                  "settings": { "gap": 4 },
-                  "blocks": {
-                    "heading": {
-                      "type": "text",
-                      "settings": { "text": "<h3>Weerstand</h3>", "type_preset": "h4", "alignment": "center", "width": "100%" }
-                    },
-                    "desc": {
-                      "type": "text",
-                      "settings": { "text": "<p>Ondersteunt je natuurlijke afweer, dag in dag uit.</p>", "type_preset": "rte", "alignment": "center", "width": "100%" }
-                    }
-                  },
-                  "block_order": ["heading", "desc"]
-                }
-              },
-              "block_order": ["icon", "text_group"]
-            },
-            "benefit_3": {
-              "type": "group",
-              "settings": {
-                "content_direction": "column",
-                "horizontal_alignment_flex_direction_column": "center",
-                "vertical_alignment_flex_direction_column": "center",
-                "gap": 12,
-                "width": "fill",
-                "height": "fit",
-                "inherit_color_scheme": true
-              },
-              "blocks": {
-                "icon": {
-                  "type": "icon",
-                  "settings": { "icon": "leaf", "width": 32 }
-                },
-                "text_group": {
-                  "type": "group",
-                  "settings": { "gap": 4 },
-                  "blocks": {
-                    "heading": {
-                      "type": "text",
-                      "settings": { "text": "<h3>Natuurlijke basis</h3>", "type_preset": "h4", "alignment": "center", "width": "100%" }
-                    },
-                    "desc": {
-                      "type": "text",
-                      "settings": { "text": "<p>Zorgvuldig geselecteerde ingredi&euml;nten, niets onnodigs.</p>", "type_preset": "rte", "alignment": "center", "width": "100%" }
-                    }
-                  },
-                  "block_order": ["heading", "desc"]
-                }
-              },
-              "block_order": ["icon", "text_group"]
-            },
-            "benefit_4": {
-              "type": "group",
-              "settings": {
-                "content_direction": "column",
-                "horizontal_alignment_flex_direction_column": "center",
-                "vertical_alignment_flex_direction_column": "center",
-                "gap": 12,
-                "width": "fill",
-                "height": "fit",
-                "inherit_color_scheme": true
-              },
-              "blocks": {
-                "icon": {
-                  "type": "icon",
-                  "settings": { "icon": "check_box", "width": 32 }
-                },
-                "text_group": {
-                  "type": "group",
-                  "settings": { "gap": 4 },
-                  "blocks": {
-                    "heading": {
-                      "type": "text",
-                      "settings": { "text": "<h3>Vol te houden</h3>", "type_preset": "h4", "alignment": "center", "width": "100%" }
-                    },
-                    "desc": {
-                      "type": "text",
-                      "settings": { "text": "<p>Een simpele gewoonte die makkelijk in je dag past.</p>", "type_preset": "rte", "alignment": "center", "width": "100%" }
-                    }
-                  },
-                  "block_order": ["heading", "desc"]
-                }
-              },
-              "block_order": ["icon", "text_group"]
-            }
-          },
-          "block_order": ["benefit_1", "benefit_2", "benefit_3", "benefit_4"]
-        }
-      },
-      "block_order": ["heading_benefits", "row_benefits"],
-      "settings": {
-        "content_direction": "column",
-        "vertical_on_mobile": true,
-        "horizontal_alignment_flex_direction_column": "center",
-        "vertical_alignment_flex_direction_column": "center",
-        "gap": 16,
-        "section_width": "page-width",
-        "color_scheme": "scheme-1",
-        "padding-block-start": 64,
-        "padding-block-end": 64
-      }
-    },
-    "section_highlight_ag1": {
-      "type": "media-with-content",
-      "name": "Product uitgelicht",
-      "blocks": {
-        "media": {
-          "type": "_media-without-appearance",
-          "static": true,
-          "settings": { "media_type": "image" }
+            "title": "L-Tyrosine",
+            "dose": "1.5 g",
+            "description": "Precursor to dopamine and noradrenaline. Holds focus together when the day gets loud."
+          }
         },
-        "content": {
-          "type": "_content-without-appearance",
-          "static": true,
+        "ing-3": {
+          "type": "ingredient",
           "settings": {
-            "horizontal_alignment_flex_direction_column": "flex-start",
-            "vertical_alignment_flex_direction_column": "center"
-          },
-          "blocks": {
-            "caption": {
-              "type": "text",
-              "settings": { "text": "<p>Dagelijkse routine</p>", "type_preset": "h6" }
-            },
-            "heading": {
-              "type": "text",
-              "settings": { "text": "<h2>E&eacute;n schep, alles wat je nodig hebt</h2>", "type_preset": "h3" }
-            },
-            "text": {
-              "type": "text",
-              "settings": { "text": "<p>Zorgvuldig samengestelde ingredi&euml;nten in &eacute;&eacute;n eenvoudige dagelijkse gewoonte.</p>", "max_width": "narrow", "type_preset": "rte" }
-            },
-            "button": {
-              "type": "button",
-              "settings": { "label": "Bekijk ingredi&euml;nten", "link": "shopify://collections/all", "style_class": "link" }
-            }
-          },
-          "block_order": ["caption", "heading", "text", "button"]
-        }
-      },
-      "block_order": ["media", "content"],
-      "settings": {
-        "media_position": "left",
-        "media_width": "medium",
-        "media_height": "60svh",
-        "section_width": "page-width",
-        "extend_media": true,
-        "color_scheme": "scheme-4",
-        "padding-block-start": 0,
-        "padding-block-end": 0
-      }
-    },
-    "section_testimonials_ag1": {
-      "type": "section",
-      "name": "Testimonials",
-      "blocks": {
-        "heading_testimonials": {
-          "type": "text",
-          "settings": { "text": "<h2>Wat klanten zeggen</h2>", "width": "100%", "alignment": "center", "type_preset": "h2" }
+            "title": "Taurine",
+            "dose": "1 g",
+            "description": "Smooths the caffeine curve. Supports hydration, cardiac output and clean energy without the edge."
+          }
         },
-        "row_testimonials": {
-          "type": "group",
+        "ing-4": {
+          "type": "ingredient",
           "settings": {
-            "content_direction": "row",
-            "vertical_on_mobile": true,
-            "gap": 24,
-            "width": "fill",
-            "height": "fit",
-            "inherit_color_scheme": true,
-            "padding-block-start": 32
-          },
-          "blocks": {
-            "quote_1": {
-              "type": "group",
-              "settings": {
-                "content_direction": "column",
-                "horizontal_alignment_flex_direction_column": "center",
-                "gap": 12,
-                "width": "fill",
-                "height": "fit",
-                "inherit_color_scheme": true
-              },
-              "blocks": {
-                "quote": {
-                  "type": "text",
-                  "settings": { "text": "<p>&ldquo;Sinds ik dit elke ochtend gebruik voel ik me consistenter.&rdquo;</p>", "type_preset": "h5", "alignment": "center", "width": "100%" }
-                },
-                "author": {
-                  "type": "text",
-                  "settings": { "text": "<p>&mdash; Placeholder klant</p>", "type_preset": "paragraph", "alignment": "center", "width": "100%" }
-                }
-              },
-              "block_order": ["quote", "author"]
-            },
-            "quote_2": {
-              "type": "group",
-              "settings": {
-                "content_direction": "column",
-                "horizontal_alignment_flex_direction_column": "center",
-                "gap": 12,
-                "width": "fill",
-                "height": "fit",
-                "inherit_color_scheme": true
-              },
-              "blocks": {
-                "quote": {
-                  "type": "text",
-                  "settings": { "text": "<p>&ldquo;Simpel, snel, en het past precies in mijn ochtendritueel.&rdquo;</p>", "type_preset": "h5", "alignment": "center", "width": "100%" }
-                },
-                "author": {
-                  "type": "text",
-                  "settings": { "text": "<p>&mdash; Placeholder klant</p>", "type_preset": "paragraph", "alignment": "center", "width": "100%" }
-                }
-              },
-              "block_order": ["quote", "author"]
-            },
-            "quote_3": {
-              "type": "group",
-              "settings": {
-                "content_direction": "column",
-                "horizontal_alignment_flex_direction_column": "center",
-                "gap": 12,
-                "width": "fill",
-                "height": "fit",
-                "inherit_color_scheme": true
-              },
-              "blocks": {
-                "quote": {
-                  "type": "text",
-                  "settings": { "text": "<p>&ldquo;Precies de ondersteuning die ik nodig had voor drukke dagen.&rdquo;</p>", "type_preset": "h5", "alignment": "center", "width": "100%" }
-                },
-                "author": {
-                  "type": "text",
-                  "settings": { "text": "<p>&mdash; Placeholder klant</p>", "type_preset": "paragraph", "alignment": "center", "width": "100%" }
-                }
-              },
-              "block_order": ["quote", "author"]
-            }
-          },
-          "block_order": ["quote_1", "quote_2", "quote_3"]
-        }
-      },
-      "block_order": ["heading_testimonials", "row_testimonials"],
-      "settings": {
-        "content_direction": "column",
-        "horizontal_alignment_flex_direction_column": "center",
-        "gap": 16,
-        "section_width": "page-width",
-        "color_scheme": "scheme-5",
-        "padding-block-start": 64,
-        "padding-block-end": 64
-      }
-    },
-    "section_newsletter_ag1": {
-      "type": "section",
-      "name": "Nieuwsbrief",
-      "blocks": {
-        "text_1": {
-          "type": "text",
-          "settings": { "text": "<h2>Blijf op de hoogte</h2>", "width": "100%", "alignment": "center" }
+            "title": "Citicoline",
+            "dose": "250 mg",
+            "description": "Acetylcholine support, in its most bioavailable form. Working memory and attention that hold through a full deep-work block."
+          }
         },
-        "text_2": {
-          "type": "text",
-          "settings": { "text": "<p>Meld je aan voor updates, nieuwe producten en aanbiedingen.</p>", "type_preset": "paragraph", "width": "100%", "alignment": "center" }
-        },
-        "email_signup": {
-          "type": "email-signup",
+        "ing-5": {
+          "type": "ingredient",
           "settings": {
-            "width": "custom",
-            "custom_width": 50,
-            "style_class": "button-unstyled",
-            "display_type": "arrow",
-            "label": "Aanmelden",
-            "integrated_button": true
+            "title": "Caffeine",
+            "dose": "100 mg",
+            "description": "One coffee's worth, paired with taurine and tyrosine. Enough to move. Not enough to rattle."
+          }
+        },
+        "ing-6": {
+          "type": "ingredient",
+          "settings": {
+            "title": "Sodium Citrate",
+            "dose": "600 mg",
+            "description": "Replaces what sleep and sweat take first. Blood volume, blood pressure and drive from the opening minute."
+          }
+        },
+        "ing-7": {
+          "type": "ingredient",
+          "settings": {
+            "title": "Potassium Citrate",
+            "dose": "400 mg",
+            "description": "Sodium's counterweight. Muscle contraction and nerve signalling stay clean under load."
+          }
+        },
+        "ing-8": {
+          "type": "ingredient",
+          "settings": {
+            "title": "Magnesium Citrate",
+            "dose": "375 mg",
+            "description": "Full daily reference intake. Energy metabolism, nerve function and recovery between hard mornings."
           }
         }
       },
-      "block_order": ["text_1", "text_2", "email_signup"],
-      "settings": {
-        "horizontal_alignment_flex_direction_column": "center",
-        "gap": 16,
-        "section_width": "page-width",
-        "color_scheme": "scheme-2",
-        "padding-block-start": 40,
-        "padding-block-end": 40
-      }
+      "block_order": ["ing-1", "ing-2", "ing-3", "ing-4", "ing-5", "ing-6", "ing-7", "ing-8"],
+      "settings": {}
     },
-    "product_list_fa6P9H": {
-      "type": "product-list",
+    "kit": {
+      "type": "cntdr-kit",
       "blocks": {
-        "static-header": {
-          "type": "_product-list-content",
-          "name": "t:names.header",
-          "static": true,
+        "main": {
+          "type": "kit_line_item",
           "settings": {
-            "content_direction": "row",
-            "vertical_on_mobile": false,
-            "horizontal_alignment": "space-between",
-            "vertical_alignment": "flex-end",
-            "align_baseline": true,
-            "horizontal_alignment_flex_direction_column": "flex-start",
-            "vertical_alignment_flex_direction_column": "center",
-            "gap": 12,
-            "width": "fill",
-            "custom_width": 100,
-            "width_mobile": "fill",
-            "custom_width_mobile": 100,
-            "height": "fit",
-            "custom_height": 100,
-            "inherit_color_scheme": true,
-            "color_scheme": "",
-            "background_media": "none",
-            "video_position": "cover",
-            "background_image_position": "cover",
-            "border": "none",
-            "border_width": 1,
-            "border_opacity": 100,
-            "border_radius": 0,
-            "padding-block-start": 0,
-            "padding-block-end": 0,
-            "padding-inline-start": 0,
-            "padding-inline-end": 0
-          },
-          "blocks": {
-            "product_list_text_YFtzcL": {
-              "type": "_product-list-text",
-              "name": "t:names.collection_title",
-              "settings": {
-                "text": "<h3>{{ closest.collection.title }}</h3>",
-                "width": "fit-content",
-                "max_width": "normal",
-                "alignment": "left",
-                "type_preset": "h4",
-                "font": "var(--font-body--family)",
-                "font_size": "",
-                "line_height": "normal",
-                "letter_spacing": "normal",
-                "case": "none",
-                "wrap": "pretty",
-                "color": "var(--color-foreground)",
-                "background": false,
-                "background_color": "#00000026",
-                "corner_radius": 0,
-                "padding-block-start": 0,
-                "padding-block-end": 0,
-                "padding-inline-start": 0,
-                "padding-inline-end": 0
-              },
-              "blocks": {}
-            },
-            "product_list_button_MWeP9V": {
-              "type": "_product-list-button",
-              "name": "t:names.product_list_button",
-              "settings": {
-                "label": "View all",
-                "open_in_new_tab": false,
-                "style_class": "link",
-                "width": "fit-content",
-                "custom_width": 100,
-                "width_mobile": "fit-content",
-                "custom_width_mobile": 100
-              },
-              "blocks": {}
-            }
-          },
-          "block_order": [
-            "product_list_text_YFtzcL",
-            "product_list_button_MWeP9V"
-          ]
+            "highlight": true,
+            "title": "",
+            "subtitle": "Subscription · ships every 30 days",
+            "price_text": "$69"
+          }
         },
-        "static-product-card": {
-          "type": "_product-card",
-          "name": "t:names.product_card",
-          "static": true,
+        "bonus-1": {
+          "type": "kit_line_item",
           "settings": {
-            "product_card_gap": 4,
-            "inherit_color_scheme": true,
-            "color_scheme": "",
-            "border": "none",
-            "border_width": 1,
-            "border_opacity": 100,
-            "border_radius": 0,
-            "padding-block-start": 0,
-            "padding-block-end": 0,
-            "padding-inline-start": 0,
-            "padding-inline-end": 0
-          },
-          "blocks": {
-            "product_card_gallery_677WP3": {
-              "type": "_product-card-gallery",
-              "name": "t:names.product_card_media",
-              "settings": {
-                "image_ratio": "adapt",
-                "border": "none",
-                "border_width": 1,
-                "border_opacity": 100,
-                "border_radius": 0,
-                "padding-block-start": 0,
-                "padding-block-end": 0,
-                "padding-inline-start": 0,
-                "padding-inline-end": 0
-              },
-              "blocks": {}
-            },
-            "product_title_YXxMTj": {
-              "type": "product-title",
-              "name": "t:names.product_title",
-              "settings": {
-                "width": "100%",
-                "max_width": "normal",
-                "alignment": "left",
-                "type_preset": "rte",
-                "font": "var(--font-body--family)",
-                "font_size": "1rem",
-                "line_height": "normal",
-                "letter_spacing": "normal",
-                "case": "none",
-                "wrap": "pretty",
-                "color": "var(--color-foreground)",
-                "background": false,
-                "background_color": "#00000026",
-                "corner_radius": 0,
-                "padding-block-start": 4,
-                "padding-block-end": 0,
-                "padding-inline-start": 0,
-                "padding-inline-end": 0
-              },
-              "blocks": {}
-            },
-            "price_JQzVV4": {
-              "type": "price",
-              "name": "t:names.product_price",
-              "settings": {
-                "show_sale_price_first": true,
-                "show_installments": false,
-                "show_tax_info": false,
-                "type_preset": "h6",
-                "width": "100%",
-                "alignment": "left",
-                "font": "var(--font-body--family)",
-                "font_size": "1rem",
-                "line_height": "normal",
-                "letter_spacing": "normal",
-                "case": "none",
-                "color": "var(--color-foreground)",
-                "padding-block-start": 0,
-                "padding-block-end": 0,
-                "padding-inline-start": 0,
-                "padding-inline-end": 0
-              },
-              "blocks": {}
-            }
-          },
-          "block_order": [
-            "product_card_gallery_677WP3",
-            "product_title_YXxMTj",
-            "price_JQzVV4"
-          ]
+            "title": "Travel case + steel bottle",
+            "subtitle": "Matte black, 7 sachets",
+            "strike_price": 38,
+            "free_label": "Free"
+          }
+        },
+        "bonus-2": {
+          "type": "kit_line_item",
+          "settings": {
+            "title": "AM Protocol guide",
+            "subtitle": "14-day routine build, digital",
+            "strike_price": 19,
+            "free_label": "Free"
+          }
         }
       },
-      "name": "Featured collection",
-      "settings": {
-        "collection": "all",
-        "layout_type": "grid",
-        "carousel_on_mobile": false,
-        "max_products": 8,
-        "columns": 4,
-        "mobile_columns": "2",
-        "mobile_card_size": "60cqw",
-        "columns_gap": 8,
-        "rows_gap": 24,
-        "icons_style": "arrow",
-        "icons_shape": "none",
-        "section_width": "page-width",
-        "horizontal_alignment": "flex-start",
-        "gap": 28,
-        "color_scheme": "scheme-1",
-        "padding-block-start": 48,
-        "padding-block-end": 48
-      }
+      "block_order": ["main", "bonus-1", "bonus-2"],
+      "settings": {}
+    },
+    "social-proof": {
+      "type": "cntdr-social-proof",
+      "blocks": {
+        "t1": {
+          "type": "testimonial",
+          "settings": {
+            "quote": "I stopped negotiating with my morning. Sachet, water, out the door by six. The 5-to-9 before the 9-to-5 is where the company gets built.",
+            "author_name": "Daniel R.",
+            "author_role": "Founder, SaaS"
+          }
+        },
+        "t2": {
+          "type": "testimonial",
+          "settings": {
+            "quote": "Creatine and electrolytes in one dose I actually take on the road. Threshold sessions feel the same in a hotel gym as they do at home.",
+            "author_name": "Marije K.",
+            "author_role": "Marathon, 2:41"
+          }
+        },
+        "t3": {
+          "type": "testimonial",
+          "settings": {
+            "quote": "Four bottles gone from my counter. One box, one drawer, no decisions before the first block of deep work.",
+            "author_name": "Tobias L.",
+            "author_role": "Head of Ops"
+          }
+        }
+      },
+      "block_order": ["t1", "t2", "t3"],
+      "settings": {}
+    },
+    "routine": {
+      "type": "cntdr-routine",
+      "blocks": {
+        "step-1": { "type": "step", "settings": { "time": "05:40", "title": "Up", "note": "No phone. Light on, curtains open." } },
+        "step-2": {
+          "type": "step",
+          "settings": {
+            "time": "05:45",
+            "title": "CNTDR AM",
+            "note": "One sachet, 300 ml cold water. Ten seconds of stirring, that's the whole ritual.",
+            "highlight": true
+          }
+        },
+        "step-3": {
+          "type": "step",
+          "settings": {
+            "time": "06:05",
+            "title": "Train",
+            "note": "Caffeine and tyrosine peak. Run, lift, or row — hydration already handled."
+          }
+        },
+        "step-4": {
+          "type": "step",
+          "settings": {
+            "time": "07:20",
+            "title": "Cold shower, coffee",
+            "note": "Optional. Most people find they need less of it."
+          }
+        },
+        "step-5": {
+          "type": "step",
+          "settings": {
+            "time": "08:00",
+            "title": "Deep work",
+            "note": "Citicoline and creatine carry the first block. Hardest task first, no notifications."
+          }
+        },
+        "step-6": {
+          "type": "step",
+          "settings": {
+            "time": "11:00",
+            "title": "Still flat, no crash",
+            "note": "Taurine and electrolytes keep the curve level into the afternoon."
+          }
+        }
+      },
+      "block_order": ["step-1", "step-2", "step-3", "step-4", "step-5", "step-6"],
+      "settings": {}
+    },
+    "positioning": {
+      "type": "cntdr-positioning",
+      "settings": {}
+    },
+    "faq": {
+      "type": "cntdr-faq",
+      "blocks": {
+        "faq-1": {
+          "type": "faq_item",
+          "settings": {
+            "question": "Who is CNTDR AM for?",
+            "answer": "<p>Anyone with a morning that matters: founders, operators, professionals, endurance and strength athletes. If your first three hours decide the day, this is built for you.</p>"
+          }
+        },
+        "faq-2": {
+          "type": "faq_item",
+          "settings": {
+            "question": "How do I take it?",
+            "answer": "<p>One sachet in 300 ml of cold water, within 15 minutes of waking. Stir ten seconds. Take it before training or before your first work block — not both.</p>"
+          }
+        },
+        "faq-3": {
+          "type": "faq_item",
+          "settings": {
+            "question": "Why sachets instead of a tub?",
+            "answer": "<p>Dosing accuracy and travel. Every sachet is the same 9.2 g dose, sealed, and it fits in a laptop bag. Sachets. Not scoops.</p>"
+          }
+        },
+        "faq-4": {
+          "type": "faq_item",
+          "settings": {
+            "question": "Is 100 mg of caffeine a lot?",
+            "answer": "<p>It is roughly one coffee, paired with taurine and L-tyrosine to flatten the curve. If you also drink coffee, take CNTDR AM first and adjust from there.</p>"
+          }
+        },
+        "faq-5": {
+          "type": "faq_item",
+          "settings": {
+            "question": "Can I stack it with other supplements?",
+            "answer": "<p>Yes. It replaces most morning stacks — creatine, electrolytes, nootropics, caffeine. Keep your protein, omega-3 or vitamin D if you use them.</p>"
+          }
+        },
+        "faq-6": {
+          "type": "faq_item",
+          "settings": {
+            "question": "How is it tested?",
+            "answer": "<p>Every batch is third-party tested for identity, potency and contaminants. Certificates of analysis are published per batch number.</p>"
+          }
+        }
+      },
+      "block_order": ["faq-1", "faq-2", "faq-3", "faq-4", "faq-5", "faq-6"],
+      "settings": {}
+    },
+    "closing-cta": {
+      "type": "cntdr-closing-cta",
+      "settings": {}
     }
   },
   "order": [
-    "hero_jVaWmY",
-    "section_benefits_ag1",
-    "section_highlight_ag1",
-    "section_testimonials_ag1",
-    "product_list_fa6P9H",
-    "section_newsletter_ag1"
+    "hero",
+    "trust-bar",
+    "comparison",
+    "ingredients",
+    "kit",
+    "social-proof",
+    "routine",
+    "positioning",
+    "faq",
+    "closing-cta"
   ]
 }
