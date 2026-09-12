@@ -131,7 +131,9 @@
         }
       },
       "block_order": ["main", "bonus-1", "bonus-2"],
-      "settings": {}
+      "settings": {
+        "product": "shopify://products/cntdr-am-30-sachets"
+      }
     },
     "social-proof": {
       "type": "cntdr-social-proof",
