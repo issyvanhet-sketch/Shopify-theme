@@ -19,6 +19,7 @@
     endunless
   endfor
   assign total_strike_cents = base_cents | plus: bonus_cents_sum
+  assign kit_form_id = 'CntdrKitForm-' | append: section.id
 -%}
 
 <section id="kit" class="cntdr cntdr-kit">
@@ -98,7 +99,7 @@
             on:submit="/handleSubmit"
           >
             <div class="visually-hidden" aria-live="assertive" role="status" aria-atomic="true" ref="liveRegion"></div>
-            {%- form 'product', kit_product, id: 'CntdrKitForm-' | append: section.id, novalidate: 'novalidate', data-type: 'add-to-cart-form' -%}
+            {%- form 'product', kit_product, id: kit_form_id, novalidate: 'novalidate', data-type: 'add-to-cart-form' -%}
               <input
                 type="hidden"
                 name="id"
