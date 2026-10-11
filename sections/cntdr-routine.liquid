@@ -3,7 +3,9 @@
     <div class="cntdr-routine__intro">
       <div class="cntdr-eyebrow">{{ section.settings.label }}</div>
       <h2 class="cntdr-h2 cntdr-routine__heading">{{ section.settings.heading }}</h2>
-      <p class="cntdr-body-text cntdr-routine__body">{{ section.settings.body }}</p>
+      {%- if section.settings.body != blank -%}
+        <p class="cntdr-body-text cntdr-routine__body">{{ section.settings.body }}</p>
+      {%- endif -%}
       {%- if section.settings.image != blank -%}
         <div class="cntdr-routine__media">
           {{

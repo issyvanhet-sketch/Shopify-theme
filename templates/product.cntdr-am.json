@@ -1,0 +1,404 @@
+{
+  "sections": {
+    "main": {
+      "type": "cntdr-pdp-main",
+      "blocks": {
+        "bullet-1": { "type": "bullet", "settings": { "text": "Focus and drive inside 30 minutes, no jitter, no crash" } },
+        "bullet-2": { "type": "bullet", "settings": { "text": "Replaces four products and about €69 of shelf clutter" } },
+        "bullet-3": { "type": "bullet", "settings": { "text": "Sachets, not scoops — same exact dose at home or on the road" } },
+        "detail-1": {
+          "type": "detail",
+          "settings": {
+            "title": "How to take it",
+            "content": "<p>One sachet in 300 ml of cold water within 15 minutes of waking. Stir ten seconds. Take it before training or before your first work block — not both.</p>"
+          }
+        },
+        "detail-2": {
+          "type": "detail",
+          "settings": {
+            "title": "Shipping & delivery",
+            "content": "<p>Dispatched from the EU within 24 hours. 2–3 working days in the Benelux and Germany, 3–5 elsewhere in Europe. Free over €65.</p>"
+          }
+        },
+        "detail-3": {
+          "type": "detail",
+          "settings": {
+            "title": "Subscription terms",
+            "content": "<p>Ships every 30, 60 or 90 days depending on your supply. Skip, delay or cancel in two clicks from your account — no phone call, no retention flow.</p>"
+          }
+        }
+      },
+      "block_order": ["bullet-1", "bullet-2", "bullet-3", "detail-1", "detail-2", "detail-3"],
+      "settings": {}
+    },
+    "trust-bar": {
+      "type": "cntdr-trust-bar",
+      "blocks": {
+        "claim-1": { "type": "claim", "settings": { "claim": "Third-party tested" } },
+        "claim-2": { "type": "claim", "settings": { "claim": "Clinically dosed" } },
+        "claim-3": { "type": "claim", "settings": { "claim": "No fillers" } },
+        "claim-4": { "type": "claim", "settings": { "claim": "No added sugar" } },
+        "claim-5": { "type": "claim", "settings": { "claim": "Pause anytime" } }
+      },
+      "block_order": ["claim-1", "claim-2", "claim-3", "claim-4", "claim-5"],
+      "settings": {}
+    },
+    "benefits": {
+      "type": "cntdr-pdp-benefits",
+      "blocks": {
+        "benefit-1": {
+          "type": "benefit",
+          "settings": {
+            "chip": "First 30 minutes",
+            "title": "Awake, not wired",
+            "text": "Caffeine at one coffee's dose, buffered by taurine and L-tyrosine. Electrolytes replace what the night took, so the lift is flat instead of spiked."
+          }
+        },
+        "benefit-2": {
+          "type": "benefit",
+          "settings": {
+            "chip": "Week one",
+            "title": "The morning stops being a decision",
+            "text": "Same dose, same time, no counter full of tubs. Most people report a longer first deep-work block and less mid-morning drift by day five."
+          }
+        },
+        "benefit-3": {
+          "type": "benefit",
+          "settings": {
+            "chip": "Week four",
+            "title": "Creatine fully loaded",
+            "text": "5 g daily saturates muscle and brain stores. Strength output, power endurance and cognitive resilience on short sleep all hold better."
+          }
+        }
+      },
+      "block_order": ["benefit-1", "benefit-2", "benefit-3"],
+      "settings": {}
+    },
+    "facts": {
+      "type": "cntdr-pdp-facts",
+      "blocks": {
+        "row-1": { "type": "row", "settings": { "active": "Creatine Monohydrate", "amount": "5 g" } },
+        "row-2": { "type": "row", "settings": { "active": "L-Tyrosine", "amount": "1.5 g" } },
+        "row-3": { "type": "row", "settings": { "active": "Taurine", "amount": "1 g" } },
+        "row-4": { "type": "row", "settings": { "active": "Citicoline (CDP-Choline)", "amount": "250 mg" } },
+        "row-5": { "type": "row", "settings": { "active": "Caffeine (anhydrous)", "amount": "100 mg" } },
+        "row-6": { "type": "row", "settings": { "active": "Sodium (as citrate)", "amount": "600 mg" } },
+        "row-7": { "type": "row", "settings": { "active": "Potassium (as citrate)", "amount": "400 mg", "ri": "20%" } },
+        "row-8": { "type": "row", "settings": { "active": "Magnesium (as citrate)", "amount": "375 mg", "ri": "100%" } },
+        "logo-1": { "type": "logo", "settings": {} },
+        "logo-2": { "type": "logo", "settings": {} },
+        "logo-3": { "type": "logo", "settings": {} },
+        "logo-4": { "type": "logo", "settings": {} }
+      },
+      "block_order": ["row-1", "row-2", "row-3", "row-4", "row-5", "row-6", "row-7", "row-8", "logo-1", "logo-2", "logo-3", "logo-4"],
+      "settings": {}
+    },
+    "audience": {
+      "type": "cntdr-pdp-audience",
+      "blocks": {
+        "persona-1": {
+          "type": "persona",
+          "settings": {
+            "label": "Founders",
+            "title": "Deep work before the inbox opens",
+            "text": "Clear head for the two hours that move the company. No second coffee, no 11 a.m. slump."
+          }
+        },
+        "persona-2": {
+          "type": "persona",
+          "settings": {
+            "label": "Athletes",
+            "title": "Train fasted, train hard",
+            "text": "Creatine, electrolytes and caffeine in one dose before the session. Same output at 6 a.m. as at 6 p.m."
+          }
+        },
+        "persona-3": {
+          "type": "persona",
+          "settings": {
+            "label": "Operators",
+            "title": "Back-to-back without the drift",
+            "text": "Steady focus through a full calendar. Sachets travel, so the protocol holds on the road."
+          }
+        }
+      },
+      "block_order": ["persona-1", "persona-2", "persona-3"],
+      "settings": {}
+    },
+    "ingredients": {
+      "type": "cntdr-ingredients",
+      "blocks": {
+        "ing-1": {
+          "type": "ingredient",
+          "settings": {
+            "title": "Creatine Monohydrate",
+            "dose": "5 g",
+            "description": "The most studied form, at the full daily dose. Strength output, power endurance and cognitive resilience on short sleep."
+          }
+        },
+        "ing-2": {
+          "type": "ingredient",
+          "settings": {
+            "title": "L-Tyrosine",
+            "dose": "1.5 g",
+            "description": "Precursor to dopamine and noradrenaline. Holds focus together when the day gets loud."
+          }
+        },
+        "ing-3": {
+          "type": "ingredient",
+          "settings": {
+            "title": "Taurine",
+            "dose": "1 g",
+            "description": "Smooths the caffeine curve. Supports hydration, cardiac output and clean energy without the edge."
+          }
+        },
+        "ing-4": {
+          "type": "ingredient",
+          "settings": {
+            "title": "Citicoline",
+            "dose": "250 mg",
+            "description": "Acetylcholine support, in its most bioavailable form. Working memory and attention that hold through a full deep-work block."
+          }
+        },
+        "ing-5": {
+          "type": "ingredient",
+          "settings": {
+            "title": "Caffeine",
+            "dose": "100 mg",
+            "description": "One coffee's worth, paired with taurine and tyrosine. Enough to move. Not enough to rattle."
+          }
+        },
+        "ing-6": {
+          "type": "ingredient",
+          "settings": {
+            "title": "Sodium Citrate",
+            "dose": "600 mg",
+            "description": "Replaces what sleep and sweat take first. Blood volume, blood pressure and drive from the opening minute."
+          }
+        },
+        "ing-7": {
+          "type": "ingredient",
+          "settings": {
+            "title": "Potassium Citrate",
+            "dose": "400 mg",
+            "description": "Sodium's counterweight. Muscle contraction and nerve signalling stay clean under load."
+          }
+        },
+        "ing-8": {
+          "type": "ingredient",
+          "settings": {
+            "title": "Magnesium Citrate",
+            "dose": "375 mg",
+            "description": "Full daily reference intake. Energy metabolism, nerve function and recovery between hard mornings."
+          }
+        }
+      },
+      "block_order": ["ing-1", "ing-2", "ing-3", "ing-4", "ing-5", "ing-6", "ing-7", "ing-8"],
+      "settings": {
+        "label": "Eight actives",
+        "heading": "Every dose earns its place",
+        "badge": "9.2 g per sachet"
+      }
+    },
+    "comparison": {
+      "type": "cntdr-comparison",
+      "blocks": {
+        "row-1": { "type": "row", "settings": { "item": "Creatine tub", "price": "€22" } },
+        "row-2": { "type": "row", "settings": { "item": "Nootropic stack", "price": "€34" } },
+        "row-3": { "type": "row", "settings": { "item": "Electrolyte sticks", "price": "€19" } },
+        "row-4": { "type": "row", "settings": { "item": "Caffeine + Taurine", "price": "€16" } },
+        "row-5": { "type": "row", "settings": { "item": "Choline capsules", "price": "€18" } }
+      },
+      "block_order": ["row-1", "row-2", "row-3", "row-4", "row-5"],
+      "settings": {
+        "label": "Less clutter. More output.",
+        "heading": "One protocol replaces the shelf",
+        "total_label": "CNTDR AM",
+        "total_price": "€59*",
+        "total_strike_price": "€109",
+        "note": "",
+        "footnote": "* Price per box with a monthly subscription — our most popular option, chosen by most of our customers. One-time purchase €69 per box."
+      }
+    },
+    "routine": {
+      "type": "cntdr-routine",
+      "blocks": {
+        "step-1": {
+          "type": "step",
+          "settings": {
+            "time": "01",
+            "title": "Tear the sachet",
+            "note": "Within 15 minutes of waking, before coffee. One sachet is the full dose — nothing to measure."
+          }
+        },
+        "step-2": {
+          "type": "step",
+          "settings": {
+            "time": "02",
+            "title": "300 ml cold water",
+            "note": "Stir ten seconds. Light citrus, no grit, no sweetener aftertaste."
+          }
+        },
+        "step-3": {
+          "type": "step",
+          "settings": {
+            "time": "03",
+            "title": "Move",
+            "note": "Train or start your first deep-work block. Peak effect lands 30–60 minutes in and holds flat."
+          }
+        }
+      },
+      "block_order": ["step-1", "step-2", "step-3"],
+      "settings": {
+        "label": "Ten seconds, once a day",
+        "heading": "How to take it",
+        "body": ""
+      }
+    },
+    "reviews": {
+      "type": "cntdr-pdp-reviews",
+      "blocks": {
+        "photo-1": { "type": "photo", "settings": {} },
+        "photo-2": { "type": "photo", "settings": {} },
+        "photo-3": { "type": "photo", "settings": {} },
+        "photo-4": { "type": "photo", "settings": {} },
+        "photo-5": { "type": "photo", "settings": {} },
+        "photo-6": { "type": "photo", "settings": {} },
+        "t1": {
+          "type": "testimonial",
+          "settings": {
+            "quote": "I stopped negotiating with my morning. Sachet, water, out the door by six. The 5-to-9 before the 9-to-5 is where the company gets built.",
+            "author_name": "Daniel R.",
+            "author_role": "Founder, SaaS"
+          }
+        },
+        "t2": {
+          "type": "testimonial",
+          "settings": {
+            "quote": "Creatine and electrolytes in one dose I actually take on the road. Threshold sessions feel the same in a hotel gym as they do at home.",
+            "author_name": "Marije K.",
+            "author_role": "Marathon, 2:41"
+          }
+        },
+        "t3": {
+          "type": "testimonial",
+          "settings": {
+            "quote": "Four bottles gone from my counter. One box, one drawer, no decisions before the first block of deep work.",
+            "author_name": "Tobias L.",
+            "author_role": "Head of Ops"
+          }
+        }
+      },
+      "block_order": ["photo-1", "photo-2", "photo-3", "photo-4", "photo-5", "photo-6", "t1", "t2", "t3"],
+      "settings": {}
+    },
+    "guarantee": {
+      "type": "cntdr-pdp-guarantee",
+      "blocks": {
+        "stat-1": { "type": "stat", "settings": { "number": "60", "label": "Day guarantee on your first box" } },
+        "stat-2": { "type": "stat", "settings": { "number": "24 h", "label": "Dispatch from the EU warehouse" } },
+        "stat-3": { "type": "stat", "settings": { "number": "100%", "label": "Batch-tested, COA published" } },
+        "stat-4": { "type": "stat", "settings": { "number": "0", "label": "Added sugar, dyes or fillers" } }
+      },
+      "block_order": ["stat-1", "stat-2", "stat-3", "stat-4"],
+      "settings": {}
+    },
+    "faq": {
+      "type": "cntdr-faq",
+      "blocks": {
+        "faq-1": {
+          "type": "faq_item",
+          "settings": {
+            "question": "Who is CNTDR AM for?",
+            "answer": "<p>Anyone with a morning that matters: founders, operators, professionals, endurance and strength athletes. If your first three hours decide the day, this is built for you.</p>"
+          }
+        },
+        "faq-2": {
+          "type": "faq_item",
+          "settings": {
+            "question": "Will I feel it on day one?",
+            "answer": "<p>Most people notice the focus and hydration effect inside 30 minutes of the first sachet. The creatine benefit builds over three to four weeks as stores saturate.</p>"
+          }
+        },
+        "faq-3": {
+          "type": "faq_item",
+          "settings": {
+            "question": "Is 100 mg of caffeine a lot?",
+            "answer": "<p>It is roughly one coffee, paired with taurine and L-tyrosine to flatten the curve. If you also drink coffee, take CNTDR AM first and adjust from there.</p>"
+          }
+        },
+        "faq-4": {
+          "type": "faq_item",
+          "settings": {
+            "question": "Why sachets instead of a tub?",
+            "answer": "<p>Dosing accuracy and travel. Every sachet is the same 9.2 g dose, sealed, and it fits in a laptop bag. Sachets. Not scoops.</p>"
+          }
+        },
+        "faq-5": {
+          "type": "faq_item",
+          "settings": {
+            "question": "Can I stack it with other supplements?",
+            "answer": "<p>Yes. It replaces most morning stacks — creatine, electrolytes, nootropics, caffeine. Keep your protein, omega-3 or vitamin D if you use them.</p>"
+          }
+        },
+        "faq-6": {
+          "type": "faq_item",
+          "settings": {
+            "question": "What does it taste like?",
+            "answer": "<p>Light citrus, lightly sweetened with steviol glycosides. No sugar, no grit, no artificial aftertaste. Best cold.</p>"
+          }
+        },
+        "faq-7": {
+          "type": "faq_item",
+          "settings": {
+            "question": "What does the 60-day guarantee cover?",
+            "answer": "<p>Your first order, one box per customer. Use it for at least 21 days, then email us with your order number within 60 days of delivery and we refund that box — no return shipping. The Welcome Kit is yours to keep. Claiming a refund also cancels your subscription.</p>"
+          }
+        },
+        "faq-8": {
+          "type": "faq_item",
+          "settings": {
+            "question": "How is it tested?",
+            "answer": "<p>Every batch is third-party tested for identity, potency and contaminants. Certificates of analysis are published per batch number.</p>"
+          }
+        }
+      },
+      "block_order": ["faq-1", "faq-2", "faq-3", "faq-4", "faq-5", "faq-6", "faq-7", "faq-8"],
+      "settings": {
+        "heading": "Questions",
+        "first_open": true
+      }
+    },
+    "closing-cta": {
+      "type": "cntdr-closing-cta",
+      "settings": {
+        "label": "One protocol. No excuses.",
+        "heading": "Own tomorrow morning",
+        "body": "<p>30 sachets, shipped monthly with the Welcome Kit. Cancel whenever — most people don't.</p>",
+        "button_label": "Add CNTDR AM to cart",
+        "button_anchor": "#cntdr-buy",
+        "note": "60-day guarantee on your first box*"
+      }
+    },
+    "sticky-atc": {
+      "type": "cntdr-pdp-sticky-atc",
+      "settings": {
+        "enabled": true
+      }
+    }
+  },
+  "order": [
+    "main",
+    "trust-bar",
+    "benefits",
+    "facts",
+    "audience",
+    "ingredients",
+    "comparison",
+    "routine",
+    "reviews",
+    "guarantee",
+    "faq",
+    "closing-cta",
+    "sticky-atc"
+  ]
+}

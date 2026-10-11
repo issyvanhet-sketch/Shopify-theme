@@ -1,0 +1,722 @@
+{{ 'cntdr-am.css' | asset_url | stylesheet_tag }}
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link
+  href="https://fonts.googleapis.com/css2?family=Instrument+Serif&family=Space+Grotesk:wght@400;500;700&display=swap"
+  rel="stylesheet"
+>
+<script src="{{ 'cntdr-pdp.js' | asset_url }}" defer></script>
+
+{%- liquid
+  assign current_variant = product.selected_or_first_available_variant
+  assign form_id = 'CntdrPdpForm-' | append: section.id
+
+  assign supply_index = 0
+  for option in product.options_with_values
+    assign option_name = option.name | downcase
+    if option_name == 'supply'
+      assign supply_index = forloop.index0
+    endif
+  endfor
+
+  assign has_subscription = false
+  for variant in product.variants
+    if variant.selling_plan_allocations.size > 0
+      assign has_subscription = true
+    endif
+  endfor
+
+  assign default_plan = 'once'
+  if has_subscription and current_variant.selling_plan_allocations.size > 0
+    assign default_plan = 'sub'
+  endif
+
+  assign app_block_count = 0
+  for block in section.blocks
+    if block.type == '@app'
+      assign app_block_count = app_block_count | plus: 1
+    endif
+  endfor
+
+  assign kit_value_cents = section.settings.kit_value | times: 100
+-%}
+
+<script type="application/ld+json">
+  {{ product | structured_data }}
+</script>
+
+<section id="{{ section.id }}" class="cntdr cntdr-pdp">
+  <div class="cntdr-wrap">
+    <nav class="cntdr-pdp__crumbs" aria-label="Breadcrumb">
+      <a href="{{ section.settings.breadcrumb_link | default: routes.all_products_collection_url }}">
+        {{- section.settings.breadcrumb_label -}}
+      </a>
+      <span aria-hidden="true">/</span>
+      <span aria-current="page">{{ product.title }}</span>
+    </nav>
+
+    <div class="cntdr-pdp__grid">
+      {%- comment -%} Gallery {%- endcomment -%}
+      <cntdr-gallery class="cntdr-pdp__gallery">
+        <div class="cntdr-pdp__main-media" data-cntdr-main>
+          {%- if section.settings.show_glow -%}
+            <div class="cntdr-pdp__glow" aria-hidden="true"></div>
+          {%- endif -%}
+          {%- if section.settings.image_badge != blank -%}
+            <span class="cntdr-chip cntdr-pdp__media-badge">{{ section.settings.image_badge }}</span>
+          {%- endif -%}
+          {%- if product.featured_media != blank -%}
+            {{
+              product.featured_media.preview_image
+              | image_url: width: 1400
+              | image_tag:
+                loading: 'eager',
+                fetchpriority: 'high',
+                widths: '400,600,800,1000,1200,1400',
+                sizes: '(min-width: 990px) 50vw, 100vw',
+                alt: product.featured_media.alt | default: product.title
+            }}
+          {%- else -%}
+            <div class="cntdr-pdp__placeholder"></div>
+          {%- endif -%}
+        </div>
+
+        {%- if product.media.size > 1 -%}
+          <div class="cntdr-pdp__thumbs">
+            {%- for media in product.media offset: 1 limit: 4 -%}
+              <button type="button" class="cntdr-pdp__thumb" data-cntdr-thumb aria-label="{{ media.alt | default: product.title | escape }}">
+                {{
+                  media.preview_image
+                  | image_url: width: 1400
+                  | image_tag:
+                    loading: 'lazy',
+                    widths: '160,320,400,600,800,1000,1200,1400',
+                    sizes: '120px',
+                    alt: media.alt | default: product.title
+                }}
+              </button>
+            {%- endfor -%}
+          </div>
+        {%- endif -%}
+
+        {%- if section.settings.gallery_note != blank -%}
+          <div class="cntdr-pdp__gallery-note">{{ section.settings.gallery_note }}</div>
+        {%- endif -%}
+      </cntdr-gallery>
+
+      {%- comment -%} Buy box {%- endcomment -%}
+      <cntdr-buy-box id="cntdr-buy" class="cntdr-pdp__buy">
+        <script type="application/json" data-cntdr-pdp>
+          {
+            "title": {{ product.title | json }},
+            "currency": {{ cart.currency.iso_code | json }},
+            "moneyFormat": {{ shop.money_format | json }},
+            "selectedId": {{ current_variant.id | json }},
+            "requiresPlan": {{ product.requires_selling_plan | json }},
+            "defaultPlan": {{ default_plan | json }},
+            "kitValue": {{ kit_value_cents | json }},
+            "popularSub": {{ section.settings.popular_sub_index | json }},
+            "popularOnce": {{ section.settings.popular_once_index | json }},
+            "text": {
+              "subText": {{ section.settings.plan_sub_text | json }},
+              "subChip": {{ section.settings.plan_sub_chip | json }},
+              "onceText": {{ section.settings.plan_once_text | json }},
+              "fromLabel": {{ section.settings.from_label | json }},
+              "perBox": {{ section.settings.per_box_label | json }},
+              "perMorningSub": {{ section.settings.per_morning_sub | json }},
+              "perMorningOnce": {{ section.settings.per_morning_once | json }},
+              "perMorningShort": {{ section.settings.per_morning_short | json }},
+              "save": {{ section.settings.save_label | json }},
+              "ctaSub": {{ section.settings.cta_sub | json }},
+              "ctaOnce": {{ section.settings.cta_once | json }},
+              "soldOut": {{ 'products.product.sold_out' | t | json }},
+              "planSubShort": {{ section.settings.plan_sub_short | json }},
+              "planOnceShort": {{ section.settings.plan_once_short | json }}
+            },
+            "variants": [
+              {%- for variant in product.variants -%}
+                {%- liquid
+                  assign supply_value = variant.options[supply_index] | default: variant.title
+                  assign boxes = supply_value | split: ' ' | first | plus: 0
+                  if boxes < 1
+                    assign boxes = forloop.index
+                  endif
+                  assign allocation = variant.selling_plan_allocations.first
+                -%}
+                {
+                  "id": {{ variant.id }},
+                  "title": {{ supply_value | json }},
+                  "boxes": {{ boxes }},
+                  "price": {{ variant.price }},
+                  "compare_at_price": {{ variant.compare_at_price | json }},
+                  "available": {{ variant.available | json }},
+                  "plan": {% if allocation %}{
+                    "id": {{ allocation.selling_plan.id }},
+                    "name": {{ allocation.selling_plan.name | json }},
+                    "price": {{ allocation.price }},
+                    "per_delivery_price": {{ allocation.per_delivery_price }},
+                    "compare_at_price": {{ allocation.compare_at_price | json }}
+                  }{% else %}null{% endif %}
+                }{% unless forloop.last %},{% endunless %}
+              {%- endfor -%}
+            ]
+          }
+        </script>
+
+        <div class="cntdr-eyebrow">
+          <span class="cntdr-pill" aria-hidden="true"></span>
+          {{ section.settings.eyebrow }}
+        </div>
+
+        <h1 class="cntdr-pdp__title">{{ product.title }}</h1>
+
+        <div class="cntdr-pdp__rating">
+          {%- if app_block_count > 0 -%}
+            {%- for block in section.blocks -%}
+              {%- if block.type == '@app' -%}
+                {% render block %}
+              {%- endif -%}
+            {%- endfor -%}
+          {%- elsif section.settings.rating != blank -%}
+            <a href="#reviews" class="cntdr-pdp__rating-link">
+              <span class="cntdr-pdp__stars" aria-hidden="true">&#9733;&#9733;&#9733;&#9733;&#9733;</span>
+              <span>
+                <strong>{{ section.settings.rating }}</strong>
+                {%- if section.settings.review_count != blank %}
+                  · {{ section.settings.review_count }} {{ section.settings.reviews_label }}
+                {%- endif -%}
+              </span>
+            </a>
+          {%- endif -%}
+        </div>
+
+        {%- if section.settings.intro != blank -%}
+          <div class="cntdr-body-text cntdr-pdp__intro">{{ section.settings.intro }}</div>
+        {%- endif -%}
+
+        {%- assign bullet_count = 0 -%}
+        {%- for block in section.blocks -%}
+          {%- if block.type == 'bullet' -%}{%- assign bullet_count = bullet_count | plus: 1 -%}{%- endif -%}
+        {%- endfor -%}
+        {%- if bullet_count > 0 -%}
+          <ul class="cntdr-pdp__bullets" role="list">
+            {%- for block in section.blocks -%}
+              {%- if block.type == 'bullet' -%}
+                <li {{ block.shopify_attributes }}>
+                  <span class="cntdr-pdp__check" aria-hidden="true">&#10003;</span>
+                  <span>{{ block.settings.text }}</span>
+                </li>
+              {%- endif -%}
+            {%- endfor -%}
+          </ul>
+        {%- endif -%}
+
+        {%- comment -%} Purchase card {%- endcomment -%}
+        <div class="cntdr-pdp__card">
+          <fieldset class="cntdr-pdp__plans">
+            <legend class="cntdr-pdp__sr">{{ section.settings.plan_legend }}</legend>
+
+            <label class="cntdr-pdp__plan" data-cntdr-plan-card="sub"{% unless has_subscription %} hidden{% endunless %}>
+              <input
+                type="radio"
+                name="cntdr-plan"
+                value="sub"
+                class="cntdr-pdp__sr"
+                {% if default_plan == 'sub' %}
+                  checked
+                {% endif %}
+              >
+              <span class="cntdr-pdp__radio" aria-hidden="true"></span>
+              <span class="cntdr-pdp__plan-main">
+                <span class="cntdr-pdp__plan-title">
+                  {{ section.settings.plan_sub_title }}
+                  <span class="cntdr-chip cntdr-pdp__plan-chip" data-cntdr="sub-chip"></span>
+                </span>
+                <span class="cntdr-pdp__plan-sub" data-cntdr="sub-text"></span>
+              </span>
+              <span class="cntdr-pdp__plan-price" data-cntdr="sub-from"></span>
+            </label>
+
+            <label class="cntdr-pdp__plan" data-cntdr-plan-card="once"{% if product.requires_selling_plan %} hidden{% endif %}>
+              <input
+                type="radio"
+                name="cntdr-plan"
+                value="once"
+                class="cntdr-pdp__sr"
+                {% if default_plan == 'once' %}
+                  checked
+                {% endif %}
+              >
+              <span class="cntdr-pdp__radio" aria-hidden="true"></span>
+              <span class="cntdr-pdp__plan-main">
+                <span class="cntdr-pdp__plan-title">{{ section.settings.plan_once_title }}</span>
+                <span class="cntdr-pdp__plan-sub" data-cntdr="once-text"></span>
+              </span>
+              <span class="cntdr-pdp__plan-price" data-cntdr="once-from"></span>
+            </label>
+          </fieldset>
+
+          {%- if has_subscription -%}
+            <div class="cntdr-pdp__kit" data-cntdr="kit"{% if default_plan != 'sub' %} hidden{% endif %}>
+              <div class="cntdr-pdp__kit-media">
+                {%- if section.settings.kit_image != blank -%}
+                  {{
+                    section.settings.kit_image
+                    | image_url: width: 240
+                    | image_tag: loading: 'lazy', widths: '120,240', alt: section.settings.kit_image.alt | default: section.settings.kit_title
+                  }}
+                {%- endif -%}
+              </div>
+              <div>
+                <div class="cntdr-pdp__kit-title">
+                  {{ section.settings.kit_title }}
+                  {%- if section.settings.kit_value > 0 %}
+                    <s>{{ section.settings.kit_value_prefix }} {{ kit_value_cents | money_without_trailing_zeros }}</s>
+                  {%- endif -%}
+                </div>
+                <div class="cntdr-pdp__kit-text">{{ section.settings.kit_text }}</div>
+              </div>
+            </div>
+          {%- endif -%}
+
+          {%- if product.has_only_default_variant == false -%}
+            <fieldset class="cntdr-pdp__supply">
+              <legend class="cntdr-pdp__label">{{ section.settings.supply_label }}</legend>
+              <div class="cntdr-pdp__supply-grid">
+                {%- for variant in product.variants -%}
+                  {%- assign supply_value = variant.options[supply_index] | default: variant.title -%}
+                  <label class="cntdr-pdp__supply-option" data-cntdr-supply>
+                    <input
+                      type="radio"
+                      name="cntdr-supply"
+                      value="{{ variant.id }}"
+                      class="cntdr-pdp__sr"
+                      {% if variant.id == current_variant.id %}
+                        checked
+                      {% endif %}
+                    >
+                    <span class="cntdr-pdp__popular" data-cntdr="popular" hidden>{{ section.settings.popular_label }}</span>
+                    <span class="cntdr-pdp__supply-label">{{ supply_value }}</span>
+                    <span class="cntdr-pdp__supply-price" data-cntdr="supply-price"></span>
+                  </label>
+                {%- endfor -%}
+              </div>
+            </fieldset>
+          {%- endif -%}
+
+          <div class="cntdr-pdp__price-row">
+            <div>
+              <div class="cntdr-pdp__total" data-cntdr="total">{{ current_variant.price | money }}</div>
+              <div class="cntdr-pdp__per-morning" data-cntdr="per-morning"></div>
+            </div>
+            <div class="cntdr-pdp__savings">
+              <s data-cntdr="compare" hidden></s>
+              <span class="cntdr-pdp__save" data-cntdr="save" hidden></span>
+            </div>
+          </div>
+
+          <product-form-component
+            data-section-id="{{ section.id }}"
+            data-product-id="{{ product.id }}"
+            on:submit="/handleSubmit"
+          >
+            <div class="visually-hidden" aria-live="assertive" role="status" aria-atomic="true" ref="liveRegion"></div>
+            {%- form 'product', product, id: form_id, novalidate: 'novalidate', data-type: 'add-to-cart-form' -%}
+              <input
+                type="hidden"
+                name="id"
+                ref="variantId"
+                value="{{ current_variant.id }}"
+                {% unless current_variant.available %}
+                  disabled
+                {% endunless %}
+              >
+              <input type="hidden" name="quantity" value="1">
+              {%- liquid
+                assign initial_plan_id = ''
+                if default_plan == 'sub'
+                  assign initial_plan_id = current_variant.selling_plan_allocations.first.selling_plan.id
+                endif
+              -%}
+              <input
+                type="hidden"
+                name="selling_plan"
+                value="{{ initial_plan_id }}"
+                {% if initial_plan_id == blank %}
+                  disabled
+                {% endif %}
+              >
+              {%- render 'add-to-cart-button',
+                add_to_cart_text: section.settings.cta_once,
+                class: 'cntdr-btn cntdr-btn--primary cntdr-btn--full cntdr-pdp__cta',
+                can_add_to_cart: current_variant.available,
+                product: product
+              -%}
+            {%- endform -%}
+          </product-form-component>
+
+          {%- if section.settings.cta_note != blank -%}
+            <div class="cntdr-pdp__cta-note">{{ section.settings.cta_note }}</div>
+          {%- endif -%}
+
+          {%- if section.settings.show_payment_icons and shop.enabled_payment_types.size > 0 -%}
+            <ul class="cntdr-pdp__pay" role="list">
+              {%- for type in shop.enabled_payment_types -%}
+                <li>{{ type | payment_type_svg_tag: class: 'cntdr-pay-icon' }}</li>
+              {%- endfor -%}
+            </ul>
+          {%- endif -%}
+        </div>
+
+        {%- comment -%} Collapsible details {%- endcomment -%}
+        <div class="cntdr-pdp__details" data-cntdr-accordion>
+          {%- for block in section.blocks -%}
+            {%- if block.type == 'detail' -%}
+              <details class="cntdr-pdp__detail" {{ block.shopify_attributes }}>
+                <summary>
+                  <span>{{ block.settings.title }}</span>
+                  <span class="cntdr-pdp__detail-icon" aria-hidden="true"></span>
+                </summary>
+                <div class="cntdr-pdp__detail-body">{{ block.settings.content }}</div>
+              </details>
+            {%- endif -%}
+          {%- endfor -%}
+        </div>
+      </cntdr-buy-box>
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "CNTDR AM product",
+  "tag": "section",
+  "class": "cntdr-pdp-section",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Breadcrumb"
+    },
+    {
+      "type": "text",
+      "id": "breadcrumb_label",
+      "label": "Breadcrumb label",
+      "default": "Shop"
+    },
+    {
+      "type": "url",
+      "id": "breadcrumb_link",
+      "label": "Breadcrumb link",
+      "info": "Defaults to the all-products collection."
+    },
+    {
+      "type": "header",
+      "content": "Gallery"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_glow",
+      "label": "Show lime glow behind the pack",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "image_badge",
+      "label": "Image badge",
+      "default": "30 mornings"
+    },
+    {
+      "type": "text",
+      "id": "gallery_note",
+      "label": "Line under the thumbnails",
+      "default": "Third-party tested / No fillers, no added sugar / Made in the EU"
+    },
+    {
+      "type": "header",
+      "content": "Intro"
+    },
+    {
+      "type": "text",
+      "id": "eyebrow",
+      "label": "Eyebrow label",
+      "default": "Daily performance protocol"
+    },
+    {
+      "type": "text",
+      "id": "rating",
+      "label": "Rating",
+      "info": "Hidden when a reviews app block is added to this section.",
+      "default": "4.8"
+    },
+    {
+      "type": "text",
+      "id": "review_count",
+      "label": "Review count",
+      "default": "3,912"
+    },
+    {
+      "type": "text",
+      "id": "reviews_label",
+      "label": "Reviews label",
+      "default": "reviews"
+    },
+    {
+      "type": "richtext",
+      "id": "intro",
+      "label": "Intro text",
+      "default": "<p>Eight clinically dosed actives in one 9.2 g sachet. Creatine, L-Tyrosine, Taurine, Citicoline, caffeine and a full electrolyte base — the first hour of your day, decided in advance.</p>"
+    },
+    {
+      "type": "header",
+      "content": "Plans",
+      "info": "Use {days}, {percent} and {price} as placeholders. Prices come from the product's variants and selling plans."
+    },
+    {
+      "type": "text",
+      "id": "plan_legend",
+      "label": "Plan selector label (screen readers)",
+      "default": "Purchase option"
+    },
+    {
+      "type": "text",
+      "id": "plan_sub_title",
+      "label": "Subscription title",
+      "default": "Subscribe & save"
+    },
+    {
+      "type": "text",
+      "id": "plan_sub_short",
+      "label": "Subscription short name (sticky bar)",
+      "default": "Subscription"
+    },
+    {
+      "type": "text",
+      "id": "plan_sub_text",
+      "label": "Subscription sub-line",
+      "default": "Ships every {days} days · Welcome Kit free · pause anytime"
+    },
+    {
+      "type": "text",
+      "id": "plan_sub_chip",
+      "label": "Subscription chip",
+      "default": "Save up to {percent}%"
+    },
+    {
+      "type": "text",
+      "id": "plan_once_title",
+      "label": "One-time title",
+      "default": "One-time purchase"
+    },
+    {
+      "type": "text",
+      "id": "plan_once_short",
+      "label": "One-time short name (sticky bar)",
+      "default": "One-time"
+    },
+    {
+      "type": "text",
+      "id": "plan_once_text",
+      "label": "One-time sub-line",
+      "default": "No kit, no commitment · save up to {percent}%"
+    },
+    {
+      "type": "text",
+      "id": "from_label",
+      "label": "Plan price label",
+      "default": "from {price}/box"
+    },
+    {
+      "type": "header",
+      "content": "Welcome Kit"
+    },
+    {
+      "type": "image_picker",
+      "id": "kit_image",
+      "label": "Kit image"
+    },
+    {
+      "type": "text",
+      "id": "kit_title",
+      "label": "Kit title",
+      "default": "Free Welcome Kit"
+    },
+    {
+      "type": "text",
+      "id": "kit_value_prefix",
+      "label": "Kit value prefix",
+      "default": "worth"
+    },
+    {
+      "type": "number",
+      "id": "kit_value",
+      "label": "Kit value",
+      "info": "Whole currency units. Counted in the subscription savings.",
+      "default": 29
+    },
+    {
+      "type": "textarea",
+      "id": "kit_text",
+      "label": "Kit text",
+      "default": "Steel shaker, travel tin for 7 sachets and the 30-day protocol card. Ships with your first box."
+    },
+    {
+      "type": "header",
+      "content": "Supply"
+    },
+    {
+      "type": "text",
+      "id": "supply_label",
+      "label": "Supply label",
+      "default": "Supply"
+    },
+    {
+      "type": "text",
+      "id": "per_box_label",
+      "label": "Per-box price label",
+      "default": "{price}/box"
+    },
+    {
+      "type": "text",
+      "id": "popular_label",
+      "label": "Popular tag",
+      "default": "Most popular"
+    },
+    {
+      "type": "range",
+      "id": "popular_sub_index",
+      "label": "Popular option (subscription)",
+      "min": 1,
+      "max": 3,
+      "step": 1,
+      "default": 2
+    },
+    {
+      "type": "range",
+      "id": "popular_once_index",
+      "label": "Popular option (one-time)",
+      "min": 1,
+      "max": 3,
+      "step": 1,
+      "default": 3
+    },
+    {
+      "type": "header",
+      "content": "Price and button"
+    },
+    {
+      "type": "text",
+      "id": "per_morning_sub",
+      "label": "Per-morning line (subscription)",
+      "default": "{price} per morning · billed every {days} days"
+    },
+    {
+      "type": "text",
+      "id": "per_morning_once",
+      "label": "Per-morning line (one-time)",
+      "default": "{price} per morning · one-time payment"
+    },
+    {
+      "type": "text",
+      "id": "per_morning_short",
+      "label": "Per-morning (sticky bar)",
+      "default": "{price} per morning"
+    },
+    {
+      "type": "text",
+      "id": "save_label",
+      "label": "Savings label",
+      "default": "You save {amount}"
+    },
+    {
+      "type": "text",
+      "id": "cta_sub",
+      "label": "Button label (subscription)",
+      "default": "Subscribe & save {percent}%"
+    },
+    {
+      "type": "text",
+      "id": "cta_once",
+      "label": "Button label (one-time)",
+      "default": "Add to cart"
+    },
+    {
+      "type": "text",
+      "id": "cta_note",
+      "label": "Line under the button",
+      "default": "60-day guarantee on your first box* · Free shipping over €65 · Ships within 24 h"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_payment_icons",
+      "label": "Show payment icons",
+      "default": true
+    }
+  ],
+  "blocks": [
+    {
+      "type": "@app"
+    },
+    {
+      "type": "bullet",
+      "name": "Check bullet",
+      "settings": [
+        {
+          "type": "text",
+          "id": "text",
+          "label": "Text",
+          "default": "Focus and drive inside 30 minutes, no jitter, no crash"
+        }
+      ]
+    },
+    {
+      "type": "detail",
+      "name": "Collapsible detail",
+      "settings": [
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Title",
+          "default": "How to take it"
+        },
+        {
+          "type": "richtext",
+          "id": "content",
+          "label": "Content",
+          "default": "<p>One sachet in 300 ml of cold water within 15 minutes of waking.</p>"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "CNTDR AM product",
+      "blocks": [
+        { "type": "bullet", "settings": { "text": "Focus and drive inside 30 minutes, no jitter, no crash" } },
+        { "type": "bullet", "settings": { "text": "Replaces four products and about €69 of shelf clutter" } },
+        { "type": "bullet", "settings": { "text": "Sachets, not scoops — same exact dose at home or on the road" } },
+        {
+          "type": "detail",
+          "settings": {
+            "title": "How to take it",
+            "content": "<p>One sachet in 300 ml of cold water within 15 minutes of waking. Stir ten seconds. Take it before training or before your first work block — not both.</p>"
+          }
+        },
+        {
+          "type": "detail",
+          "settings": {
+            "title": "Shipping & delivery",
+            "content": "<p>Dispatched from the EU within 24 hours. 2–3 working days in the Benelux and Germany, 3–5 elsewhere in Europe. Free over €65.</p>"
+          }
+        },
+        {
+          "type": "detail",
+          "settings": {
+            "title": "Subscription terms",
+            "content": "<p>Ships every 30, 60 or 90 days depending on your supply. Skip, delay or cancel in two clicks from your account — no phone call, no retention flow.</p>"
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

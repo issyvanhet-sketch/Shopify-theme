@@ -1,0 +1,88 @@
+<section id="{{ section.id }}" class="cntdr cntdr-pdp-guarantee">
+  <div class="cntdr-wrap cntdr-pdp-guarantee__grid">
+    <div class="cntdr-pdp-guarantee__copy">
+      <div class="cntdr-eyebrow">{{ section.settings.label }}</div>
+      <h2 class="cntdr-pdp-guarantee__heading">{{ section.settings.heading }}</h2>
+      {%- if section.settings.body != blank -%}
+        <p class="cntdr-body-text">{{ section.settings.body }}</p>
+      {%- endif -%}
+      {%- if section.settings.small_print != blank -%}
+        <p class="cntdr-pdp-guarantee__small">{{ section.settings.small_print }}</p>
+      {%- endif -%}
+    </div>
+
+    <div class="cntdr-pdp-guarantee__stats">
+      {%- for block in section.blocks -%}
+        <div class="cntdr-pdp-guarantee__stat" {{ block.shopify_attributes }}>
+          <div class="cntdr-pdp-guarantee__number">{{ block.settings.number }}</div>
+          <div class="cntdr-pdp-guarantee__label">{{ block.settings.label }}</div>
+        </div>
+      {%- endfor -%}
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "CNTDR AM guarantee",
+  "tag": "section",
+  "settings": [
+    {
+      "type": "text",
+      "id": "label",
+      "label": "Eyebrow label",
+      "default": "Zero risk"
+    },
+    {
+      "type": "textarea",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Try it for 60 days. If your mornings aren't better, we refund your first box."
+    },
+    {
+      "type": "textarea",
+      "id": "body",
+      "label": "Body text",
+      "default": "Give it at least 21 days — creatine needs that long to saturate. Then decide. One email within 60 days of delivery, no return shipping. Pause or cancel a subscription in two clicks from your account."
+    },
+    {
+      "type": "textarea",
+      "id": "small_print",
+      "label": "Small print",
+      "default": "* First order only, one box per customer. Minimum 21 days of use; claim within 60 days of delivery. Welcome Kit not refundable. A claim cancels the subscription. Your statutory EU rights are not affected."
+    }
+  ],
+  "blocks": [
+    {
+      "type": "stat",
+      "name": "Stat",
+      "limit": 4,
+      "settings": [
+        {
+          "type": "text",
+          "id": "number",
+          "label": "Number",
+          "default": "60"
+        },
+        {
+          "type": "text",
+          "id": "label",
+          "label": "Label",
+          "default": "Day guarantee on your first box"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "CNTDR AM guarantee",
+      "blocks": [
+        { "type": "stat", "settings": { "number": "60", "label": "Day guarantee on your first box" } },
+        { "type": "stat", "settings": { "number": "24 h", "label": "Dispatch from the EU warehouse" } },
+        { "type": "stat", "settings": { "number": "100%", "label": "Batch-tested, COA published" } },
+        { "type": "stat", "settings": { "number": "0", "label": "Added sugar, dyes or fillers" } }
+      ]
+    }
+  ]
+}
+{% endschema %}

@@ -4,7 +4,8 @@
     <h2 class="cntdr-h1 cntdr-closing__heading">{{ section.settings.heading }}</h2>
     <p class="cntdr-body-text cntdr-closing__body">{{ section.settings.body }}</p>
     {%- if section.settings.button_label != blank -%}
-      <a href="{{ section.settings.button_link | default: '#kit' }}" class="cntdr-btn cntdr-btn--primary">
+      {%- assign button_anchor = section.settings.button_anchor | default: '#kit' -%}
+      <a href="{{ section.settings.button_link | default: button_anchor }}" class="cntdr-btn cntdr-btn--primary">
         {{ section.settings.button_label }}
       </a>
     {%- endif -%}
@@ -47,6 +48,12 @@
       "type": "url",
       "id": "button_link",
       "label": "Button link"
+    },
+    {
+      "type": "text",
+      "id": "button_anchor",
+      "label": "Button anchor",
+      "info": "Optional. Used when no link is set, e.g. #cntdr-buy on the product page. Defaults to #kit."
     },
     {
       "type": "text",

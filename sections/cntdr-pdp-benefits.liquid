@@ -1,0 +1,133 @@
+<section id="{{ section.id }}" class="cntdr cntdr-pdp-benefits">
+  <div class="cntdr-wrap">
+    <div class="cntdr-pdp-head">
+      <div class="cntdr-pdp-head__group">
+        <div class="cntdr-eyebrow">{{ section.settings.label }}</div>
+        <h2 class="cntdr-h2 cntdr-pdp-head__heading">{{ section.settings.heading }}</h2>
+      </div>
+      {%- if section.settings.button_label != blank -%}
+        <a href="{{ section.settings.button_link | default: '#cntdr-buy' }}" class="cntdr-btn cntdr-btn--secondary">
+          {{- section.settings.button_label -}}
+        </a>
+      {%- endif -%}
+    </div>
+
+    <div class="cntdr-pdp-benefits__grid">
+      {%- for block in section.blocks -%}
+        <div class="cntdr-pdp-benefit" {{ block.shopify_attributes }}>
+          <div class="cntdr-pdp-benefit__media">
+            {%- if block.settings.image != blank -%}
+              {{
+                block.settings.image
+                | image_url: width: 900
+                | image_tag: loading: 'lazy', widths: '300,450,600,900', alt: block.settings.image.alt | default: block.settings.title
+              }}
+            {%- endif -%}
+          </div>
+          <div class="cntdr-pdp-benefit__body">
+            {%- if block.settings.chip != blank -%}
+              <span class="cntdr-chip cntdr-pdp-benefit__chip">{{ block.settings.chip }}</span>
+            {%- endif -%}
+            <h3 class="cntdr-h3">{{ block.settings.title }}</h3>
+            <p class="cntdr-body-text cntdr-pdp-benefit__text">{{ block.settings.text }}</p>
+          </div>
+        </div>
+      {%- endfor -%}
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "CNTDR AM benefits",
+  "tag": "section",
+  "settings": [
+    {
+      "type": "text",
+      "id": "label",
+      "label": "Eyebrow label",
+      "default": "What the protocol does"
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "One dose, three time horizons"
+    },
+    {
+      "type": "text",
+      "id": "button_label",
+      "label": "Button label",
+      "default": "Start the protocol"
+    },
+    {
+      "type": "url",
+      "id": "button_link",
+      "label": "Button link",
+      "info": "Defaults to the buy box."
+    }
+  ],
+  "blocks": [
+    {
+      "type": "benefit",
+      "name": "Benefit",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Image"
+        },
+        {
+          "type": "text",
+          "id": "chip",
+          "label": "Chip",
+          "default": "First 30 minutes"
+        },
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Title",
+          "default": "Awake, not wired"
+        },
+        {
+          "type": "textarea",
+          "id": "text",
+          "label": "Text",
+          "default": "Caffeine at one coffee's dose, buffered by taurine and L-tyrosine."
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "CNTDR AM benefits",
+      "blocks": [
+        {
+          "type": "benefit",
+          "settings": {
+            "chip": "First 30 minutes",
+            "title": "Awake, not wired",
+            "text": "Caffeine at one coffee's dose, buffered by taurine and L-tyrosine. Electrolytes replace what the night took, so the lift is flat instead of spiked."
+          }
+        },
+        {
+          "type": "benefit",
+          "settings": {
+            "chip": "Week one",
+            "title": "The morning stops being a decision",
+            "text": "Same dose, same time, no counter full of tubs. Most people report a longer first deep-work block and less mid-morning drift by day five."
+          }
+        },
+        {
+          "type": "benefit",
+          "settings": {
+            "chip": "Week four",
+            "title": "Creatine fully loaded",
+            "text": "5 g daily saturates muscle and brain stores. Strength output, power endurance and cognitive resilience on short sleep all hold better."
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

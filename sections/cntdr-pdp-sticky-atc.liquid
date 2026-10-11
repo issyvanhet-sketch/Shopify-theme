@@ -1,0 +1,47 @@
+<script src="{{ 'cntdr-pdp.js' | asset_url }}" defer></script>
+
+{%- if section.settings.enabled -%}
+  <cntdr-sticky-atc class="cntdr cntdr-pdp-sticky" aria-hidden="true" inert>
+    <div class="cntdr-pdp-sticky__inner">
+      <div class="cntdr-pdp-sticky__thumb">
+        {%- if product.featured_media != blank -%}
+          {{
+            product.featured_media.preview_image
+            | image_url: width: 96
+            | image_tag: loading: 'lazy', widths: '48,96', alt: product.featured_media.alt | default: product.title
+          }}
+        {%- endif -%}
+      </div>
+      <div class="cntdr-pdp-sticky__info">
+        <div class="cntdr-pdp-sticky__title" data-cntdr="sticky-title">{{ product.title }}</div>
+        <div class="cntdr-pdp-sticky__price" data-cntdr="sticky-price">
+          {{- product.selected_or_first_available_variant.price | money -}}
+        </div>
+      </div>
+      <button type="button" class="cntdr-btn cntdr-btn--primary cntdr-pdp-sticky__btn" data-cntdr-sticky-button>
+        {{- 'products.product.add_to_cart' | t -}}
+      </button>
+    </div>
+  </cntdr-sticky-atc>
+{%- endif -%}
+
+{% schema %}
+{
+  "name": "CNTDR AM sticky add to cart",
+  "tag": "section",
+  "settings": [
+    {
+      "type": "checkbox",
+      "id": "enabled",
+      "label": "Show sticky add-to-cart bar",
+      "info": "Mirrors the buy box and appears once the visitor scrolls past it.",
+      "default": true
+    }
+  ],
+  "presets": [
+    {
+      "name": "CNTDR AM sticky add to cart"
+    }
+  ]
+}
+{% endschema %}

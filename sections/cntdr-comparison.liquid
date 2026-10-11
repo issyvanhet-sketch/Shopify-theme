@@ -29,6 +29,10 @@
       {%- if section.settings.note != blank -%}
         <p class="cntdr-comparison__note">{{ section.settings.note }}</p>
       {%- endif -%}
+
+      {%- if section.settings.footnote != blank -%}
+        <p class="cntdr-comparison__footnote">{{ section.settings.footnote }}</p>
+      {%- endif -%}
     </div>
 
     <div class="cntdr-comparison__media">
@@ -95,6 +99,12 @@
       "id": "note",
       "label": "Closing note",
       "default": "<p>Six actives, one dose, measured for you. No jars, no scoops, no guessing what you already took.</p>"
+    },
+    {
+      "type": "textarea",
+      "id": "footnote",
+      "label": "Footnote",
+      "info": "Optional small print under the table, e.g. what the asterisk on the total means."
     },
     {
       "type": "image_picker",

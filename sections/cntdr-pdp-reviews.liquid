@@ -1,0 +1,297 @@
+<script src="{{ 'cntdr-pdp.js' | asset_url }}" defer></script>
+
+{%- liquid
+  assign photo_count = 0
+  for block in section.blocks
+    if block.type == 'photo'
+      assign photo_count = photo_count | plus: 1
+    endif
+  endfor
+-%}
+
+<section id="reviews" class="cntdr cntdr-pdp-reviews">
+  <div class="cntdr-wrap">
+    <div class="cntdr-pdp-reviews__top">
+      <div class="cntdr-pdp-reviews__score">
+        <div class="cntdr-pdp-reviews__rating">{{ section.settings.rating }}</div>
+        <div>
+          <div class="cntdr-pdp__stars" aria-hidden="true">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
+          <div class="cntdr-pdp-reviews__count">
+            {{ section.settings.review_count }}
+            {{ section.settings.reviews_label }}
+            {%- if section.settings.subscribe_rate != blank %} · {{ section.settings.subscribe_rate }}{% endif -%}
+          </div>
+        </div>
+      </div>
+
+      <div class="cntdr-pdp-reviews__bars">
+        {%- assign stars = '5,4,3,2' | split: ',' -%}
+        {%- for star in stars -%}
+          {%- assign key = 'pct_' | append: star -%}
+          {%- assign pct = section.settings[key] -%}
+          <div class="cntdr-pdp-reviews__bar-row">
+            <span>{{ star }} &#9733;</span>
+            <span class="cntdr-pdp-reviews__bar" style="--cntdr-pct: {{ pct }}%;">
+              <span class="cntdr-pdp-reviews__bar-fill"></span>
+            </span>
+            <span class="cntdr-pdp-reviews__pct">{{ pct }}%</span>
+          </div>
+        {%- endfor -%}
+      </div>
+    </div>
+
+    {%- if photo_count > 0 -%}
+      <cntdr-slider class="cntdr-pdp-photos">
+        <div class="cntdr-pdp-photos__head">
+          <div class="cntdr-eyebrow">{{ section.settings.photos_label }}</div>
+          {%- if section.settings.photos_tag != blank -%}
+            <div class="cntdr-pdp-photos__tag">{{ section.settings.photos_tag }}</div>
+          {%- endif -%}
+        </div>
+        <div class="cntdr-pdp-photos__track" data-cntdr-track>
+          {%- for block in section.blocks -%}
+            {%- if block.type == 'photo' -%}
+              <div class="cntdr-pdp-photos__tile" {{ block.shopify_attributes }}>
+                {%- if block.settings.image != blank -%}
+                  {{
+                    block.settings.image
+                    | image_url: width: 600
+                    | image_tag: loading: 'lazy', widths: '200,300,400,600', sizes: '(min-width: 990px) 200px, 45vw', alt: block.settings.image.alt
+                  }}
+                {%- endif -%}
+              </div>
+            {%- endif -%}
+          {%- endfor -%}
+        </div>
+        <div class="cntdr-pdp-photos__nav">
+          <button type="button" class="cntdr-pdp-photos__btn" data-cntdr-step="-1" aria-label="{{ 'accessibility.slideshow_previous' | t }}">&larr;</button>
+          <button type="button" class="cntdr-pdp-photos__btn" data-cntdr-step="1" aria-label="{{ 'accessibility.slideshow_next' | t }}">&rarr;</button>
+        </div>
+      </cntdr-slider>
+    {%- endif -%}
+
+    <div class="cntdr-social__grid">
+      {%- for block in section.blocks -%}
+        {%- if block.type == 'testimonial' -%}
+          <div class="cntdr-testimonial" {{ block.shopify_attributes }}>
+            <div class="cntdr-pdp-reviews__card-head">
+              <div class="cntdr-testimonial__stars" aria-label="{{ block.settings.stars }} / 5">
+                {%- for i in (1..5) -%}
+                  {%- if i <= block.settings.stars -%}&#9733;{%- else -%}&#9734;{%- endif -%}
+                {%- endfor -%}
+              </div>
+              {%- if section.settings.verified_label != blank -%}
+                <span class="cntdr-pdp-reviews__verified">{{ section.settings.verified_label }}</span>
+              {%- endif -%}
+            </div>
+            <p class="cntdr-testimonial__quote">&ldquo;{{ block.settings.quote }}&rdquo;</p>
+            <div class="cntdr-testimonial__author">
+              <div class="cntdr-testimonial__avatar">
+                {%- if block.settings.avatar != blank -%}
+                  {{ block.settings.avatar | image_url: width: 80 | image_tag: loading: 'lazy', widths: '40,80', alt: block.settings.author_name }}
+                {%- endif -%}
+              </div>
+              <div class="cntdr-testimonial__meta">
+                {{ block.settings.author_name }}<br>
+                {{ block.settings.author_role }}
+              </div>
+            </div>
+          </div>
+        {%- endif -%}
+      {%- endfor -%}
+    </div>
+
+    {%- for block in section.blocks -%}
+      {%- if block.type == '@app' -%}
+        <div class="cntdr-pdp-reviews__app">{% render block %}</div>
+      {%- endif -%}
+    {%- endfor -%}
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "CNTDR AM reviews",
+  "tag": "section",
+  "settings": [
+    {
+      "type": "text",
+      "id": "rating",
+      "label": "Rating",
+      "default": "4.8"
+    },
+    {
+      "type": "text",
+      "id": "review_count",
+      "label": "Review count",
+      "default": "3,912"
+    },
+    {
+      "type": "text",
+      "id": "reviews_label",
+      "label": "Reviews label",
+      "default": "verified reviews"
+    },
+    {
+      "type": "text",
+      "id": "subscribe_rate",
+      "label": "Extra stat",
+      "info": "Optional, shown after the review count, e.g. a resubscribe rate."
+    },
+    {
+      "type": "range",
+      "id": "pct_5",
+      "label": "5-star %",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "%",
+      "default": 84
+    },
+    {
+      "type": "range",
+      "id": "pct_4",
+      "label": "4-star %",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "%",
+      "default": 11
+    },
+    {
+      "type": "range",
+      "id": "pct_3",
+      "label": "3-star %",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "%",
+      "default": 4
+    },
+    {
+      "type": "range",
+      "id": "pct_2",
+      "label": "2-star %",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "%",
+      "default": 1
+    },
+    {
+      "type": "text",
+      "id": "verified_label",
+      "label": "Verified label",
+      "default": "Verified"
+    },
+    {
+      "type": "header",
+      "content": "Customer photos"
+    },
+    {
+      "type": "text",
+      "id": "photos_label",
+      "label": "Photos label",
+      "default": "From the community"
+    },
+    {
+      "type": "text",
+      "id": "photos_tag",
+      "label": "Tag line",
+      "default": "Tag @cntdrprotocol"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "@app"
+    },
+    {
+      "type": "photo",
+      "name": "Customer photo",
+      "limit": 6,
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Photo (4:5)"
+        }
+      ]
+    },
+    {
+      "type": "testimonial",
+      "name": "Testimonial",
+      "settings": [
+        {
+          "type": "range",
+          "id": "stars",
+          "label": "Stars",
+          "min": 1,
+          "max": 5,
+          "step": 1,
+          "default": 5
+        },
+        {
+          "type": "textarea",
+          "id": "quote",
+          "label": "Quote",
+          "default": "I stopped negotiating with my morning."
+        },
+        {
+          "type": "image_picker",
+          "id": "avatar",
+          "label": "Avatar"
+        },
+        {
+          "type": "text",
+          "id": "author_name",
+          "label": "Name",
+          "default": "Daniel R."
+        },
+        {
+          "type": "text",
+          "id": "author_role",
+          "label": "Meta line",
+          "default": "Founder, SaaS"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "CNTDR AM reviews",
+      "blocks": [
+        { "type": "photo" },
+        { "type": "photo" },
+        { "type": "photo" },
+        { "type": "photo" },
+        { "type": "photo" },
+        { "type": "photo" },
+        {
+          "type": "testimonial",
+          "settings": {
+            "quote": "I stopped negotiating with my morning. Sachet, water, out the door by six. The 5-to-9 before the 9-to-5 is where the company gets built.",
+            "author_name": "Daniel R.",
+            "author_role": "Founder, SaaS"
+          }
+        },
+        {
+          "type": "testimonial",
+          "settings": {
+            "quote": "Creatine and electrolytes in one dose I actually take on the road. Threshold sessions feel the same in a hotel gym as they do at home.",
+            "author_name": "Marije K.",
+            "author_role": "Marathon, 2:41"
+          }
+        },
+        {
+          "type": "testimonial",
+          "settings": {
+            "quote": "Four bottles gone from my counter. One box, one drawer, no decisions before the first block of deep work.",
+            "author_name": "Tobias L.",
+            "author_role": "Head of Ops"
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}
