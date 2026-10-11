@@ -1,3 +1,25 @@
+{%- if section.settings.layout == 'steps' -%}
+  <section id="routine" class="cntdr cntdr-routine">
+    <div class="cntdr-wrap cntdr-routine__steps-wrap">
+      <div class="cntdr-routine__steps-head">
+        <div class="cntdr-eyebrow">{{ section.settings.label }}</div>
+        <h2 class="cntdr-h2">{{ section.settings.heading }}</h2>
+        {%- if section.settings.body != blank -%}
+          <div class="cntdr-body-text cntdr-routine__body">{{ section.settings.body }}</div>
+        {%- endif -%}
+      </div>
+      <div class="cntdr-routine__steps">
+        {%- for block in section.blocks -%}
+          <div class="cntdr-routine__step" {{ block.shopify_attributes }}>
+            <div class="cntdr-routine__step-number">{{ block.settings.time }}</div>
+            <h3 class="cntdr-h4">{{ block.settings.title }}</h3>
+            <p class="cntdr-routine__step-note">{{ block.settings.note }}</p>
+          </div>
+        {%- endfor -%}
+      </div>
+    </div>
+  </section>
+{%- else -%}
 <section id="routine" class="cntdr cntdr-routine">
   <div class="cntdr-wrap cntdr-routine__grid">
     <div class="cntdr-routine__intro">
@@ -33,12 +55,23 @@
     </div>
   </div>
 </section>
+{%- endif -%}
 
 {% schema %}
 {
   "name": "CNTDR AM routine",
   "tag": "section",
   "settings": [
+    {
+      "type": "select",
+      "id": "layout",
+      "label": "Layout",
+      "options": [
+        { "value": "timeline", "label": "Timeline" },
+        { "value": "steps", "label": "Numbered steps" }
+      ],
+      "default": "timeline"
+    },
     {
       "type": "text",
       "id": "label",

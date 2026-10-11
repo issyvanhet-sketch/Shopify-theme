@@ -3,6 +3,7 @@
 {%- if section.settings.enabled -%}
   <cntdr-sticky-atc class="cntdr cntdr-pdp-sticky" aria-hidden="true" inert>
     <div class="cntdr-pdp-sticky__inner">
+      <div class="cntdr-pdp-sticky__lead">
       <div class="cntdr-pdp-sticky__thumb">
         {%- if product.featured_media != blank -%}
           {{
@@ -17,6 +18,7 @@
         <div class="cntdr-pdp-sticky__price" data-cntdr="sticky-price">
           {{- product.selected_or_first_available_variant.price | money -}}
         </div>
+      </div>
       </div>
       <button type="button" class="cntdr-btn cntdr-btn--primary cntdr-pdp-sticky__btn" data-cntdr-sticky-button>
         {{- 'products.product.add_to_cart' | t -}}

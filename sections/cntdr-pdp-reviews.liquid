@@ -10,17 +10,15 @@
 -%}
 
 <section id="reviews" class="cntdr cntdr-pdp-reviews">
-  <div class="cntdr-wrap">
+  <div class="cntdr-wrap cntdr-pdp-ruled">
     <div class="cntdr-pdp-reviews__top">
       <div class="cntdr-pdp-reviews__score">
         <div class="cntdr-pdp-reviews__rating">{{ section.settings.rating }}</div>
-        <div>
-          <div class="cntdr-pdp__stars" aria-hidden="true">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
-          <div class="cntdr-pdp-reviews__count">
-            {{ section.settings.review_count }}
-            {{ section.settings.reviews_label }}
-            {%- if section.settings.subscribe_rate != blank %} · {{ section.settings.subscribe_rate }}{% endif -%}
-          </div>
+        <div class="cntdr-pdp-reviews__stars" aria-hidden="true">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
+        <div class="cntdr-pdp-reviews__count">
+          {{ section.settings.review_count }}
+          {{ section.settings.reviews_label }}
+          {%- if section.settings.subscribe_rate != blank %} · {{ section.settings.subscribe_rate }}{% endif -%}
         </div>
       </div>
 
@@ -30,7 +28,7 @@
           {%- assign key = 'pct_' | append: star -%}
           {%- assign pct = section.settings[key] -%}
           <div class="cntdr-pdp-reviews__bar-row">
-            <span>{{ star }} &#9733;</span>
+            <span>{{ star }} {{ section.settings.star_label }}</span>
             <span class="cntdr-pdp-reviews__bar" style="--cntdr-pct: {{ pct }}%;">
               <span class="cntdr-pdp-reviews__bar-fill"></span>
             </span>
@@ -136,7 +134,14 @@
       "type": "text",
       "id": "subscribe_rate",
       "label": "Extra stat",
-      "info": "Optional, shown after the review count, e.g. a resubscribe rate."
+      "info": "Optional, shown after the review count, e.g. a resubscribe rate.",
+      "default": "91% subscribe after month one"
+    },
+    {
+      "type": "text",
+      "id": "star_label",
+      "label": "Star label in the bars",
+      "default": "star"
     },
     {
       "type": "range",
@@ -271,7 +276,7 @@
           "settings": {
             "quote": "I stopped negotiating with my morning. Sachet, water, out the door by six. The 5-to-9 before the 9-to-5 is where the company gets built.",
             "author_name": "Daniel R.",
-            "author_role": "Founder, SaaS"
+            "author_role": "Founder, SaaS · 7 months"
           }
         },
         {
@@ -279,7 +284,7 @@
           "settings": {
             "quote": "Creatine and electrolytes in one dose I actually take on the road. Threshold sessions feel the same in a hotel gym as they do at home.",
             "author_name": "Marije K.",
-            "author_role": "Marathon, 2:41"
+            "author_role": "Marathon, 2:41 · 1 year"
           }
         },
         {
@@ -287,7 +292,7 @@
           "settings": {
             "quote": "Four bottles gone from my counter. One box, one drawer, no decisions before the first block of deep work.",
             "author_name": "Tobias L.",
-            "author_role": "Head of Ops"
+            "author_role": "Head of Ops · 4 months"
           }
         }
       ]

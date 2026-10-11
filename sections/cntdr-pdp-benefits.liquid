@@ -6,7 +6,7 @@
         <h2 class="cntdr-h2 cntdr-pdp-head__heading">{{ section.settings.heading }}</h2>
       </div>
       {%- if section.settings.button_label != blank -%}
-        <a href="{{ section.settings.button_link | default: '#cntdr-buy' }}" class="cntdr-btn cntdr-btn--secondary">
+        <a href="{{ section.settings.button_link | default: '#cntdr-buy' }}" class="cntdr-btn cntdr-btn--secondary cntdr-pdp-head__btn">
           {{- section.settings.button_label -}}
         </a>
       {%- endif -%}
@@ -26,10 +26,10 @@
           </div>
           <div class="cntdr-pdp-benefit__body">
             {%- if block.settings.chip != blank -%}
-              <span class="cntdr-chip cntdr-pdp-benefit__chip">{{ block.settings.chip }}</span>
+              <span class="cntdr-pdp-benefit__chip">{{ block.settings.chip }}</span>
             {%- endif -%}
-            <h3 class="cntdr-h3">{{ block.settings.title }}</h3>
-            <p class="cntdr-body-text cntdr-pdp-benefit__text">{{ block.settings.text }}</p>
+            <h3 class="cntdr-h4">{{ block.settings.title }}</h3>
+            <p class="cntdr-pdp-benefit__text">{{ block.settings.text }}</p>
           </div>
         </div>
       {%- endfor -%}

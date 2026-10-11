@@ -63,7 +63,7 @@
             <div class="cntdr-pdp__glow" aria-hidden="true"></div>
           {%- endif -%}
           {%- if section.settings.image_badge != blank -%}
-            <span class="cntdr-chip cntdr-pdp__media-badge">{{ section.settings.image_badge }}</span>
+            <span class="cntdr-pdp__media-badge">{{ section.settings.image_badge }}</span>
           {%- endif -%}
           {%- if product.featured_media != blank -%}
             {{
@@ -81,8 +81,14 @@
           {%- endif -%}
         </div>
 
-        {%- if product.media.size > 1 -%}
-          <div class="cntdr-pdp__thumbs">
+        {%- liquid
+          assign thumb_count = product.media.size | minus: 1
+          if thumb_count < 0
+            assign thumb_count = 0
+          endif
+          assign empty_thumbs = 4 | minus: thumb_count
+        -%}
+        <div class="cntdr-pdp__thumbs">
             {%- for media in product.media offset: 1 limit: 4 -%}
               <button type="button" class="cntdr-pdp__thumb" data-cntdr-thumb aria-label="{{ media.alt | default: product.title | escape }}">
                 {{
@@ -96,11 +102,21 @@
                 }}
               </button>
             {%- endfor -%}
-          </div>
-        {%- endif -%}
+            {%- if empty_thumbs > 0 -%}
+              {%- for i in (1..empty_thumbs) -%}
+                <div class="cntdr-pdp__thumb cntdr-pdp__thumb--empty" aria-hidden="true"></div>
+              {%- endfor -%}
+            {%- endif -%}
+        </div>
 
         {%- if section.settings.gallery_note != blank -%}
-          <div class="cntdr-pdp__gallery-note">{{ section.settings.gallery_note }}</div>
+          {%- assign note_items = section.settings.gallery_note | split: ' / ' -%}
+          <div class="cntdr-pdp__gallery-note">
+            {%- for item in note_items -%}
+              {%- unless forloop.first -%}<span class="cntdr-pdp__sep" aria-hidden="true">/</span>{%- endunless -%}
+              <span>{{ item }}</span>
+            {%- endfor -%}
+          </div>
         {%- endif -%}
       </cntdr-gallery>
 
@@ -178,15 +194,15 @@
               {%- endif -%}
             {%- endfor -%}
           {%- elsif section.settings.rating != blank -%}
-            <a href="#reviews" class="cntdr-pdp__rating-link">
+            <div class="cntdr-pdp__rating-row">
               <span class="cntdr-pdp__stars" aria-hidden="true">&#9733;&#9733;&#9733;&#9733;&#9733;</span>
-              <span>
-                <strong>{{ section.settings.rating }}</strong>
-                {%- if section.settings.review_count != blank %}
-                  · {{ section.settings.review_count }} {{ section.settings.reviews_label }}
-                {%- endif -%}
-              </span>
-            </a>
+              <strong>{{ section.settings.rating }}</strong>
+              {%- if section.settings.review_count != blank %}
+                <a href="#reviews" class="cntdr-pdp__rating-link">
+                  {{- section.settings.review_count }} {{ section.settings.reviews_label -}}
+                </a>
+              {%- endif -%}
+            </div>
           {%- endif -%}
         </div>
 
@@ -228,16 +244,14 @@
               >
               <span class="cntdr-pdp__radio" aria-hidden="true"></span>
               <span class="cntdr-pdp__plan-main">
-                <span class="cntdr-pdp__plan-title">
-                  {{ section.settings.plan_sub_title }}
-                  <span class="cntdr-chip cntdr-pdp__plan-chip" data-cntdr="sub-chip"></span>
-                </span>
+                <span class="cntdr-pdp__plan-title">{{ section.settings.plan_sub_title }}</span>
                 <span class="cntdr-pdp__plan-sub" data-cntdr="sub-text"></span>
+                <span class="cntdr-pdp__plan-chip" data-cntdr="sub-chip"></span>
               </span>
               <span class="cntdr-pdp__plan-price" data-cntdr="sub-from"></span>
             </label>
 
-            <label class="cntdr-pdp__plan" data-cntdr-plan-card="once"{% if product.requires_selling_plan %} hidden{% endif %}>
+            <label class="cntdr-pdp__plan cntdr-pdp__plan--center" data-cntdr-plan-card="once"{% if product.requires_selling_plan %} hidden{% endif %}>
               <input
                 type="radio"
                 name="cntdr-plan"
@@ -269,8 +283,8 @@
               </div>
               <div>
                 <div class="cntdr-pdp__kit-title">
-                  {{ section.settings.kit_title }}
-                  {%- if section.settings.kit_value > 0 %}
+                  <span>{{ section.settings.kit_title }}</span>
+                  {%- if section.settings.kit_value > 0 -%}
                     <s>{{ section.settings.kit_value_prefix }} {{ kit_value_cents | money_without_trailing_zeros }}</s>
                   {%- endif -%}
                 </div>
@@ -356,7 +370,12 @@
           </product-form-component>
 
           {%- if section.settings.cta_note != blank -%}
-            <div class="cntdr-pdp__cta-note">{{ section.settings.cta_note }}</div>
+            {%- assign note_items = section.settings.cta_note | split: ' · ' -%}
+            <div class="cntdr-pdp__cta-note">
+              {%- for item in note_items -%}
+                <span>{{ item }}</span>
+              {%- endfor -%}
+            </div>
           {%- endif -%}
 
           {%- if section.settings.show_payment_icons and shop.enabled_payment_types.size > 0 -%}
@@ -458,7 +477,7 @@
       "type": "text",
       "id": "reviews_label",
       "label": "Reviews label",
-      "default": "reviews"
+      "default": "verified reviews"
     },
     {
       "type": "richtext",
@@ -567,7 +586,7 @@
       "type": "text",
       "id": "supply_label",
       "label": "Supply label",
-      "default": "Supply"
+      "default": "Choose your supply"
     },
     {
       "type": "text",

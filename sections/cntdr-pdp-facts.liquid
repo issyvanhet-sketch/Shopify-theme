@@ -27,6 +27,7 @@
       </div>
 
       {%- if logo_count > 0 -%}
+        <div class="cntdr-pdp-facts__certs">
         <div class="cntdr-pdp-facts__logos-label">{{ section.settings.logos_label }}</div>
         <div class="cntdr-pdp-facts__logos">
           {%- for block in section.blocks -%}
@@ -40,6 +41,7 @@
               </div>
             {%- endif -%}
           {%- endfor -%}
+        </div>
         </div>
       {%- endif -%}
     </div>

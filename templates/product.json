@@ -224,7 +224,7 @@
         "total_label": "CNTDR AM",
         "total_price": "€59*",
         "total_strike_price": "€109",
-        "note": "",
+        "note": "<p>Eight actives, one dose, measured for you. No jars, no scoops, no guessing what you already took.</p>",
         "footnote": "* Price per box with a monthly subscription — our most popular option, chosen by most of our customers. One-time purchase €69 per box."
       }
     },
@@ -259,6 +259,7 @@
       "block_order": ["step-1", "step-2", "step-3"],
       "settings": {
         "label": "Ten seconds, once a day",
+        "layout": "steps",
         "heading": "How to take it",
         "body": ""
       }
@@ -277,7 +278,7 @@
           "settings": {
             "quote": "I stopped negotiating with my morning. Sachet, water, out the door by six. The 5-to-9 before the 9-to-5 is where the company gets built.",
             "author_name": "Daniel R.",
-            "author_role": "Founder, SaaS"
+            "author_role": "Founder, SaaS · 7 months"
           }
         },
         "t2": {
@@ -285,7 +286,7 @@
           "settings": {
             "quote": "Creatine and electrolytes in one dose I actually take on the road. Threshold sessions feel the same in a hotel gym as they do at home.",
             "author_name": "Marije K.",
-            "author_role": "Marathon, 2:41"
+            "author_role": "Marathon, 2:41 · 1 year"
           }
         },
         "t3": {
@@ -293,7 +294,7 @@
           "settings": {
             "quote": "Four bottles gone from my counter. One box, one drawer, no decisions before the first block of deep work.",
             "author_name": "Tobias L.",
-            "author_role": "Head of Ops"
+            "author_role": "Head of Ops · 4 months"
           }
         }
       },
