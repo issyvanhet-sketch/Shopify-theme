@@ -11,7 +11,9 @@
   "sections": {
     "hero": {
       "type": "cntdr-hero",
-      "settings": {}
+      "settings": {
+        "heading": "DOWN the Morning."
+      }
     },
     "trust-bar": {
       "type": "cntdr-trust-bar",
